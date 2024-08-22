@@ -530,6 +530,13 @@ class DivSizeWrapper extends StatelessWidget {
           child: child,
         );
       }
+    } else if ((width is FlexDivSize || height is FlexDivSize) && !isFlex) {
+      dropStackLayout = false;
+      wrapper = SizedBox(
+        width: width is FlexDivSize ? double.infinity : null,
+        height: height is FlexDivSize ? double.infinity : null,
+        child: child,
+      );
     } else {
       dropStackLayout = false;
       wrapper = child;
