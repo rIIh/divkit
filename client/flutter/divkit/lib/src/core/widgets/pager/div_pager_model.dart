@@ -1,30 +1,47 @@
 import 'package:divkit/divkit.dart';
+import 'package:divkit/src/utils/div_item_builder_utils.dart';
 import 'package:divkit/src/utils/provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
 class DivPagerModel with EquatableMixin {
   final List<Widget> children;
+  final List<DivItemBuilderResult> itemBuilderResults;
   final Axis orientation;
 
   const DivPagerModel({
     required this.children,
+    required this.itemBuilderResults,
     required this.orientation,
   });
 
   static DivPagerModel? value(
-    BuildContext context,
+    BuildContext buildContext,
     DivPager data,
   ) {
     try {
       final rawOrientation = data.orientation.requireValue;
       final orientation = _convertOrientation(rawOrientation);
 
-      final children =
-          data.items?.map((e) => DivWidget(e)).toList(growable: false) ?? [];
+      final List<Widget> children;
+      final List<DivItemBuilderResult> results;
+      if (data.items != null) {
+        results = const [];
+        children = [
+          for (final item in data.items!) //
+            DivWidget(item),
+        ];
+      } else if (data.itemBuilder != null) {
+        children = const [];
+        results = buildChildren(data.itemBuilder!);
+      } else {
+        children = const [];
+        results = const [];
+      }
 
       return DivPagerModel(
         children: children,
+        itemBuilderResults: results,
         orientation: orientation,
       );
     } catch (e, st) {
@@ -38,7 +55,7 @@ class DivPagerModel with EquatableMixin {
   }
 
   static Stream<DivPagerModel> from(
-    BuildContext context,
+    BuildContext buildContext,
     DivPager data,
     PageController controller,
     ValueGetter<int> currentPage,
@@ -71,11 +88,28 @@ class DivPagerModel with EquatableMixin {
       );
       final orientation = _convertOrientation(rawOrientation);
 
-      final children =
-          data.items?.map((e) => DivWidget(e)).toList(growable: false) ?? [];
+      final List<Widget> children;
+      final List<DivItemBuilderResult> results;
+      if (data.items != null) {
+        results = const [];
+        children = [
+          for (final item in data.items!) //
+            DivWidget(item),
+        ];
+      } else if (data.itemBuilder != null && buildContext.mounted) {
+        children = const [];
+        results = await buildChildrenAsync(
+          builder: data.itemBuilder!,
+          context: context,
+        );
+      } else {
+        children = const [];
+        results = const [];
+      }
 
       return DivPagerModel(
         children: children,
+        itemBuilderResults: results,
         orientation: orientation,
       );
     }).distinct();
@@ -84,6 +118,8 @@ class DivPagerModel with EquatableMixin {
   @override
   List<Object?> get props => [
         orientation,
+        itemBuilderResults,
+        children,
       ];
 
   static Axis _convertOrientation(DivPagerOrientation orientation) {
