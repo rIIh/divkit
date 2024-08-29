@@ -5,7 +5,11 @@ import 'package:divkit/src/schema/div_function_argument.dart';
 import 'package:divkit/src/utils/parsing_utils.dart';
 import 'package:equatable/equatable.dart';
 
+<<<<<<< HEAD
 /// User-defined function.
+=======
+/// Custom function.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
 class DivFunction extends Preloadable with EquatableMixin {
   const DivFunction({
     required this.arguments,
@@ -17,14 +21,22 @@ class DivFunction extends Preloadable with EquatableMixin {
   /// Function argument.
   final List<DivFunctionArgument> arguments;
 
+<<<<<<< HEAD
   /// Function body. Evaluated as an expression using the passed arguments. Doesn't capture external variables.
+=======
+  /// Function body. Evaluated as an expression with the passed arguments. Does not capture external variables
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   final String body;
 
   /// Function name.
   // regex: ^[a-zA-Z_][a-zA-Z0-9_]*$
   final String name;
 
+<<<<<<< HEAD
   /// Return value type.
+=======
+  /// Return type.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   final DivEvaluableType returnType;
 
   @override

@@ -23,7 +23,7 @@ class DivActionHideTooltip extends Preloadable with EquatableMixin {
     Expression<String>? id,
   }) =>
       DivActionHideTooltip(
-        id: id ?? this.id,
+        id: id ?? this.id.copy(),
       );
 
   static DivActionHideTooltip? fromJson(

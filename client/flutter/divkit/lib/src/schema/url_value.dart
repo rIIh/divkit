@@ -20,7 +20,7 @@ class UrlValue extends Preloadable with EquatableMixin {
     Expression<Uri>? value,
   }) =>
       UrlValue(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static UrlValue? fromJson(

@@ -22,7 +22,11 @@ class DivActionAnimatorStart extends Preloadable with EquatableMixin {
 
   static const type = "animator_start";
 
+<<<<<<< HEAD
   /// ID of the animator launched.
+=======
+  /// The identifier of the animator being started.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   final String animatorId;
 
   /// Animation direction. Determines whether the animation should be played forward, backward, or alternate between forward and backward.
@@ -38,7 +42,11 @@ class DivActionAnimatorStart extends Preloadable with EquatableMixin {
   /// Animated value interpolation function.
   final Expression<DivAnimationInterpolator>? interpolator;
 
+<<<<<<< HEAD
   /// Number of times the animation will repeat before stopping. A value of `0` enables infinite looping.
+=======
+  /// The number of times the animation will repeat before it finishes. `0` enables infinite repeats.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   final DivCount? repeatCount;
 
   /// Delay before the animation is launched in milliseconds.
@@ -72,14 +80,17 @@ class DivActionAnimatorStart extends Preloadable with EquatableMixin {
   }) =>
       DivActionAnimatorStart(
         animatorId: animatorId ?? this.animatorId,
-        direction: direction != null ? direction.call() : this.direction,
-        duration: duration != null ? duration.call() : this.duration,
+        direction:
+            direction != null ? direction.call() : this.direction?.copy(),
+        duration: duration != null ? duration.call() : this.duration?.copy(),
         endValue: endValue != null ? endValue.call() : this.endValue,
-        interpolator:
-            interpolator != null ? interpolator.call() : this.interpolator,
+        interpolator: interpolator != null
+            ? interpolator.call()
+            : this.interpolator?.copy(),
         repeatCount:
             repeatCount != null ? repeatCount.call() : this.repeatCount,
-        startDelay: startDelay != null ? startDelay.call() : this.startDelay,
+        startDelay:
+            startDelay != null ? startDelay.call() : this.startDelay?.copy(),
         startValue: startValue != null ? startValue.call() : this.startValue,
       );
 

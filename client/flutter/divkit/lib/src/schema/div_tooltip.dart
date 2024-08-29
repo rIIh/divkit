@@ -66,10 +66,10 @@ class DivTooltip extends Preloadable with EquatableMixin {
         animationOut:
             animationOut != null ? animationOut.call() : this.animationOut,
         div: div ?? this.div,
-        duration: duration ?? this.duration,
+        duration: duration ?? this.duration.copy(),
         id: id ?? this.id,
         offset: offset != null ? offset.call() : this.offset,
-        position: position ?? this.position,
+        position: position ?? this.position.copy(),
       );
 
   static DivTooltip? fromJson(

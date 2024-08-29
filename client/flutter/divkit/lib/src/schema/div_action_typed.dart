@@ -122,6 +122,7 @@ class DivActionTyped extends Preloadable with EquatableMixin {
           value as DivActionShowTooltip,
         );
       case 17:
+<<<<<<< HEAD
         return divActionSubmit(
           value as DivActionSubmit,
         );
@@ -130,6 +131,12 @@ class DivActionTyped extends Preloadable with EquatableMixin {
           value as DivActionTimer,
         );
       case 19:
+=======
+        return divActionTimer(
+          value as DivActionTimer,
+        );
+      case 18:
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         return divActionVideo(
           value as DivActionVideo,
         );
@@ -283,6 +290,7 @@ class DivActionTyped extends Preloadable with EquatableMixin {
         }
         break;
       case 17:
+<<<<<<< HEAD
         if (divActionSubmit != null) {
           return divActionSubmit(
             value as DivActionSubmit,
@@ -290,13 +298,19 @@ class DivActionTyped extends Preloadable with EquatableMixin {
         }
         break;
       case 18:
+=======
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         if (divActionTimer != null) {
           return divActionTimer(
             value as DivActionTimer,
           );
         }
         break;
+<<<<<<< HEAD
       case 19:
+=======
+      case 18:
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         if (divActionVideo != null) {
           return divActionVideo(
             value as DivActionVideo,
@@ -391,21 +405,32 @@ class DivActionTyped extends Preloadable with EquatableMixin {
     DivActionShowTooltip obj,
   )   : value = obj,
         _index = 16;
+<<<<<<< HEAD
 
   const DivActionTyped.divActionSubmit(
     DivActionSubmit obj,
   )   : value = obj,
         _index = 17;
+=======
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
 
   const DivActionTyped.divActionTimer(
     DivActionTimer obj,
   )   : value = obj,
+<<<<<<< HEAD
         _index = 18;
+=======
+        _index = 17;
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
 
   const DivActionTyped.divActionVideo(
     DivActionVideo obj,
   )   : value = obj,
+<<<<<<< HEAD
         _index = 19;
+=======
+        _index = 18;
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
 
   bool get isDivActionAnimatorStart => _index == 0;
 
@@ -441,11 +466,17 @@ class DivActionTyped extends Preloadable with EquatableMixin {
 
   bool get isDivActionShowTooltip => _index == 16;
 
+<<<<<<< HEAD
   bool get isDivActionSubmit => _index == 17;
 
   bool get isDivActionTimer => _index == 18;
 
   bool get isDivActionVideo => _index == 19;
+=======
+  bool get isDivActionTimer => _index == 17;
+
+  bool get isDivActionVideo => _index == 18;
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
 
   @override
   Future<void> preload(Map<String, dynamic> context) => value.preload(context);

@@ -31,8 +31,8 @@ class DivActionVideo extends Preloadable with EquatableMixin {
     Expression<String>? id,
   }) =>
       DivActionVideo(
-        action: action ?? this.action,
-        id: id ?? this.id,
+        action: action ?? this.action.copy(),
+        id: id ?? this.id.copy(),
       );
 
   static DivActionVideo? fromJson(

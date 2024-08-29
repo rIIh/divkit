@@ -63,10 +63,10 @@ class DivSlideTransition extends Preloadable
   }) =>
       DivSlideTransition(
         distance: distance != null ? distance.call() : this.distance,
-        duration: duration ?? this.duration,
-        edge: edge ?? this.edge,
-        interpolator: interpolator ?? this.interpolator,
-        startDelay: startDelay ?? this.startDelay,
+        duration: duration ?? this.duration.copy(),
+        edge: edge ?? this.edge.copy(),
+        interpolator: interpolator ?? this.interpolator.copy(),
+        startDelay: startDelay ?? this.startDelay.copy(),
       );
 
   static DivSlideTransition? fromJson(

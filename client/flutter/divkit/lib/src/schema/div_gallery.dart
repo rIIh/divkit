@@ -156,7 +156,11 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+<<<<<<< HEAD
   /// User functions.
+=======
+  /// Custom functions.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -204,7 +208,11 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
   // default value: false
   final Expression<bool> restrictParentScroll;
 
+<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+=======
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 
@@ -374,22 +382,24 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
         columnCount:
-            columnCount != null ? columnCount.call() : this.columnCount,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+            columnCount != null ? columnCount.call() : this.columnCount?.copy(),
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         crossContentAlignment:
-            crossContentAlignment ?? this.crossContentAlignment,
-        crossSpacing:
-            crossSpacing != null ? crossSpacing.call() : this.crossSpacing,
-        defaultItem: defaultItem ?? this.defaultItem,
+            crossContentAlignment ?? this.crossContentAlignment.copy(),
+        crossSpacing: crossSpacing != null
+            ? crossSpacing.call()
+            : this.crossSpacing?.copy(),
+        defaultItem: defaultItem ?? this.defaultItem.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -400,19 +410,20 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
         id: id != null ? id.call() : this.id,
         itemBuilder:
             itemBuilder != null ? itemBuilder.call() : this.itemBuilder,
-        itemSpacing: itemSpacing ?? this.itemSpacing,
+        itemSpacing: itemSpacing ?? this.itemSpacing.copy(),
         items: items != null ? items.call() : this.items,
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        orientation: orientation ?? this.orientation,
+        orientation: orientation ?? this.orientation.copy(),
         paddings: paddings ?? this.paddings,
-        restrictParentScroll: restrictParentScroll ?? this.restrictParentScroll,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        scrollMode: scrollMode ?? this.scrollMode,
-        scrollbar: scrollbar ?? this.scrollbar,
+        restrictParentScroll:
+            restrictParentScroll ?? this.restrictParentScroll.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scrollMode: scrollMode ?? this.scrollMode.copy(),
+        scrollbar: scrollbar ?? this.scrollbar.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -432,7 +443,7 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

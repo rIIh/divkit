@@ -46,9 +46,9 @@ class DivChangeBoundsTransition extends Preloadable
     Expression<int>? startDelay,
   }) =>
       DivChangeBoundsTransition(
-        duration: duration ?? this.duration,
-        interpolator: interpolator ?? this.interpolator,
-        startDelay: startDelay ?? this.startDelay,
+        duration: duration ?? this.duration.copy(),
+        interpolator: interpolator ?? this.interpolator.copy(),
+        startDelay: startDelay ?? this.startDelay.copy(),
       );
 
   static DivChangeBoundsTransition? fromJson(

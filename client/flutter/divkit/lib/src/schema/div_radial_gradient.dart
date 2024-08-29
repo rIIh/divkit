@@ -71,7 +71,7 @@ class DivRadialGradient extends Preloadable with EquatableMixin {
       DivRadialGradient(
         centerX: centerX ?? this.centerX,
         centerY: centerY ?? this.centerY,
-        colors: colors ?? this.colors,
+        colors: colors ?? this.colors.copy(),
         radius: radius ?? this.radius,
       );
 
