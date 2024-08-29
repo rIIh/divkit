@@ -50,11 +50,12 @@ class DivBorder extends Preloadable with EquatableMixin {
     DivStroke? Function()? stroke,
   }) =>
       DivBorder(
-        cornerRadius:
-            cornerRadius != null ? cornerRadius.call() : this.cornerRadius,
+        cornerRadius: cornerRadius != null
+            ? cornerRadius.call()
+            : this.cornerRadius?.copy(),
         cornersRadius:
             cornersRadius != null ? cornersRadius.call() : this.cornersRadius,
-        hasShadow: hasShadow ?? this.hasShadow,
+        hasShadow: hasShadow ?? this.hasShadow.copy(),
         shadow: shadow != null ? shadow.call() : this.shadow,
         stroke: stroke != null ? stroke.call() : this.stroke,
       );

@@ -136,7 +136,11 @@ class DivSlider extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+<<<<<<< HEAD
   /// User functions.
+=======
+  /// Custom functions.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -172,7 +176,11 @@ class DivSlider extends Preloadable with EquatableMixin implements DivBase {
   /// Section style.
   final List<DivSliderRange>? ranges;
 
+<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+=======
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 
@@ -371,15 +379,16 @@ class DivSlider extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -392,12 +401,12 @@ class DivSlider extends Preloadable with EquatableMixin implements DivBase {
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        maxValue: maxValue ?? this.maxValue,
-        minValue: minValue ?? this.minValue,
+        maxValue: maxValue ?? this.maxValue.copy(),
+        minValue: minValue ?? this.minValue.copy(),
         paddings: paddings ?? this.paddings,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         secondaryValueAccessibility:
             secondaryValueAccessibility ?? this.secondaryValueAccessibility,
         selectedActions: selectedActions != null
@@ -443,7 +452,7 @@ class DivSlider extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -1021,14 +1030,14 @@ class DivSliderTextStyle extends Preloadable with EquatableMixin {
     Expression<Color>? textColor,
   }) =>
       DivSliderTextStyle(
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
         offset: offset != null ? offset.call() : this.offset,
-        textColor: textColor ?? this.textColor,
+        textColor: textColor ?? this.textColor.copy(),
       );
 
   static DivSliderTextStyle? fromJson(
@@ -1163,9 +1172,9 @@ class DivSliderRange extends Preloadable with EquatableMixin {
     DivDrawable? Function()? trackInactiveStyle,
   }) =>
       DivSliderRange(
-        end: end != null ? end.call() : this.end,
+        end: end != null ? end.call() : this.end?.copy(),
         margins: margins ?? this.margins,
-        start: start != null ? start.call() : this.start,
+        start: start != null ? start.call() : this.start?.copy(),
         trackActiveStyle: trackActiveStyle != null
             ? trackActiveStyle.call()
             : this.trackActiveStyle,

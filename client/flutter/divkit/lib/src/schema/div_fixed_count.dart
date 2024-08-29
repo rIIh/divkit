@@ -24,7 +24,7 @@ class DivFixedCount extends Preloadable with EquatableMixin {
     Expression<int>? value,
   }) =>
       DivFixedCount(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static DivFixedCount? fromJson(

@@ -35,7 +35,7 @@ class DivCollectionItemBuilder extends Preloadable with EquatableMixin {
     List<DivCollectionItemBuilderPrototype>? prototypes,
   }) =>
       DivCollectionItemBuilder(
-        data: data ?? this.data,
+        data: data ?? this.data.copy(),
         dataElementName: dataElementName ?? this.dataElementName,
         prototypes: prototypes ?? this.prototypes,
       );
@@ -143,8 +143,8 @@ class DivCollectionItemBuilderPrototype extends Preloadable
   }) =>
       DivCollectionItemBuilderPrototype(
         div: div ?? this.div,
-        id: id != null ? id.call() : this.id,
-        selector: selector ?? this.selector,
+        id: id != null ? id.call() : this.id?.copy(),
+        selector: selector ?? this.selector.copy(),
       );
 
   static DivCollectionItemBuilderPrototype? fromJson(

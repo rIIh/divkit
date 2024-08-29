@@ -9,7 +9,11 @@ import 'package:divkit/src/schema/div_fixed_count.dart';
 import 'package:divkit/src/utils/parsing_utils.dart';
 import 'package:equatable/equatable.dart';
 
+<<<<<<< HEAD
 /// Numeric value animator.
+=======
+/// Number animator.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
 class DivNumberAnimator extends Preloadable
     with EquatableMixin
     implements DivAnimatorBase {
@@ -35,7 +39,11 @@ class DivNumberAnimator extends Preloadable
 
   static const type = "number_animator";
 
+<<<<<<< HEAD
   /// Actions to be performed if the animator is canceled. For example, when a command with the type `animator_stop` is received.
+=======
+  /// Actions performed when the animator is cancelled. For example, when an action with `animator_stop` type is received
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivAction>? cancelActions;
 
@@ -49,14 +57,22 @@ class DivNumberAnimator extends Preloadable
   @override
   final Expression<int> duration;
 
+<<<<<<< HEAD
   /// Actions to be performed after the animator finishes.
+=======
+  /// Actions performed when the animator completes animation.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivAction>? endActions;
 
   /// The value the variable will have when the animation ends.
   final Expression<double> endValue;
 
+<<<<<<< HEAD
   /// Animator ID.
+=======
+  /// Animator identificator
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final String id;
 
@@ -65,7 +81,11 @@ class DivNumberAnimator extends Preloadable
   @override
   final Expression<DivAnimationInterpolator> interpolator;
 
+<<<<<<< HEAD
   /// Number of times the animation will repeat before stopping. A value of `0` enables infinite looping.
+=======
+  /// The number of times the animation will repeat before it finishes. `0` enables infinite repeats.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   // default value: const DivCount.divFixedCount(const DivFixedCount(value: ValueExpression(1,),),)
   @override
   final DivCount repeatCount;
@@ -113,15 +133,16 @@ class DivNumberAnimator extends Preloadable
       DivNumberAnimator(
         cancelActions:
             cancelActions != null ? cancelActions.call() : this.cancelActions,
-        direction: direction ?? this.direction,
-        duration: duration ?? this.duration,
+        direction: direction ?? this.direction.copy(),
+        duration: duration ?? this.duration.copy(),
         endActions: endActions != null ? endActions.call() : this.endActions,
-        endValue: endValue ?? this.endValue,
+        endValue: endValue ?? this.endValue.copy(),
         id: id ?? this.id,
-        interpolator: interpolator ?? this.interpolator,
+        interpolator: interpolator ?? this.interpolator.copy(),
         repeatCount: repeatCount ?? this.repeatCount,
-        startDelay: startDelay ?? this.startDelay,
-        startValue: startValue != null ? startValue.call() : this.startValue,
+        startDelay: startDelay ?? this.startDelay.copy(),
+        startValue:
+            startValue != null ? startValue.call() : this.startValue?.copy(),
         variableName: variableName ?? this.variableName,
       );
 

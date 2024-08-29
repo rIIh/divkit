@@ -133,7 +133,11 @@ class DivState extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+<<<<<<< HEAD
   /// User functions.
+=======
+  /// Custom functions.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -158,7 +162,11 @@ class DivState extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivEdgeInsets paddings;
 
+<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+=======
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 
@@ -317,18 +325,19 @@ class DivState extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         defaultStateId: defaultStateId != null
             ? defaultStateId.call()
-            : this.defaultStateId,
+            : this.defaultStateId?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -343,8 +352,8 @@ class DivState extends Preloadable with EquatableMixin implements DivBase {
             : this.layoutProvider,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -354,8 +363,8 @@ class DivState extends Preloadable with EquatableMixin implements DivBase {
         states: states ?? this.states,
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
-        transitionAnimationSelector:
-            transitionAnimationSelector ?? this.transitionAnimationSelector,
+        transitionAnimationSelector: transitionAnimationSelector ??
+            this.transitionAnimationSelector.copy(),
         transitionChange: transitionChange != null
             ? transitionChange.call()
             : this.transitionChange,
@@ -370,7 +379,7 @@ class DivState extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

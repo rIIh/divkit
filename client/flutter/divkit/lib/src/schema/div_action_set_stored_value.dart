@@ -36,8 +36,13 @@ class DivActionSetStoredValue extends Preloadable with EquatableMixin {
     DivTypedValue? value,
   }) =>
       DivActionSetStoredValue(
+<<<<<<< HEAD
         lifetime: lifetime ?? this.lifetime,
         name: name ?? this.name,
+=======
+        lifetime: lifetime ?? this.lifetime.copy(),
+        name: name ?? this.name.copy(),
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         value: value ?? this.value,
       );
 

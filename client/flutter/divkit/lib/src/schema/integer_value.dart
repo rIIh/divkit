@@ -20,7 +20,7 @@ class IntegerValue extends Preloadable with EquatableMixin {
     Expression<int>? value,
   }) =>
       IntegerValue(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static IntegerValue? fromJson(

@@ -140,7 +140,11 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+<<<<<<< HEAD
   /// User functions.
+=======
+  /// Custom functions.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -200,7 +204,11 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
   // default value: false
   final Expression<bool> restrictParentScroll;
 
+<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+=======
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 
@@ -356,16 +364,17 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        defaultItem: defaultItem ?? this.defaultItem,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        defaultItem: defaultItem ?? this.defaultItem.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -374,7 +383,7 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
-        infiniteScroll: infiniteScroll ?? this.infiniteScroll,
+        infiniteScroll: infiniteScroll ?? this.infiniteScroll.copy(),
         itemBuilder:
             itemBuilder != null ? itemBuilder.call() : this.itemBuilder,
         itemSpacing: itemSpacing ?? this.itemSpacing,
@@ -384,14 +393,15 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        orientation: orientation ?? this.orientation,
+        orientation: orientation ?? this.orientation.copy(),
         paddings: paddings ?? this.paddings,
         pageTransformation: pageTransformation != null
             ? pageTransformation.call()
             : this.pageTransformation,
-        restrictParentScroll: restrictParentScroll ?? this.restrictParentScroll,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        restrictParentScroll:
+            restrictParentScroll ?? this.restrictParentScroll.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -411,7 +421,7 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

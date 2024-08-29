@@ -27,7 +27,7 @@ class DivActionSetVariable extends Preloadable with EquatableMixin {
   }) =>
       DivActionSetVariable(
         value: value ?? this.value,
-        variableName: variableName ?? this.variableName,
+        variableName: variableName ?? this.variableName.copy(),
       );
 
   static DivActionSetVariable? fromJson(

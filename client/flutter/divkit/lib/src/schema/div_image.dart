@@ -187,7 +187,11 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+<<<<<<< HEAD
   /// User functions.
+=======
+  /// Custom functions.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -233,7 +237,11 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
   /// Image preview encoded in `base64`. It will be shown instead of `placeholder_color` before the image is loaded. Format `data url`: `data:[;base64],<data>`
   final Expression<String>? preview;
 
+<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+=======
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 
@@ -423,11 +431,11 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         appearanceAnimation: appearanceAnimation != null
             ? appearanceAnimation.call()
@@ -435,11 +443,12 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
         aspect: aspect != null ? aspect.call() : this.aspect,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -452,9 +461,9 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         highPriorityPreviewShow:
-            highPriorityPreviewShow ?? this.highPriorityPreviewShow,
+            highPriorityPreviewShow ?? this.highPriorityPreviewShow.copy(),
         id: id != null ? id.call() : this.id,
-        imageUrl: imageUrl ?? this.imageUrl,
+        imageUrl: imageUrl ?? this.imageUrl.copy(),
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
@@ -463,17 +472,18 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
             : this.longtapActions,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        placeholderColor: placeholderColor ?? this.placeholderColor,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        preview: preview != null ? preview.call() : this.preview,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        scale: scale ?? this.scale,
+        placeholderColor: placeholderColor ?? this.placeholderColor.copy(),
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        preview: preview != null ? preview.call() : this.preview?.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scale: scale ?? this.scale.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
-        tintColor: tintColor != null ? tintColor.call() : this.tintColor,
-        tintMode: tintMode ?? this.tintMode,
+        tintColor:
+            tintColor != null ? tintColor.call() : this.tintColor?.copy(),
+        tintMode: tintMode ?? this.tintMode.copy(),
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
         transitionChange: transitionChange != null
@@ -490,7 +500,7 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

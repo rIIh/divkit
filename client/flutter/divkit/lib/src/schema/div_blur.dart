@@ -24,7 +24,7 @@ class DivBlur extends Preloadable with EquatableMixin {
     Expression<int>? radius,
   }) =>
       DivBlur(
-        radius: radius ?? this.radius,
+        radius: radius ?? this.radius.copy(),
       );
 
   static DivBlur? fromJson(

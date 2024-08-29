@@ -195,11 +195,11 @@ class DivFocusNextFocusIds extends Preloadable with EquatableMixin {
     Expression<String>? Function()? up,
   }) =>
       DivFocusNextFocusIds(
-        down: down != null ? down.call() : this.down,
-        forward: forward != null ? forward.call() : this.forward,
-        left: left != null ? left.call() : this.left,
-        right: right != null ? right.call() : this.right,
-        up: up != null ? up.call() : this.up,
+        down: down != null ? down.call() : this.down?.copy(),
+        forward: forward != null ? forward.call() : this.forward?.copy(),
+        left: left != null ? left.call() : this.left?.copy(),
+        right: right != null ? right.call() : this.right?.copy(),
+        up: up != null ? up.call() : this.up?.copy(),
       );
 
   static DivFocusNextFocusIds? fromJson(

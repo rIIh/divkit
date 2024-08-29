@@ -55,13 +55,13 @@ class DivAccessibility extends Preloadable with EquatableMixin {
   }) =>
       DivAccessibility(
         description:
-            description != null ? description.call() : this.description,
-        hint: hint != null ? hint.call() : this.hint,
-        mode: mode ?? this.mode,
-        muteAfterAction: muteAfterAction ?? this.muteAfterAction,
+            description != null ? description.call() : this.description?.copy(),
+        hint: hint != null ? hint.call() : this.hint?.copy(),
+        mode: mode ?? this.mode.copy(),
+        muteAfterAction: muteAfterAction ?? this.muteAfterAction.copy(),
         stateDescription: stateDescription != null
             ? stateDescription.call()
-            : this.stateDescription,
+            : this.stateDescription?.copy(),
         type: type ?? this.type,
       );
 

@@ -32,8 +32,8 @@ class DivFixedSize extends Preloadable with EquatableMixin {
     Expression<int>? value,
   }) =>
       DivFixedSize(
-        unit: unit ?? this.unit,
-        value: value ?? this.value,
+        unit: unit ?? this.unit.copy(),
+        value: value ?? this.value.copy(),
       );
 
   static DivFixedSize? fromJson(

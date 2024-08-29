@@ -33,6 +33,8 @@ abstract class Expression<T> with EquatableMixin {
       }
     }
   }
+
+  Expression<T> copy();
 }
 
 class ValueExpression<T> extends Expression<T> {
@@ -49,6 +51,9 @@ class ValueExpression<T> extends Expression<T> {
 
   @override
   List<Object?> get props => [value];
+
+  @override
+  Expression<T> copy() => ValueExpression(value);
 }
 
 abstract class Preloadable extends Object {
@@ -107,4 +112,11 @@ class ResolvableExpression<T> extends Expression<T> {
 
   @override
   List<Object?> get props => [value, source, fallback];
+
+  @override
+  Expression<T> copy() => ResolvableExpression(
+        source,
+        parse: parse,
+        fallback: fallback,
+      );
 }

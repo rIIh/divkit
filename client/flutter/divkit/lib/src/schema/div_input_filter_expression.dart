@@ -23,7 +23,7 @@ class DivInputFilterExpression extends Preloadable with EquatableMixin {
     Expression<bool>? condition,
   }) =>
       DivInputFilterExpression(
-        condition: condition ?? this.condition,
+        condition: condition ?? this.condition.copy(),
       );
 
   static DivInputFilterExpression? fromJson(

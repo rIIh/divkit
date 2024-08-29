@@ -63,13 +63,13 @@ class DivEdgeInsets extends Preloadable with EquatableMixin {
     Expression<DivSizeUnit>? unit,
   }) =>
       DivEdgeInsets(
-        bottom: bottom ?? this.bottom,
-        end: end != null ? end.call() : this.end,
-        left: left ?? this.left,
-        right: right ?? this.right,
-        start: start != null ? start.call() : this.start,
-        top: top ?? this.top,
-        unit: unit ?? this.unit,
+        bottom: bottom ?? this.bottom.copy(),
+        end: end != null ? end.call() : this.end?.copy(),
+        left: left ?? this.left.copy(),
+        right: right ?? this.right.copy(),
+        start: start != null ? start.call() : this.start?.copy(),
+        top: top ?? this.top.copy(),
+        unit: unit ?? this.unit.copy(),
       );
 
   static DivEdgeInsets? fromJson(

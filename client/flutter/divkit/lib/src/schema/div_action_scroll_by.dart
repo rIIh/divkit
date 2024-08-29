@@ -53,11 +53,19 @@ class DivActionScrollBy extends Preloadable with EquatableMixin {
     Expression<DivActionScrollByOverflow>? overflow,
   }) =>
       DivActionScrollBy(
+<<<<<<< HEAD
         animated: animated ?? this.animated,
         id: id ?? this.id,
         itemCount: itemCount ?? this.itemCount,
         offset: offset ?? this.offset,
         overflow: overflow ?? this.overflow,
+=======
+        animated: animated ?? this.animated.copy(),
+        id: id ?? this.id.copy(),
+        itemCount: itemCount ?? this.itemCount.copy(),
+        offset: offset ?? this.offset.copy(),
+        overflow: overflow ?? this.overflow.copy(),
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
       );
 
   static DivActionScrollBy? fromJson(

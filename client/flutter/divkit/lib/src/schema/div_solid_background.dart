@@ -23,7 +23,7 @@ class DivSolidBackground extends Preloadable with EquatableMixin {
     Expression<Color>? color,
   }) =>
       DivSolidBackground(
-        color: color ?? this.color,
+        color: color ?? this.color.copy(),
       );
 
   static DivSolidBackground? fromJson(

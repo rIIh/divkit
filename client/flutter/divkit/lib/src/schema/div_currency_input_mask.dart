@@ -33,7 +33,7 @@ class DivCurrencyInputMask extends Preloadable
     String? rawTextVariable,
   }) =>
       DivCurrencyInputMask(
-        locale: locale != null ? locale.call() : this.locale,
+        locale: locale != null ? locale.call() : this.locale?.copy(),
         rawTextVariable: rawTextVariable ?? this.rawTextVariable,
       );
 

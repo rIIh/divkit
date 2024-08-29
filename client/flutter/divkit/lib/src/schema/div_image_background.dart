@@ -70,15 +70,15 @@ class DivImageBackground extends Preloadable with EquatableMixin {
     Expression<DivImageScale>? scale,
   }) =>
       DivImageBackground(
-        alpha: alpha ?? this.alpha,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        alpha: alpha ?? this.alpha.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         filters: filters != null ? filters.call() : this.filters,
-        imageUrl: imageUrl ?? this.imageUrl,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        scale: scale ?? this.scale,
+        imageUrl: imageUrl ?? this.imageUrl.copy(),
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        scale: scale ?? this.scale.copy(),
       );
 
   static DivImageBackground? fromJson(

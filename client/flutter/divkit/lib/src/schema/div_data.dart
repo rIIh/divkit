@@ -62,8 +62,8 @@ class DivData extends Preloadable with EquatableMixin {
         logId: logId ?? this.logId,
         states: states ?? this.states,
         timers: timers != null ? timers.call() : this.timers,
-        transitionAnimationSelector:
-            transitionAnimationSelector ?? this.transitionAnimationSelector,
+        transitionAnimationSelector: transitionAnimationSelector ??
+            this.transitionAnimationSelector.copy(),
         variableTriggers: variableTriggers != null
             ? variableTriggers.call()
             : this.variableTriggers,

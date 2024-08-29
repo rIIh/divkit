@@ -173,7 +173,11 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+<<<<<<< HEAD
   /// User functions.
+=======
+  /// Custom functions.
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -215,7 +219,11 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
   /// Image preview encoded in `base64`. It will be shown instead of `placeholder_color` before the image is loaded. Format `data url`: `data:[;base64],<data>`
   final Expression<String>? preview;
 
+<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+=======
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 
@@ -388,20 +396,21 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         aspect: aspect != null ? aspect.call() : this.aspect,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -411,7 +420,11 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
         functions: functions != null ? functions.call() : this.functions,
+<<<<<<< HEAD
         gifUrl: gifUrl ?? this.gifUrl,
+=======
+        gifUrl: gifUrl ?? this.gifUrl.copy(),
+>>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
         layoutProvider: layoutProvider != null
@@ -422,12 +435,12 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
             : this.longtapActions,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        placeholderColor: placeholderColor ?? this.placeholderColor,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        preview: preview != null ? preview.call() : this.preview,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        scale: scale ?? this.scale,
+        placeholderColor: placeholderColor ?? this.placeholderColor.copy(),
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        preview: preview != null ? preview.call() : this.preview?.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scale: scale ?? this.scale.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -447,7 +460,7 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
