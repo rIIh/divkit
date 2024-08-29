@@ -18,6 +18,7 @@ import 'package:divkit/src/schema/div_extension.dart';
 import 'package:divkit/src/schema/div_fixed_size.dart';
 import 'package:divkit/src/schema/div_focus.dart';
 import 'package:divkit/src/schema/div_font_weight.dart';
+import 'package:divkit/src/schema/div_function.dart';
 import 'package:divkit/src/schema/div_layout_provider.dart';
 import 'package:divkit/src/schema/div_line_style.dart';
 import 'package:divkit/src/schema/div_match_parent_size.dart';
@@ -79,6 +80,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
     this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
     this.fontWeight = const ValueExpression(DivFontWeight.regular),
     this.fontWeightValue,
+    this.functions,
     this.height = const DivSize.divWrapContentSize(
       DivWrapContentSize(),
     ),
@@ -106,6 +108,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
     this.textColor = const ValueExpression(Color(0xFF000000)),
     this.textGradient,
     this.textShadow,
+    this.tightenWidth = const ValueExpression(false),
     this.tooltips,
     this.transform = const DivTransform(),
     this.transitionChange,
@@ -216,6 +219,10 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
   // constraint: number > 0
   final Expression<int>? fontWeightValue;
 
+  /// Custom functions.
+  @override
+  final List<DivFunction>? functions;
+
   /// Element height. For Android: if there is text in this or in a child element, specify height in `sp` to scale the element together with the text. To learn more about units of size measurement, see [Layout inside the card](https://divkit.tech/docs/en/concepts/layout).
   // default value: const DivSize.divWrapContentSize(DivWrapContentSize(),)
   @override
@@ -262,7 +269,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
   /// A character range in which additional style parameters can be set. Defined by mandatory `start` and `end` fields.
   final List<DivTextRange>? ranges;
 
-  /// Id for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md)
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
   @override
   final Expression<String>? reuseId;
 
@@ -303,6 +310,10 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
 
   /// Parameters of the shadow applied to the text.
   final DivShadow? textShadow;
+
+  /// Set text width to maximal line width, works only with wrap_content width with constrained=true and max_size set
+  // default value: false
+  final Expression<bool> tightenWidth;
 
   /// Tooltips linked to an element. A tooltip can be shown by `div-action://show_tooltip?id=`, hidden by `div-action://hide_tooltip?id=` where `id` — tooltip id.
   @override
@@ -389,6 +400,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         fontSizeUnit,
         fontWeight,
         fontWeightValue,
+        functions,
         height,
         id,
         images,
@@ -412,6 +424,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         textColor,
         textGradient,
         textShadow,
+        tightenWidth,
         tooltips,
         transform,
         transitionChange,
@@ -453,6 +466,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
     Expression<DivSizeUnit>? fontSizeUnit,
     Expression<DivFontWeight>? fontWeight,
     Expression<int>? Function()? fontWeightValue,
+    List<DivFunction>? Function()? functions,
     DivSize? height,
     String? Function()? id,
     List<DivTextImage>? Function()? images,
@@ -476,6 +490,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
     Expression<Color>? textColor,
     DivTextGradient? Function()? textGradient,
     DivShadow? Function()? textShadow,
+    Expression<bool>? tightenWidth,
     List<DivTooltip>? Function()? tooltips,
     DivTransform? transform,
     DivChangeTransition? Function()? transitionChange,
@@ -498,17 +513,19 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
-        autoEllipsize:
-            autoEllipsize != null ? autoEllipsize.call() : this.autoEllipsize,
+        autoEllipsize: autoEllipsize != null
+            ? autoEllipsize.call()
+            : this.autoEllipsize?.copy(),
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -520,51 +537,55 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         focus: focus != null ? focus.call() : this.focus,
         focusedTextColor: focusedTextColor != null
             ? focusedTextColor.call()
-            : this.focusedTextColor,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
+            : this.focusedTextColor?.copy(),
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
         fontFeatureSettings: fontFeatureSettings != null
             ? fontFeatureSettings.call()
-            : this.fontFeatureSettings,
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+            : this.fontFeatureSettings?.copy(),
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
+        functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
         images: images != null ? images.call() : this.images,
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+        letterSpacing: letterSpacing ?? this.letterSpacing.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         longtapActions: longtapActions != null
             ? longtapActions.call()
             : this.longtapActions,
         margins: margins ?? this.margins,
-        maxLines: maxLines != null ? maxLines.call() : this.maxLines,
+        maxLines: maxLines != null ? maxLines.call() : this.maxLines?.copy(),
         minHiddenLines: minHiddenLines != null
             ? minHiddenLines.call()
-            : this.minHiddenLines,
+            : this.minHiddenLines?.copy(),
         paddings: paddings ?? this.paddings,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        selectable: selectable ?? this.selectable,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        selectable: selectable ?? this.selectable.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
-        strike: strike ?? this.strike,
-        text: text ?? this.text,
+        strike: strike ?? this.strike.copy(),
+        text: text ?? this.text.copy(),
         textAlignmentHorizontal:
-            textAlignmentHorizontal ?? this.textAlignmentHorizontal,
+            textAlignmentHorizontal ?? this.textAlignmentHorizontal.copy(),
         textAlignmentVertical:
-            textAlignmentVertical ?? this.textAlignmentVertical,
-        textColor: textColor ?? this.textColor,
+            textAlignmentVertical ?? this.textAlignmentVertical.copy(),
+        textColor: textColor ?? this.textColor.copy(),
         textGradient:
             textGradient != null ? textGradient.call() : this.textGradient,
         textShadow: textShadow != null ? textShadow.call() : this.textShadow,
+        tightenWidth: tightenWidth ?? this.tightenWidth.copy(),
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
         transitionChange: transitionChange != null
@@ -577,13 +598,13 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         transitionTriggers: transitionTriggers != null
             ? transitionTriggers.call()
             : this.transitionTriggers,
-        truncate: truncate ?? this.truncate,
-        underline: underline ?? this.underline,
+        truncate: truncate ?? this.truncate.copy(),
+        underline: underline ?? this.underline.copy(),
         variableTriggers: variableTriggers != null
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -727,6 +748,14 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         fontWeightValue: safeParseIntExpr(
           json['font_weight_value'],
         ),
+        functions: safeParseObj(
+          safeListMap(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
+        ),
         height: safeParseObj(
           DivSize.fromJson(json['height']),
           fallback: const DivSize.divWrapContentSize(
@@ -830,6 +859,10 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         textShadow: safeParseObj(
           DivShadow.fromJson(json['text_shadow']),
         ),
+        tightenWidth: safeParseBoolExpr(
+          json['tighten_width'],
+          fallback: false,
+        )!,
         tooltips: safeParseObj(
           safeListMap(
             json['tooltips'],
@@ -1048,6 +1081,14 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         fontWeightValue: await safeParseIntExprAsync(
           json['font_weight_value'],
         ),
+        functions: await safeParseObjAsync(
+          await safeListMapAsync(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
+        ),
         height: (await safeParseObjAsync(
           DivSize.fromJson(json['height']),
           fallback: const DivSize.divWrapContentSize(
@@ -1151,6 +1192,10 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         textShadow: await safeParseObjAsync(
           DivShadow.fromJson(json['text_shadow']),
         ),
+        tightenWidth: (await safeParseBoolExprAsync(
+          json['tighten_width'],
+          fallback: false,
+        ))!,
         tooltips: await safeParseObjAsync(
           await safeListMapAsync(
             json['tooltips'],
@@ -1264,6 +1309,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
       await fontSizeUnit.preload(context);
       await fontWeight.preload(context);
       await fontWeightValue?.preload(context);
+      await safeFuturesWait(functions, (v) => v.preload(context));
       await height.preload(context);
       await safeFuturesWait(images, (v) => v.preload(context));
       await layoutProvider?.preload(context);
@@ -1286,6 +1332,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
       await textColor.preload(context);
       await textGradient?.preload(context);
       await textShadow?.preload(context);
+      await tightenWidth.preload(context);
       await safeFuturesWait(tooltips, (v) => v.preload(context));
       await transform.preload(context);
       await transitionChange?.preload(context);
@@ -1447,29 +1494,36 @@ class DivTextRange extends Preloadable with EquatableMixin {
         actions: actions != null ? actions.call() : this.actions,
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
+            : this.alignmentVertical?.copy(),
         background: background != null ? background.call() : this.background,
         border: border != null ? border.call() : this.border,
-        end: end ?? this.end,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
+        end: end ?? this.end.copy(),
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
         fontFeatureSettings: fontFeatureSettings != null
             ? fontFeatureSettings.call()
-            : this.fontFeatureSettings,
-        fontSize: fontSize != null ? fontSize.call() : this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight != null ? fontWeight.call() : this.fontWeight,
+            : this.fontFeatureSettings?.copy(),
+        fontSize: fontSize != null ? fontSize.call() : this.fontSize?.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight:
+            fontWeight != null ? fontWeight.call() : this.fontWeight?.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
-        letterSpacing:
-            letterSpacing != null ? letterSpacing.call() : this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
-        start: start ?? this.start,
-        strike: strike != null ? strike.call() : this.strike,
-        textColor: textColor != null ? textColor.call() : this.textColor,
+            : this.fontWeightValue?.copy(),
+        letterSpacing: letterSpacing != null
+            ? letterSpacing.call()
+            : this.letterSpacing?.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
+        start: start ?? this.start.copy(),
+        strike: strike != null ? strike.call() : this.strike?.copy(),
+        textColor:
+            textColor != null ? textColor.call() : this.textColor?.copy(),
         textShadow: textShadow != null ? textShadow.call() : this.textShadow,
-        topOffset: topOffset != null ? topOffset.call() : this.topOffset,
-        underline: underline != null ? underline.call() : this.underline,
+        topOffset:
+            topOffset != null ? topOffset.call() : this.topOffset?.copy(),
+        underline:
+            underline != null ? underline.call() : this.underline?.copy(),
       );
 
   static DivTextRange? fromJson(
@@ -1747,13 +1801,14 @@ class DivTextImage extends Preloadable with EquatableMixin {
   }) =>
       DivTextImage(
         accessibility: accessibility ?? this.accessibility,
-        alignmentVertical: alignmentVertical ?? this.alignmentVertical,
+        alignmentVertical: alignmentVertical ?? this.alignmentVertical.copy(),
         height: height ?? this.height,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        start: start ?? this.start,
-        tintColor: tintColor != null ? tintColor.call() : this.tintColor,
-        tintMode: tintMode ?? this.tintMode,
-        url: url ?? this.url,
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        start: start ?? this.start.copy(),
+        tintColor:
+            tintColor != null ? tintColor.call() : this.tintColor?.copy(),
+        tintMode: tintMode ?? this.tintMode.copy(),
+        url: url ?? this.url.copy(),
         width: width ?? this.width,
       );
 
@@ -1912,7 +1967,7 @@ class DivTextImageAccessibility extends Preloadable with EquatableMixin {
   }) =>
       DivTextImageAccessibility(
         description:
-            description != null ? description.call() : this.description,
+            description != null ? description.call() : this.description?.copy(),
         type: type ?? this.type,
       );
 
@@ -2129,7 +2184,7 @@ class DivTextEllipsis extends Preloadable with EquatableMixin {
         actions: actions != null ? actions.call() : this.actions,
         images: images != null ? images.call() : this.images,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        text: text ?? this.text,
+        text: text ?? this.text.copy(),
       );
 
   static DivTextEllipsis? fromJson(

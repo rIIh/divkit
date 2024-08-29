@@ -16,6 +16,7 @@ import 'package:divkit/src/schema/div_disappear_action.dart';
 import 'package:divkit/src/schema/div_edge_insets.dart';
 import 'package:divkit/src/schema/div_extension.dart';
 import 'package:divkit/src/schema/div_focus.dart';
+import 'package:divkit/src/schema/div_function.dart';
 import 'package:divkit/src/schema/div_layout_provider.dart';
 import 'package:divkit/src/schema/div_match_parent_size.dart';
 import 'package:divkit/src/schema/div_size.dart';
@@ -49,6 +50,7 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
     this.disappearActions,
     this.extensions,
     this.focus,
+    this.functions,
     this.height = const DivSize.divWrapContentSize(
       DivWrapContentSize(),
     ),
@@ -154,6 +156,10 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+  /// Custom functions.
+  @override
+  final List<DivFunction>? functions;
+
   /// Element height. For Android: if there is text in this or in a child element, specify height in `sp` to scale the element together with the text. To learn more about units of size measurement, see [Layout inside the card](https://divkit.tech/docs/en/concepts/layout).
   // default value: const DivSize.divWrapContentSize(DivWrapContentSize(),)
   @override
@@ -198,7 +204,7 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
   // default value: false
   final Expression<bool> restrictParentScroll;
 
-  /// Id for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md)
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
   @override
   final Expression<String>? reuseId;
 
@@ -289,6 +295,7 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
         disappearActions,
         extensions,
         focus,
+        functions,
         height,
         id,
         itemBuilder,
@@ -334,6 +341,7 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
     List<DivDisappearAction>? Function()? disappearActions,
     List<DivExtension>? Function()? extensions,
     DivFocus? Function()? focus,
+    List<DivFunction>? Function()? functions,
     DivSize? height,
     String? Function()? id,
     DivCollectionItemBuilder? Function()? itemBuilder,
@@ -366,44 +374,48 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
         columnCount:
-            columnCount != null ? columnCount.call() : this.columnCount,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+            columnCount != null ? columnCount.call() : this.columnCount?.copy(),
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         crossContentAlignment:
-            crossContentAlignment ?? this.crossContentAlignment,
-        crossSpacing:
-            crossSpacing != null ? crossSpacing.call() : this.crossSpacing,
-        defaultItem: defaultItem ?? this.defaultItem,
+            crossContentAlignment ?? this.crossContentAlignment.copy(),
+        crossSpacing: crossSpacing != null
+            ? crossSpacing.call()
+            : this.crossSpacing?.copy(),
+        defaultItem: defaultItem ?? this.defaultItem.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
+        functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
         itemBuilder:
             itemBuilder != null ? itemBuilder.call() : this.itemBuilder,
-        itemSpacing: itemSpacing ?? this.itemSpacing,
+        itemSpacing: itemSpacing ?? this.itemSpacing.copy(),
         items: items != null ? items.call() : this.items,
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        orientation: orientation ?? this.orientation,
+        orientation: orientation ?? this.orientation.copy(),
         paddings: paddings ?? this.paddings,
-        restrictParentScroll: restrictParentScroll ?? this.restrictParentScroll,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        scrollMode: scrollMode ?? this.scrollMode,
-        scrollbar: scrollbar ?? this.scrollbar,
+        restrictParentScroll:
+            restrictParentScroll ?? this.restrictParentScroll.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scrollMode: scrollMode ?? this.scrollMode.copy(),
+        scrollbar: scrollbar ?? this.scrollbar.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -423,7 +435,7 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -513,6 +525,14 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
         ),
         focus: safeParseObj(
           DivFocus.fromJson(json['focus']),
+        ),
+        functions: safeParseObj(
+          safeListMap(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
         ),
         height: safeParseObj(
           DivSize.fromJson(json['height']),
@@ -737,6 +757,14 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
         focus: await safeParseObjAsync(
           DivFocus.fromJson(json['focus']),
         ),
+        functions: await safeParseObjAsync(
+          await safeListMapAsync(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
+        ),
         height: (await safeParseObjAsync(
           DivSize.fromJson(json['height']),
           fallback: const DivSize.divWrapContentSize(
@@ -899,6 +927,7 @@ class DivGallery extends Preloadable with EquatableMixin implements DivBase {
       await safeFuturesWait(disappearActions, (v) => v.preload(context));
       await safeFuturesWait(extensions, (v) => v.preload(context));
       await focus?.preload(context);
+      await safeFuturesWait(functions, (v) => v.preload(context));
       await height.preload(context);
       await itemBuilder?.preload(context);
       await itemSpacing.preload(context);

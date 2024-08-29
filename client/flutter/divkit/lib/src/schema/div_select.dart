@@ -15,6 +15,7 @@ import 'package:divkit/src/schema/div_edge_insets.dart';
 import 'package:divkit/src/schema/div_extension.dart';
 import 'package:divkit/src/schema/div_focus.dart';
 import 'package:divkit/src/schema/div_font_weight.dart';
+import 'package:divkit/src/schema/div_function.dart';
 import 'package:divkit/src/schema/div_layout_provider.dart';
 import 'package:divkit/src/schema/div_match_parent_size.dart';
 import 'package:divkit/src/schema/div_size.dart';
@@ -49,6 +50,7 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
     this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
     this.fontWeight = const ValueExpression(DivFontWeight.regular),
     this.fontWeightValue,
+    this.functions,
     this.height = const DivSize.divWrapContentSize(
       DivWrapContentSize(),
     ),
@@ -154,6 +156,10 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
   // constraint: number > 0
   final Expression<int>? fontWeightValue;
 
+  /// Custom functions.
+  @override
+  final List<DivFunction>? functions;
+
   /// Element height. For Android: if there is text in this or in a child element, specify height in `sp` to scale the element together with the text. To learn more about units of size measurement, see [Layout inside the card](https://divkit.tech/docs/en/concepts/layout).
   // default value: const DivSize.divWrapContentSize(DivWrapContentSize(),)
   @override
@@ -192,7 +198,7 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivEdgeInsets paddings;
 
-  /// Id for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md)
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
   @override
   final Expression<String>? reuseId;
 
@@ -281,6 +287,7 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
         fontSizeUnit,
         fontWeight,
         fontWeightValue,
+        functions,
         height,
         hintColor,
         hintText,
@@ -327,6 +334,7 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
     Expression<DivSizeUnit>? fontSizeUnit,
     Expression<DivFontWeight>? fontWeight,
     Expression<int>? Function()? fontWeightValue,
+    List<DivFunction>? Function()? functions,
     DivSize? height,
     Expression<Color>? hintColor,
     Expression<String>? Function()? hintText,
@@ -359,45 +367,49 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
+        functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
-        hintColor: hintColor ?? this.hintColor,
-        hintText: hintText != null ? hintText.call() : this.hintText,
+        hintColor: hintColor ?? this.hintColor.copy(),
+        hintText: hintText != null ? hintText.call() : this.hintText?.copy(),
         id: id != null ? id.call() : this.id,
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+        letterSpacing: letterSpacing ?? this.letterSpacing.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         margins: margins ?? this.margins,
         options: options ?? this.options,
         paddings: paddings ?? this.paddings,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
-        textColor: textColor ?? this.textColor,
+        textColor: textColor ?? this.textColor.copy(),
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
         transitionChange: transitionChange != null
@@ -415,7 +427,7 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -510,6 +522,14 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
         )!,
         fontWeightValue: safeParseIntExpr(
           json['font_weight_value'],
+        ),
+        functions: safeParseObj(
+          safeListMap(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
         ),
         height: safeParseObj(
           DivSize.fromJson(json['height']),
@@ -734,6 +754,14 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
         fontWeightValue: await safeParseIntExprAsync(
           json['font_weight_value'],
         ),
+        functions: await safeParseObjAsync(
+          await safeListMapAsync(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
+        ),
         height: (await safeParseObjAsync(
           DivSize.fromJson(json['height']),
           fallback: const DivSize.divWrapContentSize(
@@ -892,6 +920,7 @@ class DivSelect extends Preloadable with EquatableMixin implements DivBase {
       await fontSizeUnit.preload(context);
       await fontWeight.preload(context);
       await fontWeightValue?.preload(context);
+      await safeFuturesWait(functions, (v) => v.preload(context));
       await height.preload(context);
       await hintColor.preload(context);
       await hintText?.preload(context);
@@ -947,8 +976,8 @@ class DivSelectOption extends Preloadable with EquatableMixin {
     Expression<String>? value,
   }) =>
       DivSelectOption(
-        text: text != null ? text.call() : this.text,
-        value: value ?? this.value,
+        text: text != null ? text.call() : this.text?.copy(),
+        value: value ?? this.value.copy(),
       );
 
   static DivSelectOption? fromJson(

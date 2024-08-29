@@ -13,9 +13,9 @@ class DivActionSetState extends Preloadable with EquatableMixin {
   static const type = "set_state";
 
   /// The path of the state inside `state` that needs to be activated. Set in `div_data_state_id/id/state_id` format. Can be hierarchical: `div_data_state_id/id_1/state_id_1/../id_n/state_id_n`. Consists of:
-  /// • `div_data_state_id` - `state_id` numeric value of the `state` object in data;
+  /// • `div_data_state_id` - `state_id` numeric value of the `state` object in `data`;
   /// • `id` - `id` value of the `state` object;
-  /// • `state_id` - `state_id` value of the state object in `state`.
+  /// • `state_id` - `state_id` value of the `state` object in `state`.
   final Expression<String> stateId;
 
   /// Indicates a state change:
@@ -35,8 +35,8 @@ class DivActionSetState extends Preloadable with EquatableMixin {
     Expression<bool>? temporary,
   }) =>
       DivActionSetState(
-        stateId: stateId ?? this.stateId,
-        temporary: temporary ?? this.temporary,
+        stateId: stateId ?? this.stateId.copy(),
+        temporary: temporary ?? this.temporary.copy(),
       );
 
   static DivActionSetState? fromJson(

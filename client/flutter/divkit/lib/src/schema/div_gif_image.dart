@@ -16,6 +16,7 @@ import 'package:divkit/src/schema/div_disappear_action.dart';
 import 'package:divkit/src/schema/div_edge_insets.dart';
 import 'package:divkit/src/schema/div_extension.dart';
 import 'package:divkit/src/schema/div_focus.dart';
+import 'package:divkit/src/schema/div_function.dart';
 import 'package:divkit/src/schema/div_image_scale.dart';
 import 'package:divkit/src/schema/div_layout_provider.dart';
 import 'package:divkit/src/schema/div_match_parent_size.dart';
@@ -67,6 +68,7 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
     this.doubletapActions,
     this.extensions,
     this.focus,
+    this.functions,
     required this.gifUrl,
     this.height = const DivSize.divWrapContentSize(
       DivWrapContentSize(),
@@ -171,6 +173,10 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+  /// Custom functions.
+  @override
+  final List<DivFunction>? functions;
+
   /// Direct URL to a GIF image.
   final Expression<Uri> gifUrl;
 
@@ -209,7 +215,7 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
   /// Image preview encoded in `base64`. It will be shown instead of `placeholder_color` before the image is loaded. Format `data url`: `data:[;base64],<data>`
   final Expression<String>? preview;
 
-  /// Id for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md)
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
   @override
   final Expression<String>? reuseId;
 
@@ -299,6 +305,7 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
         doubletapActions,
         extensions,
         focus,
+        functions,
         gifUrl,
         height,
         id,
@@ -346,6 +353,7 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
     List<DivAction>? Function()? doubletapActions,
     List<DivExtension>? Function()? extensions,
     DivFocus? Function()? focus,
+    List<DivFunction>? Function()? functions,
     Expression<Uri>? gifUrl,
     DivSize? height,
     String? Function()? id,
@@ -380,20 +388,21 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         aspect: aspect != null ? aspect.call() : this.aspect,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -402,7 +411,8 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
             : this.doubletapActions,
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
-        gifUrl: gifUrl ?? this.gifUrl,
+        functions: functions != null ? functions.call() : this.functions,
+        gifUrl: gifUrl ?? this.gifUrl.copy(),
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
         layoutProvider: layoutProvider != null
@@ -413,12 +423,12 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
             : this.longtapActions,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        placeholderColor: placeholderColor ?? this.placeholderColor,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        preview: preview != null ? preview.call() : this.preview,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        scale: scale ?? this.scale,
+        placeholderColor: placeholderColor ?? this.placeholderColor.copy(),
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        preview: preview != null ? preview.call() : this.preview?.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scale: scale ?? this.scale.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -438,7 +448,7 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -562,6 +572,14 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
         ),
         focus: safeParseObj(
           DivFocus.fromJson(json['focus']),
+        ),
+        functions: safeParseObj(
+          safeListMap(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
         ),
         gifUrl: safeParseUriExpr(json['gif_url'])!,
         height: safeParseObj(
@@ -811,6 +829,14 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
         focus: await safeParseObjAsync(
           DivFocus.fromJson(json['focus']),
         ),
+        functions: await safeParseObjAsync(
+          await safeListMapAsync(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
+        ),
         gifUrl: (await safeParseUriExprAsync(json['gif_url']))!,
         height: (await safeParseObjAsync(
           DivSize.fromJson(json['height']),
@@ -967,6 +993,7 @@ class DivGifImage extends Preloadable with EquatableMixin implements DivBase {
       await safeFuturesWait(doubletapActions, (v) => v.preload(context));
       await safeFuturesWait(extensions, (v) => v.preload(context));
       await focus?.preload(context);
+      await safeFuturesWait(functions, (v) => v.preload(context));
       await gifUrl.preload(context);
       await height.preload(context);
       await layoutProvider?.preload(context);

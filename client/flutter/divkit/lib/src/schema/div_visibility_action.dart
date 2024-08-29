@@ -17,6 +17,7 @@ class DivVisibilityAction extends Preloadable
     this.logLimit = const ValueExpression(1),
     this.payload,
     this.referer,
+    this.scopeId,
     this.typed,
     this.url,
     this.visibilityDuration = const ValueExpression(800),
@@ -48,6 +49,10 @@ class DivVisibilityAction extends Preloadable
   /// Referer URL for logging.
   @override
   final Expression<Uri>? referer;
+
+  /// Div identifier denotes the scope in which this action will be performed.
+  @override
+  final String? scopeId;
   @override
   final DivActionTyped? typed;
 
@@ -71,6 +76,7 @@ class DivVisibilityAction extends Preloadable
         logLimit,
         payload,
         referer,
+        scopeId,
         typed,
         url,
         visibilityDuration,
@@ -84,6 +90,7 @@ class DivVisibilityAction extends Preloadable
     Expression<int>? logLimit,
     Map<String, dynamic>? Function()? payload,
     Expression<Uri>? Function()? referer,
+    String? Function()? scopeId,
     DivActionTyped? Function()? typed,
     Expression<Uri>? Function()? url,
     Expression<int>? visibilityDuration,
@@ -93,15 +100,18 @@ class DivVisibilityAction extends Preloadable
         downloadCallbacks: downloadCallbacks != null
             ? downloadCallbacks.call()
             : this.downloadCallbacks,
-        isEnabled: isEnabled ?? this.isEnabled,
-        logId: logId ?? this.logId,
-        logLimit: logLimit ?? this.logLimit,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
+        logId: logId ?? this.logId.copy(),
+        logLimit: logLimit ?? this.logLimit.copy(),
         payload: payload != null ? payload.call() : this.payload,
-        referer: referer != null ? referer.call() : this.referer,
+        referer: referer != null ? referer.call() : this.referer?.copy(),
+        scopeId: scopeId != null ? scopeId.call() : this.scopeId,
         typed: typed != null ? typed.call() : this.typed,
-        url: url != null ? url.call() : this.url,
-        visibilityDuration: visibilityDuration ?? this.visibilityDuration,
-        visibilityPercentage: visibilityPercentage ?? this.visibilityPercentage,
+        url: url != null ? url.call() : this.url?.copy(),
+        visibilityDuration:
+            visibilityDuration ?? this.visibilityDuration.copy(),
+        visibilityPercentage:
+            visibilityPercentage ?? this.visibilityPercentage.copy(),
       );
 
   static DivVisibilityAction? fromJson(
@@ -130,6 +140,9 @@ class DivVisibilityAction extends Preloadable
           json['payload'],
         ),
         referer: safeParseUriExpr(json['referer']),
+        scopeId: safeParseStr(
+          json['scope_id']?.toString(),
+        ),
         typed: safeParseObj(
           DivActionTyped.fromJson(json['typed']),
         ),
@@ -174,6 +187,9 @@ class DivVisibilityAction extends Preloadable
           json['payload'],
         ),
         referer: await safeParseUriExprAsync(json['referer']),
+        scopeId: await safeParseStrAsync(
+          json['scope_id']?.toString(),
+        ),
         typed: await safeParseObjAsync(
           DivActionTyped.fromJson(json['typed']),
         ),

@@ -15,6 +15,7 @@ class DivAction extends Preloadable with EquatableMixin {
     this.menuItems,
     this.payload,
     this.referer,
+    this.scopeId,
     this.target,
     this.typed,
     this.url,
@@ -42,6 +43,9 @@ class DivAction extends Preloadable with EquatableMixin {
   /// Referer URL for logging.
   final Expression<Uri>? referer;
 
+  /// Div identifier denotes the scope in which this action will be performed.
+  final String? scopeId;
+
   /// The tab in which the URL must be opened.
   final Expression<DivActionTarget>? target;
   final DivActionTyped? typed;
@@ -58,6 +62,7 @@ class DivAction extends Preloadable with EquatableMixin {
         menuItems,
         payload,
         referer,
+        scopeId,
         target,
         typed,
         url,
@@ -71,6 +76,7 @@ class DivAction extends Preloadable with EquatableMixin {
     List<DivActionMenuItem>? Function()? menuItems,
     Map<String, dynamic>? Function()? payload,
     Expression<Uri>? Function()? referer,
+    String? Function()? scopeId,
     Expression<DivActionTarget>? Function()? target,
     DivActionTyped? Function()? typed,
     Expression<Uri>? Function()? url,
@@ -79,15 +85,16 @@ class DivAction extends Preloadable with EquatableMixin {
         downloadCallbacks: downloadCallbacks != null
             ? downloadCallbacks.call()
             : this.downloadCallbacks,
-        isEnabled: isEnabled ?? this.isEnabled,
-        logId: logId ?? this.logId,
-        logUrl: logUrl != null ? logUrl.call() : this.logUrl,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
+        logId: logId ?? this.logId.copy(),
+        logUrl: logUrl != null ? logUrl.call() : this.logUrl?.copy(),
         menuItems: menuItems != null ? menuItems.call() : this.menuItems,
         payload: payload != null ? payload.call() : this.payload,
-        referer: referer != null ? referer.call() : this.referer,
-        target: target != null ? target.call() : this.target,
+        referer: referer != null ? referer.call() : this.referer?.copy(),
+        scopeId: scopeId != null ? scopeId.call() : this.scopeId,
+        target: target != null ? target.call() : this.target?.copy(),
         typed: typed != null ? typed.call() : this.typed,
-        url: url != null ? url.call() : this.url,
+        url: url != null ? url.call() : this.url?.copy(),
       );
 
   static DivAction? fromJson(
@@ -121,6 +128,9 @@ class DivAction extends Preloadable with EquatableMixin {
           json['payload'],
         ),
         referer: safeParseUriExpr(json['referer']),
+        scopeId: safeParseStr(
+          json['scope_id']?.toString(),
+        ),
         target: safeParseStrEnumExpr(
           json['target'],
           parse: DivActionTarget.fromJson,
@@ -166,6 +176,9 @@ class DivAction extends Preloadable with EquatableMixin {
           json['payload'],
         ),
         referer: await safeParseUriExprAsync(json['referer']),
+        scopeId: await safeParseStrAsync(
+          json['scope_id']?.toString(),
+        ),
         target: await safeParseStrEnumExprAsync(
           json['target'],
           parse: DivActionTarget.fromJson,
@@ -231,7 +244,7 @@ class DivActionMenuItem extends Preloadable with EquatableMixin {
       DivActionMenuItem(
         action: action != null ? action.call() : this.action,
         actions: actions != null ? actions.call() : this.actions,
-        text: text ?? this.text,
+        text: text ?? this.text.copy(),
       );
 
   static DivActionMenuItem? fromJson(

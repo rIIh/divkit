@@ -18,6 +18,7 @@ import 'package:divkit/src/schema/div_extension.dart';
 import 'package:divkit/src/schema/div_fixed_size.dart';
 import 'package:divkit/src/schema/div_focus.dart';
 import 'package:divkit/src/schema/div_font_weight.dart';
+import 'package:divkit/src/schema/div_function.dart';
 import 'package:divkit/src/schema/div_layout_provider.dart';
 import 'package:divkit/src/schema/div_match_parent_size.dart';
 import 'package:divkit/src/schema/div_size.dart';
@@ -48,6 +49,7 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
     this.dynamicHeight = const ValueExpression(false),
     this.extensions,
     this.focus,
+    this.functions,
     this.hasSeparator = const ValueExpression(false),
     this.height = const DivSize.divWrapContentSize(
       DivWrapContentSize(),
@@ -162,6 +164,10 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+  /// Custom functions.
+  @override
+  final List<DivFunction>? functions;
+
   /// A separating line between tabs and contents.
   // default value: false
   final Expression<bool> hasSeparator;
@@ -200,7 +206,7 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
   // default value: false
   final Expression<bool> restrictParentScroll;
 
-  /// Id for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md)
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
   @override
   final Expression<String>? reuseId;
 
@@ -304,6 +310,7 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
         dynamicHeight,
         extensions,
         focus,
+        functions,
         hasSeparator,
         height,
         id,
@@ -349,6 +356,7 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
     Expression<bool>? dynamicHeight,
     List<DivExtension>? Function()? extensions,
     DivFocus? Function()? focus,
+    List<DivFunction>? Function()? functions,
     Expression<bool>? hasSeparator,
     DivSize? height,
     String? Function()? id,
@@ -384,22 +392,24 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
-        dynamicHeight: dynamicHeight ?? this.dynamicHeight,
+        dynamicHeight: dynamicHeight ?? this.dynamicHeight.copy(),
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
-        hasSeparator: hasSeparator ?? this.hasSeparator,
+        functions: functions != null ? functions.call() : this.functions,
+        hasSeparator: hasSeparator ?? this.hasSeparator.copy(),
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
         items: items ?? this.items,
@@ -408,17 +418,18 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
             : this.layoutProvider,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        restrictParentScroll: restrictParentScroll ?? this.restrictParentScroll,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        restrictParentScroll:
+            restrictParentScroll ?? this.restrictParentScroll.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
-        selectedTab: selectedTab ?? this.selectedTab,
-        separatorColor: separatorColor ?? this.separatorColor,
+        selectedTab: selectedTab ?? this.selectedTab.copy(),
+        separatorColor: separatorColor ?? this.separatorColor.copy(),
         separatorPaddings: separatorPaddings ?? this.separatorPaddings,
         switchTabsByContentSwipeEnabled: switchTabsByContentSwipeEnabled ??
-            this.switchTabsByContentSwipeEnabled,
+            this.switchTabsByContentSwipeEnabled.copy(),
         tabTitleDelimiter: tabTitleDelimiter != null
             ? tabTitleDelimiter.call()
             : this.tabTitleDelimiter,
@@ -440,7 +451,7 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -519,6 +530,14 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
         ),
         focus: safeParseObj(
           DivFocus.fromJson(json['focus']),
+        ),
+        functions: safeParseObj(
+          safeListMap(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
         ),
         hasSeparator: safeParseBoolExpr(
           json['has_separator'],
@@ -767,6 +786,14 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
         focus: await safeParseObjAsync(
           DivFocus.fromJson(json['focus']),
         ),
+        functions: await safeParseObjAsync(
+          await safeListMapAsync(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
+        ),
         hasSeparator: (await safeParseBoolExprAsync(
           json['has_separator'],
           fallback: false,
@@ -961,6 +988,7 @@ class DivTabs extends Preloadable with EquatableMixin implements DivBase {
       await dynamicHeight.preload(context);
       await safeFuturesWait(extensions, (v) => v.preload(context));
       await focus?.preload(context);
+      await safeFuturesWait(functions, (v) => v.preload(context));
       await hasSeparator.preload(context);
       await height.preload(context);
       await safeFuturesWait(items, (v) => v.preload(context));
@@ -1146,31 +1174,34 @@ class DivTabsTabTitleStyle extends Preloadable with EquatableMixin {
   }) =>
       DivTabsTabTitleStyle(
         activeBackgroundColor:
-            activeBackgroundColor ?? this.activeBackgroundColor,
+            activeBackgroundColor ?? this.activeBackgroundColor.copy(),
         activeFontWeight: activeFontWeight != null
             ? activeFontWeight.call()
-            : this.activeFontWeight,
-        activeTextColor: activeTextColor ?? this.activeTextColor,
-        animationDuration: animationDuration ?? this.animationDuration,
-        animationType: animationType ?? this.animationType,
-        cornerRadius:
-            cornerRadius != null ? cornerRadius.call() : this.cornerRadius,
+            : this.activeFontWeight?.copy(),
+        activeTextColor: activeTextColor ?? this.activeTextColor.copy(),
+        animationDuration: animationDuration ?? this.animationDuration.copy(),
+        animationType: animationType ?? this.animationType.copy(),
+        cornerRadius: cornerRadius != null
+            ? cornerRadius.call()
+            : this.cornerRadius?.copy(),
         cornersRadius:
             cornersRadius != null ? cornersRadius.call() : this.cornersRadius,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         inactiveBackgroundColor: inactiveBackgroundColor != null
             ? inactiveBackgroundColor.call()
-            : this.inactiveBackgroundColor,
+            : this.inactiveBackgroundColor?.copy(),
         inactiveFontWeight: inactiveFontWeight != null
             ? inactiveFontWeight.call()
-            : this.inactiveFontWeight,
-        inactiveTextColor: inactiveTextColor ?? this.inactiveTextColor,
-        itemSpacing: itemSpacing ?? this.itemSpacing,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+            : this.inactiveFontWeight?.copy(),
+        inactiveTextColor: inactiveTextColor ?? this.inactiveTextColor.copy(),
+        itemSpacing: itemSpacing ?? this.itemSpacing.copy(),
+        letterSpacing: letterSpacing ?? this.letterSpacing.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         paddings: paddings ?? this.paddings,
       );
 
@@ -1529,7 +1560,7 @@ class DivTabsTabTitleDelimiter extends Preloadable with EquatableMixin {
   }) =>
       DivTabsTabTitleDelimiter(
         height: height ?? this.height,
-        imageUrl: imageUrl ?? this.imageUrl,
+        imageUrl: imageUrl ?? this.imageUrl.copy(),
         width: width ?? this.width,
       );
 
@@ -1640,7 +1671,7 @@ class DivTabsItem extends Preloadable with EquatableMixin {
   }) =>
       DivTabsItem(
         div: div ?? this.div,
-        title: title ?? this.title,
+        title: title ?? this.title.copy(),
         titleClickAction: titleClickAction != null
             ? titleClickAction.call()
             : this.titleClickAction,

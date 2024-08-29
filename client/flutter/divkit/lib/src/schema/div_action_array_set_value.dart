@@ -4,7 +4,7 @@ import 'package:divkit/src/schema/div_typed_value.dart';
 import 'package:divkit/src/utils/parsing_utils.dart';
 import 'package:equatable/equatable.dart';
 
-/// Sets value in the array
+/// Sets value in the array.
 class DivActionArraySetValue extends Preloadable with EquatableMixin {
   const DivActionArraySetValue({
     required this.index,
@@ -30,9 +30,9 @@ class DivActionArraySetValue extends Preloadable with EquatableMixin {
     Expression<String>? variableName,
   }) =>
       DivActionArraySetValue(
-        index: index ?? this.index,
+        index: index ?? this.index.copy(),
         value: value ?? this.value,
-        variableName: variableName ?? this.variableName,
+        variableName: variableName ?? this.variableName.copy(),
       );
 
   static DivActionArraySetValue? fromJson(

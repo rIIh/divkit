@@ -14,7 +14,7 @@ class DivActionTimer extends Preloadable with EquatableMixin {
 
   /// Defines timer action:
   /// • `start`- starts the timer when stopped, does onStart action;
-  /// • `stop`- stops timer, resets the time, does onEnd action;
+  /// • `stop`- stops timer, resets the time, does `onEnd` action;
   /// • `pause`- pause timer, preserves current time;
   /// • `resume`- starts timer from paused state, restores saved time;
   /// • `cancel`- stops timer, resets its state, does onInterrupt action;
@@ -35,8 +35,8 @@ class DivActionTimer extends Preloadable with EquatableMixin {
     Expression<String>? id,
   }) =>
       DivActionTimer(
-        action: action ?? this.action,
-        id: id ?? this.id,
+        action: action ?? this.action.copy(),
+        id: id ?? this.id.copy(),
       );
 
   static DivActionTimer? fromJson(

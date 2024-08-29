@@ -29,8 +29,9 @@ class DivTextRangeBorder extends Preloadable with EquatableMixin {
     DivStroke? Function()? stroke,
   }) =>
       DivTextRangeBorder(
-        cornerRadius:
-            cornerRadius != null ? cornerRadius.call() : this.cornerRadius,
+        cornerRadius: cornerRadius != null
+            ? cornerRadius.call()
+            : this.cornerRadius?.copy(),
         stroke: stroke != null ? stroke.call() : this.stroke,
       );
 

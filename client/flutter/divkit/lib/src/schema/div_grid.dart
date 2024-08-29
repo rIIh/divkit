@@ -16,6 +16,7 @@ import 'package:divkit/src/schema/div_disappear_action.dart';
 import 'package:divkit/src/schema/div_edge_insets.dart';
 import 'package:divkit/src/schema/div_extension.dart';
 import 'package:divkit/src/schema/div_focus.dart';
+import 'package:divkit/src/schema/div_function.dart';
 import 'package:divkit/src/schema/div_layout_provider.dart';
 import 'package:divkit/src/schema/div_match_parent_size.dart';
 import 'package:divkit/src/schema/div_size.dart';
@@ -66,6 +67,7 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
     this.doubletapActions,
     this.extensions,
     this.focus,
+    this.functions,
     this.height = const DivSize.divWrapContentSize(
       DivWrapContentSize(),
     ),
@@ -167,6 +169,10 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
+  /// Custom functions.
+  @override
+  final List<DivFunction>? functions;
+
   /// Element height. For Android: if there is text in this or in a child element, specify height in `sp` to scale the element together with the text. To learn more about units of size measurement, see [Layout inside the card](https://divkit.tech/docs/en/concepts/layout).
   // default value: const DivSize.divWrapContentSize(DivWrapContentSize(),)
   @override
@@ -194,7 +200,7 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivEdgeInsets paddings;
 
-  /// Id for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md)
+  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
   @override
   final Expression<String>? reuseId;
 
@@ -278,6 +284,7 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
         doubletapActions,
         extensions,
         focus,
+        functions,
         height,
         id,
         items,
@@ -321,6 +328,7 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
     List<DivAction>? Function()? doubletapActions,
     List<DivExtension>? Function()? extensions,
     DivFocus? Function()? focus,
+    List<DivFunction>? Function()? functions,
     DivSize? height,
     String? Function()? id,
     List<Div>? Function()? items,
@@ -351,20 +359,21 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnCount: columnCount ?? this.columnCount,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        columnCount: columnCount ?? this.columnCount.copy(),
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -373,6 +382,7 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
             : this.doubletapActions,
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
+        functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
         items: items != null ? items.call() : this.items,
@@ -384,8 +394,8 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
             : this.longtapActions,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -405,7 +415,7 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -529,6 +539,14 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
         ),
         focus: safeParseObj(
           DivFocus.fromJson(json['focus']),
+        ),
+        functions: safeParseObj(
+          safeListMap(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
         ),
         height: safeParseObj(
           DivSize.fromJson(json['height']),
@@ -769,6 +787,14 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
         focus: await safeParseObjAsync(
           DivFocus.fromJson(json['focus']),
         ),
+        functions: await safeParseObjAsync(
+          await safeListMapAsync(
+            json['functions'],
+            (v) => safeParseObj(
+              DivFunction.fromJson(v),
+            )!,
+          ),
+        ),
         height: (await safeParseObjAsync(
           DivSize.fromJson(json['height']),
           fallback: const DivSize.divWrapContentSize(
@@ -916,6 +942,7 @@ class DivGrid extends Preloadable with EquatableMixin implements DivBase {
       await safeFuturesWait(doubletapActions, (v) => v.preload(context));
       await safeFuturesWait(extensions, (v) => v.preload(context));
       await focus?.preload(context);
+      await safeFuturesWait(functions, (v) => v.preload(context));
       await height.preload(context);
       await safeFuturesWait(items, (v) => v.preload(context));
       await layoutProvider?.preload(context);

@@ -23,7 +23,7 @@ class DivRadialGradientRelativeCenter extends Preloadable with EquatableMixin {
     Expression<double>? value,
   }) =>
       DivRadialGradientRelativeCenter(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static DivRadialGradientRelativeCenter? fromJson(

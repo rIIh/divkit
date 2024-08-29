@@ -20,7 +20,7 @@ class StringValue extends Preloadable with EquatableMixin {
     Expression<String>? value,
   }) =>
       StringValue(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static StringValue? fromJson(
