@@ -27,8 +27,8 @@ class DivPivotFixed extends Preloadable with EquatableMixin {
     Expression<int>? Function()? value,
   }) =>
       DivPivotFixed(
-        unit: unit ?? this.unit,
-        value: value != null ? value.call() : this.value,
+        unit: unit ?? this.unit.copy(),
+        value: value != null ? value.call() : this.value?.copy(),
       );
 
   static DivPivotFixed? fromJson(

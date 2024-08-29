@@ -32,9 +32,9 @@ class DivActionDictSetValue extends Preloadable with EquatableMixin {
     Expression<String>? variableName,
   }) =>
       DivActionDictSetValue(
-        key: key ?? this.key,
+        key: key ?? this.key.copy(),
         value: value != null ? value.call() : this.value,
-        variableName: variableName ?? this.variableName,
+        variableName: variableName ?? this.variableName.copy(),
       );
 
   static DivActionDictSetValue? fromJson(

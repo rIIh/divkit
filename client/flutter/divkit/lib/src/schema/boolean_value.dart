@@ -21,7 +21,7 @@ class BooleanValue extends Preloadable with EquatableMixin {
     Expression<bool>? value,
   }) =>
       BooleanValue(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static BooleanValue? fromJson(

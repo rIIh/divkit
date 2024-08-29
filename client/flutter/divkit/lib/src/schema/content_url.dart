@@ -21,7 +21,7 @@ class ContentUrl extends Preloadable with EquatableMixin {
     Expression<Uri>? value,
   }) =>
       ContentUrl(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static ContentUrl? fromJson(

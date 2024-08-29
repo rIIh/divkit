@@ -21,7 +21,7 @@ class ArrayValue extends Preloadable with EquatableMixin {
     Expression<List<dynamic>>? value,
   }) =>
       ArrayValue(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static ArrayValue? fromJson(

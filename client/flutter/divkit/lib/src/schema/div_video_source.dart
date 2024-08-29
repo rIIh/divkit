@@ -36,10 +36,10 @@ class DivVideoSource extends Preloadable with EquatableMixin {
     Expression<Uri>? url,
   }) =>
       DivVideoSource(
-        bitrate: bitrate != null ? bitrate.call() : this.bitrate,
-        mimeType: mimeType ?? this.mimeType,
+        bitrate: bitrate != null ? bitrate.call() : this.bitrate?.copy(),
+        mimeType: mimeType ?? this.mimeType.copy(),
         resolution: resolution != null ? resolution.call() : this.resolution,
-        url: url ?? this.url,
+        url: url ?? this.url.copy(),
       );
 
   static DivVideoSource? fromJson(
@@ -128,8 +128,8 @@ class DivVideoSourceResolution extends Preloadable with EquatableMixin {
     Expression<int>? width,
   }) =>
       DivVideoSourceResolution(
-        height: height ?? this.height,
-        width: width ?? this.width,
+        height: height ?? this.height.copy(),
+        width: width ?? this.width.copy(),
       );
 
   static DivVideoSourceResolution? fromJson(

@@ -32,9 +32,9 @@ class DivActionArraySetValue extends Preloadable with EquatableMixin {
     Expression<String>? variableName,
   }) =>
       DivActionArraySetValue(
-        index: index ?? this.index,
+        index: index ?? this.index.copy(),
         value: value ?? this.value,
-        variableName: variableName ?? this.variableName,
+        variableName: variableName ?? this.variableName.copy(),
       );
 
   static DivActionArraySetValue? fromJson(

@@ -54,12 +54,12 @@ class DivScaleTransition extends Preloadable
     Expression<int>? startDelay,
   }) =>
       DivScaleTransition(
-        duration: duration ?? this.duration,
-        interpolator: interpolator ?? this.interpolator,
-        pivotX: pivotX ?? this.pivotX,
-        pivotY: pivotY ?? this.pivotY,
-        scale: scale ?? this.scale,
-        startDelay: startDelay ?? this.startDelay,
+        duration: duration ?? this.duration.copy(),
+        interpolator: interpolator ?? this.interpolator.copy(),
+        pivotX: pivotX ?? this.pivotX.copy(),
+        pivotY: pivotY ?? this.pivotY.copy(),
+        scale: scale ?? this.scale.copy(),
+        startDelay: startDelay ?? this.startDelay.copy(),
       );
 
   static DivScaleTransition? fromJson(

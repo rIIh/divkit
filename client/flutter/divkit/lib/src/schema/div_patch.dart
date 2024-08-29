@@ -38,7 +38,7 @@ class DivPatch extends Preloadable with EquatableMixin {
   }) =>
       DivPatch(
         changes: changes ?? this.changes,
-        mode: mode ?? this.mode,
+        mode: mode ?? this.mode.copy(),
         onAppliedActions: onAppliedActions != null
             ? onAppliedActions.call()
             : this.onAppliedActions,

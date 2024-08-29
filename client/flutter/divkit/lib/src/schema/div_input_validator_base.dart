@@ -30,8 +30,8 @@ class DivInputValidatorBase extends Preloadable with EquatableMixin {
     String? Function()? variable,
   }) =>
       DivInputValidatorBase(
-        allowEmpty: allowEmpty ?? this.allowEmpty,
-        labelId: labelId != null ? labelId.call() : this.labelId,
+        allowEmpty: allowEmpty ?? this.allowEmpty.copy(),
+        labelId: labelId != null ? labelId.call() : this.labelId?.copy(),
         variable: variable != null ? variable.call() : this.variable,
       );
 

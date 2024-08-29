@@ -21,7 +21,7 @@ class ContentText extends Preloadable with EquatableMixin {
     Expression<String>? value,
   }) =>
       ContentText(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static ContentText? fromJson(

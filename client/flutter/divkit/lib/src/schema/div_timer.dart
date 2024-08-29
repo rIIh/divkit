@@ -46,13 +46,14 @@ class DivTimer extends Preloadable with EquatableMixin {
     String? Function()? valueVariable,
   }) =>
       DivTimer(
-        duration: duration ?? this.duration,
+        duration: duration ?? this.duration.copy(),
         endActions: endActions != null ? endActions.call() : this.endActions,
         id: id ?? this.id,
         tickActions:
             tickActions != null ? tickActions.call() : this.tickActions,
-        tickInterval:
-            tickInterval != null ? tickInterval.call() : this.tickInterval,
+        tickInterval: tickInterval != null
+            ? tickInterval.call()
+            : this.tickInterval?.copy(),
         valueVariable:
             valueVariable != null ? valueVariable.call() : this.valueVariable,
       );

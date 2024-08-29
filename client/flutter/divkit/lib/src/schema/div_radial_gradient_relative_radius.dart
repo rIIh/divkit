@@ -21,7 +21,7 @@ class DivRadialGradientRelativeRadius extends Preloadable with EquatableMixin {
     Expression<DivRadialGradientRelativeRadiusValue>? value,
   }) =>
       DivRadialGradientRelativeRadius(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static DivRadialGradientRelativeRadius? fromJson(
