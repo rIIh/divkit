@@ -23,6 +23,7 @@ import 'package:divkit/src/schema/div_match_parent_size.dart';
 import 'package:divkit/src/schema/div_shadow.dart';
 import 'package:divkit/src/schema/div_size.dart';
 import 'package:divkit/src/schema/div_size_unit.dart';
+import 'package:divkit/src/schema/div_text_alignment_vertical.dart';
 import 'package:divkit/src/schema/div_text_gradient.dart';
 import 'package:divkit/src/schema/div_text_range_background.dart';
 import 'package:divkit/src/schema/div_text_range_border.dart';
@@ -405,16 +406,18 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
-        autoEllipsize:
-            autoEllipsize != null ? autoEllipsize.call() : this.autoEllipsize,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
+        autoEllipsize: autoEllipsize != null
+            ? autoEllipsize.call()
+            : this.autoEllipsize?.copy(),
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -426,48 +429,50 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         focus: focus != null ? focus.call() : this.focus,
         focusedTextColor: focusedTextColor != null
             ? focusedTextColor.call()
-            : this.focusedTextColor,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
+            : this.focusedTextColor?.copy(),
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
         fontFeatureSettings: fontFeatureSettings != null
             ? fontFeatureSettings.call()
-            : this.fontFeatureSettings,
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+            : this.fontFeatureSettings?.copy(),
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
         images: images != null ? images.call() : this.images,
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+        letterSpacing: letterSpacing ?? this.letterSpacing.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         longtapActions: longtapActions != null
             ? longtapActions.call()
             : this.longtapActions,
         margins: margins ?? this.margins,
-        maxLines: maxLines != null ? maxLines.call() : this.maxLines,
+        maxLines: maxLines != null ? maxLines.call() : this.maxLines?.copy(),
         minHiddenLines: minHiddenLines != null
             ? minHiddenLines.call()
-            : this.minHiddenLines,
+            : this.minHiddenLines?.copy(),
         paddings: paddings ?? this.paddings,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        selectable: selectable ?? this.selectable,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        selectable: selectable ?? this.selectable.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
-        strike: strike ?? this.strike,
-        text: text ?? this.text,
+        strike: strike ?? this.strike.copy(),
+        text: text ?? this.text.copy(),
         textAlignmentHorizontal:
-            textAlignmentHorizontal ?? this.textAlignmentHorizontal,
+            textAlignmentHorizontal ?? this.textAlignmentHorizontal.copy(),
         textAlignmentVertical:
-            textAlignmentVertical ?? this.textAlignmentVertical,
-        textColor: textColor ?? this.textColor,
+            textAlignmentVertical ?? this.textAlignmentVertical.copy(),
+        textColor: textColor ?? this.textColor.copy(),
         textGradient:
             textGradient != null ? textGradient.call() : this.textGradient,
         textShadow: textShadow != null ? textShadow.call() : this.textShadow,
@@ -483,13 +488,13 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         transitionTriggers: transitionTriggers != null
             ? transitionTriggers.call()
             : this.transitionTriggers,
-        truncate: truncate ?? this.truncate,
-        underline: underline ?? this.underline,
+        truncate: truncate ?? this.truncate.copy(),
+        underline: underline ?? this.underline.copy(),
         variableTriggers: variableTriggers != null
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -1198,6 +1203,8 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
 class DivTextRange extends Preloadable with EquatableMixin {
   const DivTextRange({
     this.actions,
+    this.alignmentVertical =
+        const ValueExpression(DivTextAlignmentVertical.baseline),
     this.background,
     this.border,
     required this.end,
@@ -1218,6 +1225,8 @@ class DivTextRange extends Preloadable with EquatableMixin {
   });
 
   final List<DivAction>? actions;
+  // default value: DivTextAlignmentVertical.baseline
+  final Expression<DivTextAlignmentVertical> alignmentVertical;
 
   final DivTextRangeBackground? background;
 
@@ -1256,6 +1265,7 @@ class DivTextRange extends Preloadable with EquatableMixin {
   @override
   List<Object?> get props => [
         actions,
+        alignmentVertical,
         background,
         border,
         end,
@@ -1277,6 +1287,7 @@ class DivTextRange extends Preloadable with EquatableMixin {
 
   DivTextRange copyWith({
     List<DivAction>? Function()? actions,
+    Expression<DivTextAlignmentVertical>? alignmentVertical,
     DivTextRangeBackground? Function()? background,
     DivTextRangeBorder? Function()? border,
     Expression<int>? end,
@@ -1297,28 +1308,36 @@ class DivTextRange extends Preloadable with EquatableMixin {
   }) =>
       DivTextRange(
         actions: actions != null ? actions.call() : this.actions,
+        alignmentVertical: alignmentVertical ?? this.alignmentVertical.copy(),
         background: background != null ? background.call() : this.background,
         border: border != null ? border.call() : this.border,
-        end: end ?? this.end,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
+        end: end ?? this.end.copy(),
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
         fontFeatureSettings: fontFeatureSettings != null
             ? fontFeatureSettings.call()
-            : this.fontFeatureSettings,
-        fontSize: fontSize != null ? fontSize.call() : this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight != null ? fontWeight.call() : this.fontWeight,
+            : this.fontFeatureSettings?.copy(),
+        fontSize: fontSize != null ? fontSize.call() : this.fontSize?.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight:
+            fontWeight != null ? fontWeight.call() : this.fontWeight?.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
-        letterSpacing:
-            letterSpacing != null ? letterSpacing.call() : this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
-        start: start ?? this.start,
-        strike: strike != null ? strike.call() : this.strike,
-        textColor: textColor != null ? textColor.call() : this.textColor,
+            : this.fontWeightValue?.copy(),
+        letterSpacing: letterSpacing != null
+            ? letterSpacing.call()
+            : this.letterSpacing?.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
+        start: start ?? this.start.copy(),
+        strike: strike != null ? strike.call() : this.strike?.copy(),
+        textColor:
+            textColor != null ? textColor.call() : this.textColor?.copy(),
         textShadow: textShadow != null ? textShadow.call() : this.textShadow,
-        topOffset: topOffset != null ? topOffset.call() : this.topOffset,
-        underline: underline != null ? underline.call() : this.underline,
+        topOffset:
+            topOffset != null ? topOffset.call() : this.topOffset?.copy(),
+        underline:
+            underline != null ? underline.call() : this.underline?.copy(),
       );
 
   static DivTextRange? fromJson(
@@ -1337,6 +1356,11 @@ class DivTextRange extends Preloadable with EquatableMixin {
             )!,
           ),
         ),
+        alignmentVertical: safeParseStrEnumExpr(
+          json['alignment_vertical'],
+          parse: DivTextAlignmentVertical.fromJson,
+          fallback: DivTextAlignmentVertical.baseline,
+        )!,
         background: safeParseObj(
           DivTextRangeBackground.fromJson(json['background']),
         ),
@@ -1415,6 +1439,11 @@ class DivTextRange extends Preloadable with EquatableMixin {
             )!,
           ),
         ),
+        alignmentVertical: (await safeParseStrEnumExprAsync(
+          json['alignment_vertical'],
+          parse: DivTextAlignmentVertical.fromJson,
+          fallback: DivTextAlignmentVertical.baseline,
+        ))!,
         background: await safeParseObjAsync(
           DivTextRangeBackground.fromJson(json['background']),
         ),
@@ -1483,6 +1512,7 @@ class DivTextRange extends Preloadable with EquatableMixin {
   ) async {
     try {
       await safeFuturesWait(actions, (v) => v.preload(context));
+      await alignmentVertical.preload(context);
       await background?.preload(context);
       await border?.preload(context);
       await end.preload(context);
@@ -1508,6 +1538,9 @@ class DivTextRange extends Preloadable with EquatableMixin {
 
 class DivTextImage extends Preloadable with EquatableMixin {
   const DivTextImage({
+    this.accessibility = const DivTextImageAccessibility(),
+    this.alignmentVertical =
+        const ValueExpression(DivTextAlignmentVertical.baseline),
     this.height = const DivFixedSize(
       value: ValueExpression(
         20,
@@ -1525,6 +1558,9 @@ class DivTextImage extends Preloadable with EquatableMixin {
     ),
   });
 
+  final DivTextImageAccessibility accessibility;
+  // default value: DivTextAlignmentVertical.baseline
+  final Expression<DivTextAlignmentVertical> alignmentVertical;
   // default value: const DivFixedSize(value: ValueExpression(20,),)
   final DivFixedSize height;
   // default value: false
@@ -1542,6 +1578,8 @@ class DivTextImage extends Preloadable with EquatableMixin {
 
   @override
   List<Object?> get props => [
+        accessibility,
+        alignmentVertical,
         height,
         preloadRequired,
         start,
@@ -1552,6 +1590,8 @@ class DivTextImage extends Preloadable with EquatableMixin {
       ];
 
   DivTextImage copyWith({
+    DivTextImageAccessibility? accessibility,
+    Expression<DivTextAlignmentVertical>? alignmentVertical,
     DivFixedSize? height,
     Expression<bool>? preloadRequired,
     Expression<int>? start,
@@ -1561,12 +1601,15 @@ class DivTextImage extends Preloadable with EquatableMixin {
     DivFixedSize? width,
   }) =>
       DivTextImage(
+        accessibility: accessibility ?? this.accessibility,
+        alignmentVertical: alignmentVertical ?? this.alignmentVertical.copy(),
         height: height ?? this.height,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        start: start ?? this.start,
-        tintColor: tintColor != null ? tintColor.call() : this.tintColor,
-        tintMode: tintMode ?? this.tintMode,
-        url: url ?? this.url,
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        start: start ?? this.start.copy(),
+        tintColor:
+            tintColor != null ? tintColor.call() : this.tintColor?.copy(),
+        tintMode: tintMode ?? this.tintMode.copy(),
+        url: url ?? this.url.copy(),
         width: width ?? this.width,
       );
 
@@ -1578,6 +1621,15 @@ class DivTextImage extends Preloadable with EquatableMixin {
     }
     try {
       return DivTextImage(
+        accessibility: safeParseObj(
+          DivTextImageAccessibility.fromJson(json['accessibility']),
+          fallback: const DivTextImageAccessibility(),
+        )!,
+        alignmentVertical: safeParseStrEnumExpr(
+          json['alignment_vertical'],
+          parse: DivTextAlignmentVertical.fromJson,
+          fallback: DivTextAlignmentVertical.baseline,
+        )!,
         height: safeParseObj(
           DivFixedSize.fromJson(json['height']),
           fallback: const DivFixedSize(
@@ -1624,6 +1676,15 @@ class DivTextImage extends Preloadable with EquatableMixin {
     }
     try {
       return DivTextImage(
+        accessibility: (await safeParseObjAsync(
+          DivTextImageAccessibility.fromJson(json['accessibility']),
+          fallback: const DivTextImageAccessibility(),
+        ))!,
+        alignmentVertical: (await safeParseStrEnumExprAsync(
+          json['alignment_vertical'],
+          parse: DivTextAlignmentVertical.fromJson,
+          fallback: DivTextAlignmentVertical.baseline,
+        ))!,
         height: (await safeParseObjAsync(
           DivFixedSize.fromJson(json['height']),
           fallback: const DivFixedSize(
@@ -1667,6 +1728,8 @@ class DivTextImage extends Preloadable with EquatableMixin {
     Map<String, dynamic> context,
   ) async {
     try {
+      await accessibility.preload(context);
+      await alignmentVertical.preload(context);
       await height.preload(context);
       await preloadRequired.preload(context);
       await start.preload(context);
@@ -1676,6 +1739,197 @@ class DivTextImage extends Preloadable with EquatableMixin {
       await width.preload(context);
     } catch (e) {
       return;
+    }
+  }
+}
+
+class DivTextImageAccessibility extends Preloadable with EquatableMixin {
+  const DivTextImageAccessibility({
+    this.description,
+    this.type = DivTextImageAccessibilityType.auto,
+  });
+
+  final Expression<String>? description;
+  // default value: DivTextImageAccessibilityType.auto
+  final DivTextImageAccessibilityType type;
+
+  @override
+  List<Object?> get props => [
+        description,
+        type,
+      ];
+
+  DivTextImageAccessibility copyWith({
+    Expression<String>? Function()? description,
+    DivTextImageAccessibilityType? type,
+  }) =>
+      DivTextImageAccessibility(
+        description:
+            description != null ? description.call() : this.description?.copy(),
+        type: type ?? this.type,
+      );
+
+  static DivTextImageAccessibility? fromJson(
+    Map<String, dynamic>? json,
+  ) {
+    if (json == null) {
+      return null;
+    }
+    try {
+      return DivTextImageAccessibility(
+        description: safeParseStrExpr(
+          json['description']?.toString(),
+        ),
+        type: safeParseStrEnum(
+          json['type'],
+          parse: DivTextImageAccessibilityType.fromJson,
+          fallback: DivTextImageAccessibilityType.auto,
+        )!,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<DivTextImageAccessibility?> parse(
+    Map<String, dynamic>? json,
+  ) async {
+    if (json == null) {
+      return null;
+    }
+    try {
+      return DivTextImageAccessibility(
+        description: await safeParseStrExprAsync(
+          json['description']?.toString(),
+        ),
+        type: (await safeParseStrEnumAsync(
+          json['type'],
+          parse: DivTextImageAccessibilityType.fromJson,
+          fallback: DivTextImageAccessibilityType.auto,
+        ))!,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> preload(
+    Map<String, dynamic> context,
+  ) async {
+    try {
+      await description?.preload(context);
+      await type.preload(context);
+    } catch (e) {
+      return;
+    }
+  }
+}
+
+enum DivTextImageAccessibilityType implements Preloadable {
+  none('none'),
+  button('button'),
+  image('image'),
+  text('text'),
+  auto('auto');
+
+  final String value;
+
+  const DivTextImageAccessibilityType(this.value);
+
+  T map<T>({
+    required T Function() none,
+    required T Function() button,
+    required T Function() image,
+    required T Function() text,
+    required T Function() auto,
+  }) {
+    switch (this) {
+      case DivTextImageAccessibilityType.none:
+        return none();
+      case DivTextImageAccessibilityType.button:
+        return button();
+      case DivTextImageAccessibilityType.image:
+        return image();
+      case DivTextImageAccessibilityType.text:
+        return text();
+      case DivTextImageAccessibilityType.auto:
+        return auto();
+    }
+  }
+
+  T maybeMap<T>({
+    T Function()? none,
+    T Function()? button,
+    T Function()? image,
+    T Function()? text,
+    T Function()? auto,
+    required T Function() orElse,
+  }) {
+    switch (this) {
+      case DivTextImageAccessibilityType.none:
+        return none?.call() ?? orElse();
+      case DivTextImageAccessibilityType.button:
+        return button?.call() ?? orElse();
+      case DivTextImageAccessibilityType.image:
+        return image?.call() ?? orElse();
+      case DivTextImageAccessibilityType.text:
+        return text?.call() ?? orElse();
+      case DivTextImageAccessibilityType.auto:
+        return auto?.call() ?? orElse();
+    }
+  }
+
+  @override
+  Future<void> preload(Map<String, dynamic> context) async {}
+
+  static DivTextImageAccessibilityType? fromJson(
+    String? json,
+  ) {
+    if (json == null) {
+      return null;
+    }
+    try {
+      switch (json) {
+        case 'none':
+          return DivTextImageAccessibilityType.none;
+        case 'button':
+          return DivTextImageAccessibilityType.button;
+        case 'image':
+          return DivTextImageAccessibilityType.image;
+        case 'text':
+          return DivTextImageAccessibilityType.text;
+        case 'auto':
+          return DivTextImageAccessibilityType.auto;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<DivTextImageAccessibilityType?> parse(
+    String? json,
+  ) async {
+    if (json == null) {
+      return null;
+    }
+    try {
+      switch (json) {
+        case 'none':
+          return DivTextImageAccessibilityType.none;
+        case 'button':
+          return DivTextImageAccessibilityType.button;
+        case 'image':
+          return DivTextImageAccessibilityType.image;
+        case 'text':
+          return DivTextImageAccessibilityType.text;
+        case 'auto':
+          return DivTextImageAccessibilityType.auto;
+      }
+      return null;
+    } catch (e) {
+      return null;
     }
   }
 }
@@ -1714,7 +1968,7 @@ class DivTextEllipsis extends Preloadable with EquatableMixin {
         actions: actions != null ? actions.call() : this.actions,
         images: images != null ? images.call() : this.images,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        text: text ?? this.text,
+        text: text ?? this.text.copy(),
       );
 
   static DivTextEllipsis? fromJson(

@@ -26,8 +26,8 @@ class DivLinearGradient extends Preloadable with EquatableMixin {
     Expression<List<Color>>? colors,
   }) =>
       DivLinearGradient(
-        angle: angle ?? this.angle,
-        colors: colors ?? this.colors,
+        angle: angle ?? this.angle.copy(),
+        colors: colors ?? this.colors.copy(),
       );
 
   static DivLinearGradient? fromJson(

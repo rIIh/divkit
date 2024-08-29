@@ -274,14 +274,15 @@ class DivSeparator extends Preloadable with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         delimiterStyle: delimiterStyle ?? this.delimiterStyle,
         disappearActions: disappearActions != null
             ? disappearActions.call()
@@ -301,8 +302,8 @@ class DivSeparator extends Preloadable with EquatableMixin implements DivBase {
             : this.longtapActions,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -322,7 +323,7 @@ class DivSeparator extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -829,8 +830,8 @@ class DivSeparatorDelimiterStyle extends Preloadable with EquatableMixin {
     Expression<DivSeparatorDelimiterStyleOrientation>? orientation,
   }) =>
       DivSeparatorDelimiterStyle(
-        color: color ?? this.color,
-        orientation: orientation ?? this.orientation,
+        color: color ?? this.color.copy(),
+        orientation: orientation ?? this.orientation.copy(),
       );
 
   static DivSeparatorDelimiterStyle? fromJson(

@@ -33,7 +33,7 @@ class DivShapeDrawable extends Preloadable with EquatableMixin {
     DivStroke? Function()? stroke,
   }) =>
       DivShapeDrawable(
-        color: color ?? this.color,
+        color: color ?? this.color.copy(),
         shape: shape ?? this.shape,
         stroke: stroke != null ? stroke.call() : this.stroke,
       );

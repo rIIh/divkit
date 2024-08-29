@@ -39,7 +39,7 @@ class DivCircleShape extends Preloadable with EquatableMixin {
       DivCircleShape(
         backgroundColor: backgroundColor != null
             ? backgroundColor.call()
-            : this.backgroundColor,
+            : this.backgroundColor?.copy(),
         radius: radius ?? this.radius,
         stroke: stroke != null ? stroke.call() : this.stroke,
       );

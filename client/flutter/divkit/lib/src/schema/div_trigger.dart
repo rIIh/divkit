@@ -32,8 +32,8 @@ class DivTrigger extends Preloadable with EquatableMixin {
   }) =>
       DivTrigger(
         actions: actions ?? this.actions,
-        condition: condition ?? this.condition,
-        mode: mode ?? this.mode,
+        condition: condition ?? this.condition.copy(),
+        mode: mode ?? this.mode.copy(),
       );
 
   static DivTrigger? fromJson(

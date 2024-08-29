@@ -32,9 +32,9 @@ class DivActionArrayInsertValue extends Preloadable with EquatableMixin {
     Expression<String>? variableName,
   }) =>
       DivActionArrayInsertValue(
-        index: index != null ? index.call() : this.index,
+        index: index != null ? index.call() : this.index?.copy(),
         value: value ?? this.value,
-        variableName: variableName ?? this.variableName,
+        variableName: variableName ?? this.variableName.copy(),
       );
 
   static DivActionArrayInsertValue? fromJson(

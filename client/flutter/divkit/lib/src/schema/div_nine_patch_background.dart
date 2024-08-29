@@ -27,7 +27,7 @@ class DivNinePatchBackground extends Preloadable with EquatableMixin {
     DivAbsoluteEdgeInsets? insets,
   }) =>
       DivNinePatchBackground(
-        imageUrl: imageUrl ?? this.imageUrl,
+        imageUrl: imageUrl ?? this.imageUrl.copy(),
         insets: insets ?? this.insets,
       );
 

@@ -20,7 +20,7 @@ class DivAspect extends Preloadable with EquatableMixin {
     Expression<double>? ratio,
   }) =>
       DivAspect(
-        ratio: ratio ?? this.ratio,
+        ratio: ratio ?? this.ratio.copy(),
       );
 
   static DivAspect? fromJson(

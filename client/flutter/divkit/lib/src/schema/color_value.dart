@@ -21,7 +21,7 @@ class ColorValue extends Preloadable with EquatableMixin {
     Expression<Color>? value,
   }) =>
       ColorValue(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static ColorValue? fromJson(

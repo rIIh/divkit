@@ -281,15 +281,16 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        defaultItem: defaultItem ?? this.defaultItem,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        defaultItem: defaultItem ?? this.defaultItem.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -297,7 +298,7 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
         focus: focus != null ? focus.call() : this.focus,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
-        infiniteScroll: infiniteScroll ?? this.infiniteScroll,
+        infiniteScroll: infiniteScroll ?? this.infiniteScroll.copy(),
         itemBuilder:
             itemBuilder != null ? itemBuilder.call() : this.itemBuilder,
         itemSpacing: itemSpacing ?? this.itemSpacing,
@@ -307,14 +308,15 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        orientation: orientation ?? this.orientation,
+        orientation: orientation ?? this.orientation.copy(),
         paddings: paddings ?? this.paddings,
         pageTransformation: pageTransformation != null
             ? pageTransformation.call()
             : this.pageTransformation,
-        restrictParentScroll: restrictParentScroll ?? this.restrictParentScroll,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        restrictParentScroll:
+            restrictParentScroll ?? this.restrictParentScroll.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -334,7 +336,7 @@ class DivPager extends Preloadable with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
