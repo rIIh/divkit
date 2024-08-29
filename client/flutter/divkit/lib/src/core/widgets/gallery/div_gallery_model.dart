@@ -1,4 +1,5 @@
 import 'package:divkit/divkit.dart';
+import 'package:divkit/src/utils/div_item_builder_utils.dart';
 import 'package:divkit/src/utils/div_scaling_model.dart';
 import 'package:divkit/src/utils/provider.dart';
 import 'package:equatable/equatable.dart';
@@ -6,23 +7,25 @@ import 'package:flutter/widgets.dart';
 
 class DivGalleryModel with EquatableMixin {
   final List<Widget> children;
+  final List<DivItemBuilderResult> itemBuilderResults;
   final CrossAxisAlignment crossContentAlignment;
   final Axis orientation;
   final double itemSpacing;
 
   const DivGalleryModel({
-    required this.children,
+    this.children = const [],
+    this.itemBuilderResults = const [],
     required this.crossContentAlignment,
     required this.orientation,
     required this.itemSpacing,
   });
 
   static DivGalleryModel? value(
-    BuildContext context,
+    BuildContext buildContext,
     DivGallery data,
   ) {
     try {
-      final divScalingModel = read<DivScalingModel>(context);
+      final divScalingModel = read<DivScalingModel>(buildContext);
       final viewScale = divScalingModel?.viewScale ?? 1;
 
       final rawAlignment = data.crossContentAlignment.value!;
@@ -31,15 +34,25 @@ class DivGalleryModel with EquatableMixin {
       final rawOrientation = data.orientation.value!;
       final orientation = _convertOrientation(rawOrientation);
 
-      final children = data.items
-              ?.map(
-                (e) => DivWidget(e),
-              )
-              .toList(growable: false) ??
-          [];
+      final List<Widget> children;
+      final List<DivItemBuilderResult> results;
+      if (data.items != null) {
+        results = const [];
+        children = [
+          for (final item in data.items!) //
+            DivWidget(item),
+        ];
+      } else if (data.itemBuilder != null) {
+        children = const [];
+        results = buildChildren(data.itemBuilder!);
+      } else {
+        children = const [];
+        results = const [];
+      }
 
       return DivGalleryModel(
         children: children,
+        itemBuilderResults: results,
         crossContentAlignment: alignment,
         orientation: orientation,
         itemSpacing: data.itemSpacing.value!.toDouble() * viewScale,
@@ -55,12 +68,12 @@ class DivGalleryModel with EquatableMixin {
   }
 
   static Stream<DivGalleryModel> from(
-    BuildContext context,
+    BuildContext buildContext,
     DivGallery data,
   ) {
-    final variables = watch<DivContext>(context)!.variableManager;
+    final variables = watch<DivContext>(buildContext)!.variableManager;
 
-    final divScalingModel = watch<DivScalingModel>(context);
+    final divScalingModel = watch<DivScalingModel>(buildContext);
     final viewScale = divScalingModel?.viewScale ?? 1;
 
     return variables.watch<DivGalleryModel>((context) async {
@@ -74,15 +87,28 @@ class DivGalleryModel with EquatableMixin {
       );
       final orientation = _convertOrientation(rawOrientation);
 
-      final children = data.items
-              ?.map(
-                (e) => DivWidget(e),
-              )
-              .toList(growable: false) ??
-          [];
+      final List<Widget> children;
+      final List<DivItemBuilderResult> results;
+      if (data.items != null) {
+        results = const [];
+        children = [
+          for (final item in data.items!) //
+            DivWidget(item),
+        ];
+      } else if (data.itemBuilder != null && buildContext.mounted) {
+        children = const [];
+        results = await buildChildrenAsync(
+          builder: data.itemBuilder!,
+          context: context,
+        );
+      } else {
+        children = const [];
+        results = const [];
+      }
 
       return DivGalleryModel(
         children: children,
+        itemBuilderResults: results,
         crossContentAlignment: alignment,
         orientation: orientation,
         itemSpacing: (await data.itemSpacing.resolveValue(
@@ -99,6 +125,8 @@ class DivGalleryModel with EquatableMixin {
         crossContentAlignment,
         orientation,
         itemSpacing,
+        itemBuilderResults,
+        children,
       ];
 
   static CrossAxisAlignment _convertAlignment(

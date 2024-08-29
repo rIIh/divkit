@@ -58,6 +58,28 @@ class _DivContainerWidgetState extends State<DivContainerWidget> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final model = snapshot.requireData;
+              final List<Widget> children;
+              if (widget.data.itemBuilder != null) {
+                children = [
+                  for (final result in model.itemBuilderResults)
+                    provide<DivContext>(
+                      DivAdditionalVariablesContext(
+                        buildContext: context,
+                        variables: [
+                          for (final variable in result.variables.entries)
+                            DivVariableModel(
+                              name: variable.key,
+                              value: variable.value,
+                            ),
+                        ],
+                      ),
+                      child: DivWidget(result.div),
+                    )
+                ];
+              } else {
+                children = model.children;
+              }
+
               final mainWidget = model.contentAlignment.map(
                 flex: (data) => provide(
                   data.direction == Axis.vertical
@@ -68,7 +90,7 @@ class _DivContainerWidgetState extends State<DivContainerWidget> {
                     direction: data.direction,
                     mainAxisAlignment: data.mainAxisAlignment,
                     crossAxisAlignment: data.crossAxisAlignment,
-                    children: model.children,
+                    children: children,
                   ),
                 ),
                 wrap: (data) => provide(
@@ -77,7 +99,7 @@ class _DivContainerWidgetState extends State<DivContainerWidget> {
                     direction: data.direction,
                     alignment: data.wrapAlignment,
                     runAlignment: data.runAlignment,
-                    children: model.children,
+                    children: children,
                   ),
                 ),
                 stack: (data) => provide(
@@ -85,7 +107,7 @@ class _DivContainerWidgetState extends State<DivContainerWidget> {
                   child: Stack(
                     alignment:
                         data.contentAlignment ?? AlignmentDirectional.topStart,
-                    children: model.children,
+                    children: children,
                   ),
                 ),
               );
