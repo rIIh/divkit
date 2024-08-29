@@ -61,6 +61,9 @@ class DivVariableContext with EquatableMixin {
 }
 
 abstract class DivVariableManager {
+  /// Storage of this manager.
+  DivVariableStorage get storage;
+
   /// The current snapshot of the context.
   DivVariableContext get context;
 
