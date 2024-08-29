@@ -7,6 +7,7 @@ import 'package:divkit/src/core/timer/timer_manager.dart';
 import 'package:divkit/src/core/trigger/trigger_manager.dart';
 import 'package:divkit/src/core/variable/variable_manager.dart';
 import 'package:divkit/src/utils/div_focus_node.dart';
+import 'package:divkit/src/utils/provider.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class DivContext {
@@ -264,4 +265,57 @@ class DivRootContext extends DivContext {
     // Clear the expression resolver.
     await exprResolver.clearVariables();
   }
+}
+
+class DivAdditionalVariablesContext extends DivContext {
+  final DivContext _inheritedContext;
+  final DivVariableManager _variablesManager;
+
+  DivAdditionalVariablesContext({
+    required BuildContext buildContext,
+    required List<DivVariableModel> variables,
+  })  : _inheritedContext = read<DivContext>(buildContext)!,
+        _variablesManager = DefaultDivVariableManager(
+          storage: DefaultDivVariableStorage(
+            inheritedStorage: read<DivContext>(buildContext)! //
+                .variableManager
+                .storage,
+            variables: variables,
+          ),
+        );
+
+  @override
+  DivActionHandler get actionHandler => _inheritedContext.actionHandler;
+
+  @override
+  BuildContext get buildContext => _inheritedContext.buildContext;
+
+  @override
+  DivCustomHandler get customHandler => _inheritedContext.customHandler;
+
+  @override
+  FocusNode? getFocusNode(String divId) =>
+      _inheritedContext.getFocusNode(divId);
+
+  @override
+  DivLoggerContext get loggerContext => _inheritedContext.loggerContext;
+
+  @override
+  DivPatchManager get patchManager => _inheritedContext.patchManager;
+
+  @override
+  DivStateManager get stateManager => _inheritedContext.stateManager;
+
+  @override
+  DivTimerManager get timerManager => _inheritedContext.timerManager;
+
+  @override
+  DivVariableManager get variableManager => _variablesManager;
+
+  @override
+  DivVariableContext get variables => _variablesManager.context;
+
+  @override
+  DivVisibilityActionManager get visibilityActionManager =>
+      _inheritedContext.visibilityActionManager;
 }

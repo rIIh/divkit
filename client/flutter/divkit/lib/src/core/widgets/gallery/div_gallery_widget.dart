@@ -52,9 +52,45 @@ class _DivGalleryWidgetState extends State<DivGalleryWidget> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final model = snapshot.requireData;
+              if (widget.data.itemBuilder != null) {
+                final Widget spacing;
+                if (model.itemSpacing > 0) {
+                  switch (model.orientation) {
+                    case Axis.horizontal:
+                      spacing = SizedBox(width: model.itemSpacing);
+                      break;
+                    case Axis.vertical:
+                      spacing = SizedBox(height: model.itemSpacing);
+                      break;
+                  }
+                } else {
+                  spacing = const SizedBox();
+                }
+
+                return ListView.separated(
+                  itemCount: model.itemBuilderResults.length,
+                  scrollDirection: model.orientation,
+                  separatorBuilder: (context, index) => spacing,
+                  itemBuilder: (context, index) {
+                    final data = model.itemBuilderResults[index];
+                    return provide<DivContext>(
+                      DivAdditionalVariablesContext(
+                        buildContext: context,
+                        variables: [
+                          for (final variable in data.variables.entries)
+                            DivVariableModel(
+                              name: variable.key,
+                              value: variable.value,
+                            ),
+                        ],
+                      ),
+                      child: DivWidget(data.div),
+                    );
+                  },
+                );
+              }
 
               final isHorizontal = model.orientation == Axis.horizontal;
-
               final childrenWithSpacing = model.children
                   .mapIndexed((i, e) {
                     final isLastElement = i == model.children.length - 1;

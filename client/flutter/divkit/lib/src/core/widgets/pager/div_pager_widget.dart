@@ -70,11 +70,33 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
             if (snapshot.hasData) {
               final model = snapshot.requireData;
 
+              final List<Widget> children;
+              if (widget.data.itemBuilder != null) {
+                children = [
+                  for (final result in model.itemBuilderResults)
+                    provide<DivContext>(
+                      DivAdditionalVariablesContext(
+                        buildContext: context,
+                        variables: [
+                          for (final variable in result.variables.entries)
+                            DivVariableModel(
+                              name: variable.key,
+                              value: variable.value,
+                            ),
+                        ],
+                      ),
+                      child: DivWidget(result.div),
+                    )
+                ];
+              } else {
+                children = model.children;
+              }
+
               return PageView(
                 scrollDirection: model.orientation,
                 controller: controller,
                 onPageChanged: (value) => onPageChanged(value),
-                children: model.children,
+                children: children,
               );
             }
 
