@@ -47,14 +47,13 @@ class DivLinearGradient extends Preloadable with EquatableMixin {
           json['angle'],
           fallback: 0,
         )!,
-        colors: safeParseObjExpr(
-          safeListMap(
-            json['colors'],
-            (v) => safeParseColor(
-              v,
-            )!,
-          ),
-        )!,
+        colors: safeParseListExpr(
+              json['colors'],
+              mapper: (v) => safeParseColor(
+                v,
+              )!,
+            ) ??
+            const ValueExpression([]),
       );
     } catch (e) {
       return null;
@@ -73,14 +72,13 @@ class DivLinearGradient extends Preloadable with EquatableMixin {
           json['angle'],
           fallback: 0,
         ))!,
-        colors: (await safeParseObjExprAsync(
-          await safeListMapAsync(
-            json['colors'],
-            (v) => safeParseColor(
-              v,
-            )!,
-          ),
-        ))!,
+        colors: (await safeParseListExprAsync(
+              json['colors'],
+              mapper: (v) => safeParseColor(
+                v,
+              )!,
+            ) ??
+            const ValueExpression([])),
       );
     } catch (e) {
       return null;
