@@ -220,6 +220,10 @@ class DartProperty(Property):
             else:
                 strategy = ""
 
+            if self.supports_expressions:
+                return f"{br0}{_await}safeParseList{expr}{_async}(json['{self.name}'], mapper: (v) => {strategy}, {fallback}) ?? ValueExpression([])" \
+                   f"{br1}"
+
             return f"{br0}{_await}safeParseObj{expr}{_async}({_await}safeListMap{_async}(json['{self.name}'], (v) => {strategy},)," \
                    f"{fallback}){br1}{required}"
 
