@@ -105,14 +105,13 @@ class DivRadialGradient extends Preloadable with EquatableMixin {
             ),
           ),
         )!,
-        colors: safeParseObjExpr(
-          safeListMap(
-            json['colors'],
-            (v) => safeParseColor(
-              v,
-            )!,
-          ),
-        )!,
+        colors: safeParseListExpr(
+              json['colors'],
+              mapper: (v) => safeParseColor(
+                v,
+              )!,
+            ) ??
+            const ValueExpression([]),
         radius: safeParseObj(
           DivRadialGradientRadius.fromJson(json['radius']),
           fallback:
@@ -160,14 +159,13 @@ class DivRadialGradient extends Preloadable with EquatableMixin {
             ),
           ),
         ))!,
-        colors: (await safeParseObjExprAsync(
-          await safeListMapAsync(
-            json['colors'],
-            (v) => safeParseColor(
-              v,
-            )!,
-          ),
-        ))!,
+        colors: (await safeParseListExprAsync(
+              json['colors'],
+              mapper: (v) => safeParseColor(
+                v,
+              )!,
+            ) ??
+            const ValueExpression([])),
         radius: (await safeParseObjAsync(
           DivRadialGradientRadius.fromJson(json['radius']),
           fallback:
