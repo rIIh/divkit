@@ -92,15 +92,28 @@ class DivPagerModel with EquatableMixin {
       final List<DivItemBuilderResult> results;
       if (data.items != null) {
         results = const [];
+        await Future.wait(
+          (data.items ?? [])
+              .map((e) => e.value.visibility.resolveValue(context: context)),
+        );
+
         children = [
           for (final item in data.items!) //
-            DivWidget(item),
+            if (item.value.visibility.requireValue != DivVisibility.gone)
+              DivWidget(item),
         ];
       } else if (data.itemBuilder != null && buildContext.mounted) {
         children = const [];
         results = await buildChildrenAsync(
           builder: data.itemBuilder!,
           context: context,
+        ).then(
+          (results) => [
+            for (final result in results)
+              if (result.div.value.visibility.requireValue !=
+                  DivVisibility.gone)
+                result
+          ],
         );
       } else {
         children = const [];
