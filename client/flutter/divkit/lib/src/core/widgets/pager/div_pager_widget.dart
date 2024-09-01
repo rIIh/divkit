@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:divkit/divkit.dart';
 import 'package:divkit/src/core/widgets/pager/div_pager_model.dart';
 import 'package:divkit/src/utils/provider.dart';
@@ -20,17 +21,16 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
   Stream<DivPagerModel>? stream;
 
   late int currentPage;
+  late CarouselSliderController controller;
 
-  late PageController controller;
+  late DivPager dataWithoutPaddings;
 
   @override
   void initState() {
     super.initState();
     value = DivPagerModel.value(context, widget.data);
     currentPage = widget.data.defaultItem.value ?? 0;
-    controller = PageController(
-      initialPage: currentPage,
-    );
+    controller = CarouselSliderController();
   }
 
   @override
@@ -40,7 +40,7 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
     stream ??= DivPagerModel.from(
       context,
       widget.data,
-      controller,
+      () => controller,
       () => currentPage,
     );
   }
@@ -54,7 +54,7 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
       stream = DivPagerModel.from(
         context,
         widget.data,
-        controller,
+        () => controller,
         () => currentPage,
       );
     }
@@ -62,7 +62,8 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
 
   @override
   Widget build(BuildContext context) => DivBaseWidget(
-        data: widget.data,
+        ignorePaddings: true,
+        data: widget.data.copyWith(paddings: const DivEdgeInsets()),
         child: StreamBuilder<DivPagerModel>(
           initialData: value,
           stream: stream,
@@ -92,14 +93,42 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
                 children = model.children;
               }
 
-              return provide(
-                DivParentData.pager,
-                child: PageView(
-                  scrollDirection: model.orientation,
-                  controller: controller,
-                  onPageChanged: (value) => onPageChanged(value),
-                  children: children,
-                ),
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  final padding = model.padding;
+                  final viewportFractionPadding =
+                      model.orientation == Axis.horizontal
+                          ? padding.horizontal
+                          : padding.vertical;
+
+                  final viewportFraction = 1 +
+                      (model.itemSpacing - viewportFractionPadding) /
+                          constraints.maxWidth;
+
+                  return provide(
+                    DivParentData.pager,
+                    child: CarouselSlider(
+                      carouselController: controller,
+                      options: CarouselOptions(
+                        viewportFraction: viewportFraction,
+                        clipBehavior: Clip.none,
+                        enableInfiniteScroll: model.isInfinite,
+                        initialPage: widget.data.defaultItem.value ?? 0,
+                        onPageChanged: (value, _) => onPageChanged(value),
+                        scrollDirection: model.orientation,
+                      ),
+                      items: [
+                        for (final child in children)
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: model.itemSpacing / 2,
+                            ),
+                            child: child,
+                          ),
+                      ],
+                    ),
+                  );
+                },
               );
             }
 
@@ -119,7 +148,6 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
 
   @override
   void dispose() {
-    controller.dispose();
     value = null;
     stream = null;
     super.dispose();
