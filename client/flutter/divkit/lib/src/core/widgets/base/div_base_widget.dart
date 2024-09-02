@@ -91,7 +91,6 @@ class _DivBaseWidgetState extends State<DivBaseWidget> {
                               padding: widget.ignorePaddings //
                                   ? null
                                   : model.padding,
-                              margin: model.margin,
                               decoration: focusNode.hasFocus
                                   ? model.focusDecoration
                                   : model.decoration,
@@ -103,7 +102,6 @@ class _DivBaseWidgetState extends State<DivBaseWidget> {
                             padding: widget.ignorePaddings //
                                 ? null
                                 : model.padding,
-                            margin: model.margin,
                             decoration: model.decoration,
                             child: widget.child,
                           ),

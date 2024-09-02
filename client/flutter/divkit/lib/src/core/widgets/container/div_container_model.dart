@@ -14,7 +14,6 @@ class DivContainerModel with EquatableMixin {
     required this.contentAlignment,
     this.children = const [],
     this.itemBuilderResults = const [],
-    this.aspectRatio,
   });
 
   static DivContainerModel? value(
@@ -47,7 +46,6 @@ class DivContainerModel with EquatableMixin {
 
       return DivContainerModel(
         contentAlignment: contentAlignment,
-        aspectRatio: data.aspect?.ratio.requireValue,
         children: children,
         itemBuilderResults: results,
       );
@@ -98,9 +96,6 @@ class DivContainerModel with EquatableMixin {
 
       return DivContainerModel(
         contentAlignment: contentAlignment,
-        aspectRatio: await data.aspect?.ratio.resolveValue(
-          context: context,
-        ),
         children: children,
         itemBuilderResults: results,
       );

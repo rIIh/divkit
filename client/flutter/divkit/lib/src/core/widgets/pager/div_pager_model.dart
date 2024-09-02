@@ -79,7 +79,7 @@ class DivPagerModel with EquatableMixin {
     ValueGetter<CarouselSliderController> controller,
     ValueGetter<int> currentPage,
   ) {
-    final variables = watch<DivContext>(context)!.variableManager;
+    final variables = watch<DivContext>(buildContext)!.variableManager;
     final divScalingModel = watch<DivScalingModel>(buildContext);
     final viewScale = divScalingModel?.viewScale ?? 1;
 
