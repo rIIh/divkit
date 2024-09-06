@@ -1,5 +1,6 @@
 import 'package:divkit/divkit.dart';
 import 'package:divkit/src/utils/div_item_builder_utils.dart';
+import 'package:divkit/src/utils/div_scaling_model.dart';
 import 'package:divkit/src/utils/provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
@@ -7,12 +8,18 @@ import 'package:flutter/widgets.dart';
 class DivPagerModel with EquatableMixin {
   final List<Widget> children;
   final List<DivItemBuilderResult> itemBuilderResults;
+  final EdgeInsetsGeometry padding;
+  final double itemSpacing;
+  final bool isInfinite;
   final Axis orientation;
 
   const DivPagerModel({
     required this.children,
+    required this.itemSpacing,
     required this.itemBuilderResults,
     required this.orientation,
+    required this.isInfinite,
+    required this.padding,
   });
 
   static DivPagerModel? value(
@@ -20,8 +27,16 @@ class DivPagerModel with EquatableMixin {
     DivPager data,
   ) {
     try {
+      final divScalingModel = read<DivScalingModel>(buildContext);
+      final viewScale = divScalingModel?.viewScale ?? 1;
+
       final rawOrientation = data.orientation.requireValue;
       final orientation = _convertOrientation(rawOrientation);
+      final isInfinite = data.infiniteScroll.requireValue;
+      final padding = data.paddings.value(viewScale: viewScale);
+
+      final itemSpacingUnit = data.itemSpacing.unit.requireValue.asPx;
+      final itemSpacing = data.itemSpacing.value.requireValue * itemSpacingUnit;
 
       final List<Widget> children;
       final List<DivItemBuilderResult> results;
@@ -41,6 +56,9 @@ class DivPagerModel with EquatableMixin {
 
       return DivPagerModel(
         children: children,
+        padding: padding,
+        isInfinite: isInfinite,
+        itemSpacing: itemSpacing,
         itemBuilderResults: results,
         orientation: orientation,
       );
@@ -57,26 +75,35 @@ class DivPagerModel with EquatableMixin {
   static Stream<DivPagerModel> from(
     BuildContext buildContext,
     DivPager data,
-    PageController controller,
+    ValueGetter<PageController> controller,
     ValueGetter<int> currentPage,
   ) {
     final variables =
         DivKitProvider.watch<DivContext>(buildContext)!.variableManager;
-    final id = data.id;
-    if (id != null && variables.context.current[id] != currentPage()) {
-      variables.putVariable(id, currentPage());
-    }
+    final divScalingModel = watch<DivScalingModel>(buildContext);
+    final viewScale = divScalingModel?.viewScale ?? 1;
+
     return variables.watch<DivPagerModel>((context) async {
+      final id = data.id;
+      if (id != null && variables.context.current[id] == null) {
+        variables.putVariable(id, currentPage());
+      }
+
+      final isInfinite = await data.infiniteScroll //
+          .resolveValue(context: context);
+
       final length = data.items?.length;
       if (id != null && length != null) {
         if (variables.context.current[id] < 0) {
           variables.updateVariable(id, 0);
         }
-        if (variables.context.current[id] > length - 1) {
+
+        if (variables.context.current[id] > length - 1 && !isInfinite) {
           variables.updateVariable(id, length - 1);
         }
+
         if (variables.context.current[id] != currentPage()) {
-          controller.animateToPage(
+          controller().animateToPage(
             variables.context.current[id],
             duration: const Duration(milliseconds: 200),
             curve: Curves.linear,
@@ -88,6 +115,16 @@ class DivPagerModel with EquatableMixin {
         context: context,
       );
       final orientation = _convertOrientation(rawOrientation);
+      final padding = await data.paddings.resolve(
+        context: context,
+        viewScale: viewScale,
+      );
+
+      final itemSpacingUnit =
+          (await data.itemSpacing.unit.resolveValue(context: context)).asPx;
+      final itemSpacing =
+          await data.itemSpacing.value.resolveValue(context: context) *
+              itemSpacingUnit;
 
       final List<Widget> children;
       final List<DivItemBuilderResult> results;
@@ -123,6 +160,9 @@ class DivPagerModel with EquatableMixin {
 
       return DivPagerModel(
         children: children,
+        padding: padding,
+        isInfinite: isInfinite,
+        itemSpacing: itemSpacing,
         itemBuilderResults: results,
         orientation: orientation,
       );
@@ -132,6 +172,9 @@ class DivPagerModel with EquatableMixin {
   @override
   List<Object?> get props => [
         orientation,
+        isInfinite,
+        itemSpacing,
+        padding,
         itemBuilderResults,
         children,
       ];
