@@ -139,7 +139,12 @@ class _DivKitView extends StatefulWidget {
 }
 
 class _DivKitViewState extends State<_DivKitView> {
-  DivRootContext? divRootContext;
+  DivRootContext? _divRootContext;
+  DivRootContext? get divRootContext => _divRootContext;
+  set divRootContext(DivRootContext? value) {
+    _divRootContext?.dispose();
+    _divRootContext = value;
+  }
 
   DivContext get divContext => divRootContext!;
 
@@ -208,7 +213,6 @@ class _DivKitViewState extends State<_DivKitView> {
   @override
   void dispose() {
     traceEvent('Dispose DivKitView');
-    divRootContext?.dispose();
     divRootContext = null;
     super.dispose();
   }
