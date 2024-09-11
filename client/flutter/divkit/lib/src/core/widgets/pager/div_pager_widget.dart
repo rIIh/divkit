@@ -37,7 +37,7 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    stream ??= DivPagerModel.from(
+    stream = DivPagerModel.from(
       context,
       widget.data,
       () => controller,
