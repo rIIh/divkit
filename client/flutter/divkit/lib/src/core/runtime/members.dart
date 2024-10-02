@@ -5,10 +5,6 @@ dynamic defaultMembers(
   MemberToken member,
   Map<String, dynamic> context,
 ) {
-  if (member.property is! FunctionToken) {
-    throw "Member property expected after '.'";
-  }
-
   final object = member.object.run(context);
   final property = member.property;
 
@@ -50,7 +46,23 @@ dynamic defaultMembers(
       }
     }
   } else if (object is Map) {
-    if (property is FunctionToken) {
+    if (property is ReferenceToken) {
+      if (!property.identifier.contains('.')) {
+        final path = property.identifier.split('.');
+        dynamic result = object;
+        for (final part in path) {
+          if (result is! Map) {
+            throw 'Invalid path for given member';
+          }
+
+          result = result[part];
+        }
+
+        return result;
+      }
+
+      throw 'Invalid path for given member';
+    } else if (property is FunctionToken) {
       final args = property.arguments
           .map((e) => guard(() => e.run(context), null))
           .toList();
