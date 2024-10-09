@@ -78,6 +78,7 @@ class _DivBaseWidgetState extends State<DivBaseWidget> {
               height: model.height,
               width: model.width,
               margin: model.margin,
+              padding: model.padding,
               aspect: model.aspect,
               alignment: model.alignment,
               child: DivVisibilityEmitter(
