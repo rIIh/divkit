@@ -185,6 +185,7 @@ class DivLayout extends StatelessWidget {
   final DivSizeValue height;
   final double? aspect;
   final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
   final AlignmentGeometry? alignment;
 
   final Widget child;
@@ -196,10 +197,15 @@ class DivLayout extends StatelessWidget {
     this.height = const DivWrapContent(),
     this.alignment,
     this.margin,
+    this.padding = EdgeInsets.zero,
     this.aspect,
   });
 
-  DivLayoutParam modifySize(DivParentData? parent, DivLayoutParam? parentSize) {
+  DivLayoutParam modifySize(
+    DivParentData? parent,
+    DivLayoutParam? parentSize, [
+    EdgeInsetsGeometry? padding,
+  ]) {
     final parentWidth = parentSize?.width;
     final parentHeight = parentSize?.height;
 
@@ -224,6 +230,20 @@ class DivLayout extends StatelessWidget {
       );
     }
 
+    // Deflate width by padding
+    if (res.width.isFixed && padding != null) {
+      res = res.copyWith(
+        width: DivFixed((res.width as DivFixed).value - padding.horizontal),
+      );
+    }
+
+    // Deflate height by padding
+    if (res.height.isFixed && padding != null) {
+      res = res.copyWith(
+        height: DivFixed((res.height as DivFixed).value - padding.vertical),
+      );
+    }
+
     return res;
   }
 
@@ -242,7 +262,7 @@ class DivLayout extends StatelessWidget {
         height: modified.height,
         aspect: aspect,
         child: provide(
-          modified,
+          modifySize(parent, parentSize, padding),
           child: child,
         ),
       ),
