@@ -41,15 +41,9 @@ class DivActionScrollTo extends Preloadable with EquatableMixin {
     Expression<String>? id,
   }) =>
       DivActionScrollTo(
-<<<<<<< HEAD
-        animated: animated ?? this.animated,
-        destination: destination ?? this.destination,
-        id: id ?? this.id,
-=======
         animated: animated ?? this.animated.copy(),
         destination: destination ?? this.destination,
         id: id ?? this.id.copy(),
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
       );
 
   static DivActionScrollTo? fromJson(

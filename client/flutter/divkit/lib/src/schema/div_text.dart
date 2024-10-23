@@ -219,11 +219,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
   // constraint: number > 0
   final Expression<int>? fontWeightValue;
 
-<<<<<<< HEAD
   /// User functions.
-=======
-  /// Custom functions.
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -273,11 +269,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
   /// A character range in which additional style parameters can be set. Defined by mandatory `start` and `end` fields.
   final List<DivTextRange>? ranges;
 
-<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
-=======
-  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 
@@ -556,11 +548,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-<<<<<<< HEAD
-            : this.fontWeightValue,
-=======
             : this.fontWeightValue?.copy(),
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
@@ -597,11 +585,7 @@ class DivText extends Preloadable with EquatableMixin implements DivBase {
         textGradient:
             textGradient != null ? textGradient.call() : this.textGradient,
         textShadow: textShadow != null ? textShadow.call() : this.textShadow,
-<<<<<<< HEAD
-        tightenWidth: tightenWidth ?? this.tightenWidth,
-=======
         tightenWidth: tightenWidth ?? this.tightenWidth.copy(),
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
         transitionChange: transitionChange != null
@@ -1405,7 +1389,7 @@ class DivTextRange extends Preloadable with EquatableMixin {
   /// Character range border.
   final DivTextRangeBorder? border;
 
-  /// Ordinal number of the last character to be included in the range.
+  /// Ordinal number of the last character to be included in the range. If property is omitted, the range will end at the last character of the text.
   // constraint: number > 0
   final Expression<int>? end;
 
@@ -1513,14 +1497,9 @@ class DivTextRange extends Preloadable with EquatableMixin {
             : this.alignmentVertical?.copy(),
         background: background != null ? background.call() : this.background,
         border: border != null ? border.call() : this.border,
-<<<<<<< HEAD
-        end: end != null ? end.call() : this.end,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
-=======
-        end: end ?? this.end.copy(),
+        end: end != null ? end.call() : this.end?.copy(),
         fontFamily:
             fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         fontFeatureSettings: fontFeatureSettings != null
             ? fontFeatureSettings.call()
             : this.fontFeatureSettings?.copy(),

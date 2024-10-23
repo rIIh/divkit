@@ -187,11 +187,7 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
   @override
   final DivFocus? focus;
 
-<<<<<<< HEAD
   /// User functions.
-=======
-  /// Custom functions.
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivFunction>? functions;
 
@@ -237,11 +233,7 @@ class DivImage extends Preloadable with EquatableMixin implements DivBase {
   /// Image preview encoded in `base64`. It will be shown instead of `placeholder_color` before the image is loaded. Format `data url`: `data:[;base64],<data>`
   final Expression<String>? preview;
 
-<<<<<<< HEAD
   /// ID for the div object structure. Used to optimize block reuse. See [block reuse](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
-=======
-  /// ID for the div structure. Used for more optimal reuse of blocks. See [reusing blocks](https://divkit.tech/docs/en/concepts/reuse/reuse.md).
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final Expression<String>? reuseId;
 

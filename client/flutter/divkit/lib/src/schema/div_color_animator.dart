@@ -35,11 +35,7 @@ class DivColorAnimator extends Preloadable
 
   static const type = "color_animator";
 
-<<<<<<< HEAD
   /// Actions to be performed if the animator is canceled. For example, when a command with the type `animator_stop` is received.
-=======
-  /// Actions performed when the animator is cancelled. For example, when an action with `animator_stop` type is received
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivAction>? cancelActions;
 
@@ -53,22 +49,14 @@ class DivColorAnimator extends Preloadable
   @override
   final Expression<int> duration;
 
-<<<<<<< HEAD
   /// Actions to be performed after the animator finishes.
-=======
-  /// Actions performed when the animator completes animation.
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final List<DivAction>? endActions;
 
   /// The value the variable will have when the animation ends.
   final Expression<Color> endValue;
 
-<<<<<<< HEAD
   /// Animator ID.
-=======
-  /// Animator identificator
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final String id;
 
@@ -77,11 +65,7 @@ class DivColorAnimator extends Preloadable
   @override
   final Expression<DivAnimationInterpolator> interpolator;
 
-<<<<<<< HEAD
   /// Number of times the animation will repeat before stopping. A value of `0` enables infinite looping.
-=======
-  /// The number of times the animation will repeat before it finishes. `0` enables infinite repeats.
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   // default value: const DivCount.divFixedCount(const DivFixedCount(value: ValueExpression(1,),),)
   @override
   final DivCount repeatCount;

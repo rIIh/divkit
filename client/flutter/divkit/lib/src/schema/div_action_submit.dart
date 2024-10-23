@@ -42,7 +42,7 @@ class DivActionSubmit extends Preloadable with EquatableMixin {
     DivActionSubmitRequest? request,
   }) =>
       DivActionSubmit(
-        containerId: containerId ?? this.containerId,
+        containerId: containerId ?? this.containerId.copy(),
         onFailActions:
             onFailActions != null ? onFailActions.call() : this.onFailActions,
         onSuccessActions: onSuccessActions != null
@@ -142,7 +142,7 @@ class DivActionSubmit extends Preloadable with EquatableMixin {
 class DivActionSubmitRequest extends Preloadable with EquatableMixin {
   const DivActionSubmitRequest({
     this.headers,
-    this.method = const ValueExpression(DivActionSubmitRequestMethod.pOST),
+    this.method = const ValueExpression(DivActionSubmitRequestMethod.post),
     required this.url,
   });
 
@@ -150,7 +150,7 @@ class DivActionSubmitRequest extends Preloadable with EquatableMixin {
   final List<DivActionSubmitRequestHeader>? headers;
 
   /// The HTTP request method.
-  // default value: DivActionSubmitRequestMethod.pOST
+  // default value: DivActionSubmitRequestMethod.post
   final Expression<DivActionSubmitRequestMethod> method;
 
   /// The url to which data from the container is sent.
@@ -170,8 +170,8 @@ class DivActionSubmitRequest extends Preloadable with EquatableMixin {
   }) =>
       DivActionSubmitRequest(
         headers: headers != null ? headers.call() : this.headers,
-        method: method ?? this.method,
-        url: url ?? this.url,
+        method: method ?? this.method.copy(),
+        url: url ?? this.url.copy(),
       );
 
   static DivActionSubmitRequest? fromJson(
@@ -193,7 +193,7 @@ class DivActionSubmitRequest extends Preloadable with EquatableMixin {
         method: safeParseStrEnumExpr(
           json['method'],
           parse: DivActionSubmitRequestMethod.fromJson,
-          fallback: DivActionSubmitRequestMethod.pOST,
+          fallback: DivActionSubmitRequestMethod.post,
         )!,
         url: safeParseUriExpr(json['url'])!,
       );
@@ -221,7 +221,7 @@ class DivActionSubmitRequest extends Preloadable with EquatableMixin {
         method: (await safeParseStrEnumExprAsync(
           json['method'],
           parse: DivActionSubmitRequestMethod.fromJson,
-          fallback: DivActionSubmitRequestMethod.pOST,
+          fallback: DivActionSubmitRequestMethod.post,
         ))!,
         url: (await safeParseUriExprAsync(json['url']))!,
       );
@@ -264,8 +264,8 @@ class DivActionSubmitRequestHeader extends Preloadable with EquatableMixin {
     Expression<String>? value,
   }) =>
       DivActionSubmitRequestHeader(
-        name: name ?? this.name,
-        value: value ?? this.value,
+        name: name ?? this.name.copy(),
+        value: value ?? this.value.copy(),
       );
 
   static DivActionSubmitRequestHeader? fromJson(
@@ -322,83 +322,83 @@ class DivActionSubmitRequestHeader extends Preloadable with EquatableMixin {
 }
 
 enum DivActionSubmitRequestMethod implements Preloadable {
-  gET('GET'),
-  pOST('POST'),
-  pUT('PUT'),
-  pATCH('PATCH'),
-  dELETE('DELETE'),
-  hEAD('HEAD'),
-  oPTIONS('OPTIONS');
+  get('get'),
+  post('post'),
+  put('put'),
+  patch('patch'),
+  delete('delete'),
+  head('head'),
+  options('options');
 
   final String value;
 
   const DivActionSubmitRequestMethod(this.value);
-  bool get isGET => this == gET;
+  bool get isGet => this == get;
 
-  bool get isPOST => this == pOST;
+  bool get isPost => this == post;
 
-  bool get isPUT => this == pUT;
+  bool get isPut => this == put;
 
-  bool get isPATCH => this == pATCH;
+  bool get isPatch => this == patch;
 
-  bool get isDELETE => this == dELETE;
+  bool get isDelete => this == delete;
 
-  bool get isHEAD => this == hEAD;
+  bool get isHead => this == head;
 
-  bool get isOPTIONS => this == oPTIONS;
+  bool get isOptions => this == options;
 
   T map<T>({
-    required T Function() gET,
-    required T Function() pOST,
-    required T Function() pUT,
-    required T Function() pATCH,
-    required T Function() dELETE,
-    required T Function() hEAD,
-    required T Function() oPTIONS,
+    required T Function() get,
+    required T Function() post,
+    required T Function() put,
+    required T Function() patch,
+    required T Function() delete,
+    required T Function() head,
+    required T Function() options,
   }) {
     switch (this) {
-      case DivActionSubmitRequestMethod.gET:
-        return gET();
-      case DivActionSubmitRequestMethod.pOST:
-        return pOST();
-      case DivActionSubmitRequestMethod.pUT:
-        return pUT();
-      case DivActionSubmitRequestMethod.pATCH:
-        return pATCH();
-      case DivActionSubmitRequestMethod.dELETE:
-        return dELETE();
-      case DivActionSubmitRequestMethod.hEAD:
-        return hEAD();
-      case DivActionSubmitRequestMethod.oPTIONS:
-        return oPTIONS();
+      case DivActionSubmitRequestMethod.get:
+        return get();
+      case DivActionSubmitRequestMethod.post:
+        return post();
+      case DivActionSubmitRequestMethod.put:
+        return put();
+      case DivActionSubmitRequestMethod.patch:
+        return patch();
+      case DivActionSubmitRequestMethod.delete:
+        return delete();
+      case DivActionSubmitRequestMethod.head:
+        return head();
+      case DivActionSubmitRequestMethod.options:
+        return options();
     }
   }
 
   T maybeMap<T>({
-    T Function()? gET,
-    T Function()? pOST,
-    T Function()? pUT,
-    T Function()? pATCH,
-    T Function()? dELETE,
-    T Function()? hEAD,
-    T Function()? oPTIONS,
+    T Function()? get,
+    T Function()? post,
+    T Function()? put,
+    T Function()? patch,
+    T Function()? delete,
+    T Function()? head,
+    T Function()? options,
     required T Function() orElse,
   }) {
     switch (this) {
-      case DivActionSubmitRequestMethod.gET:
-        return gET?.call() ?? orElse();
-      case DivActionSubmitRequestMethod.pOST:
-        return pOST?.call() ?? orElse();
-      case DivActionSubmitRequestMethod.pUT:
-        return pUT?.call() ?? orElse();
-      case DivActionSubmitRequestMethod.pATCH:
-        return pATCH?.call() ?? orElse();
-      case DivActionSubmitRequestMethod.dELETE:
-        return dELETE?.call() ?? orElse();
-      case DivActionSubmitRequestMethod.hEAD:
-        return hEAD?.call() ?? orElse();
-      case DivActionSubmitRequestMethod.oPTIONS:
-        return oPTIONS?.call() ?? orElse();
+      case DivActionSubmitRequestMethod.get:
+        return get?.call() ?? orElse();
+      case DivActionSubmitRequestMethod.post:
+        return post?.call() ?? orElse();
+      case DivActionSubmitRequestMethod.put:
+        return put?.call() ?? orElse();
+      case DivActionSubmitRequestMethod.patch:
+        return patch?.call() ?? orElse();
+      case DivActionSubmitRequestMethod.delete:
+        return delete?.call() ?? orElse();
+      case DivActionSubmitRequestMethod.head:
+        return head?.call() ?? orElse();
+      case DivActionSubmitRequestMethod.options:
+        return options?.call() ?? orElse();
     }
   }
 
@@ -413,20 +413,20 @@ enum DivActionSubmitRequestMethod implements Preloadable {
     }
     try {
       switch (json) {
-        case 'GET':
-          return DivActionSubmitRequestMethod.gET;
-        case 'POST':
-          return DivActionSubmitRequestMethod.pOST;
-        case 'PUT':
-          return DivActionSubmitRequestMethod.pUT;
-        case 'PATCH':
-          return DivActionSubmitRequestMethod.pATCH;
-        case 'DELETE':
-          return DivActionSubmitRequestMethod.dELETE;
-        case 'HEAD':
-          return DivActionSubmitRequestMethod.hEAD;
-        case 'OPTIONS':
-          return DivActionSubmitRequestMethod.oPTIONS;
+        case 'get':
+          return DivActionSubmitRequestMethod.get;
+        case 'post':
+          return DivActionSubmitRequestMethod.post;
+        case 'put':
+          return DivActionSubmitRequestMethod.put;
+        case 'patch':
+          return DivActionSubmitRequestMethod.patch;
+        case 'delete':
+          return DivActionSubmitRequestMethod.delete;
+        case 'head':
+          return DivActionSubmitRequestMethod.head;
+        case 'options':
+          return DivActionSubmitRequestMethod.options;
       }
       return null;
     } catch (e) {
@@ -442,20 +442,20 @@ enum DivActionSubmitRequestMethod implements Preloadable {
     }
     try {
       switch (json) {
-        case 'GET':
-          return DivActionSubmitRequestMethod.gET;
-        case 'POST':
-          return DivActionSubmitRequestMethod.pOST;
-        case 'PUT':
-          return DivActionSubmitRequestMethod.pUT;
-        case 'PATCH':
-          return DivActionSubmitRequestMethod.pATCH;
-        case 'DELETE':
-          return DivActionSubmitRequestMethod.dELETE;
-        case 'HEAD':
-          return DivActionSubmitRequestMethod.hEAD;
-        case 'OPTIONS':
-          return DivActionSubmitRequestMethod.oPTIONS;
+        case 'get':
+          return DivActionSubmitRequestMethod.get;
+        case 'post':
+          return DivActionSubmitRequestMethod.post;
+        case 'put':
+          return DivActionSubmitRequestMethod.put;
+        case 'patch':
+          return DivActionSubmitRequestMethod.patch;
+        case 'delete':
+          return DivActionSubmitRequestMethod.delete;
+        case 'head':
+          return DivActionSubmitRequestMethod.head;
+        case 'options':
+          return DivActionSubmitRequestMethod.options;
       }
       return null;
     } catch (e) {

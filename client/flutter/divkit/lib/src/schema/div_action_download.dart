@@ -4,11 +4,7 @@ import 'package:divkit/src/schema/div_action.dart';
 import 'package:divkit/src/utils/parsing_utils.dart';
 import 'package:equatable/equatable.dart';
 
-<<<<<<< HEAD
 /// Loads additional data in `div-patch` format and updates the current element.
-=======
-/// Loads more data in the form of a `div-patch` and updates current element,
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
 class DivActionDownload extends Preloadable with EquatableMixin {
   const DivActionDownload({
     this.onFailActions,
@@ -24,11 +20,7 @@ class DivActionDownload extends Preloadable with EquatableMixin {
   /// Actions in case of successful loading.
   final List<DivAction>? onSuccessActions;
 
-<<<<<<< HEAD
   /// Link for receiving changes.
-=======
-  /// URL to get the patch.
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   final Expression<String> url;
 
   @override
@@ -49,11 +41,7 @@ class DivActionDownload extends Preloadable with EquatableMixin {
         onSuccessActions: onSuccessActions != null
             ? onSuccessActions.call()
             : this.onSuccessActions,
-<<<<<<< HEAD
-        url: url ?? this.url,
-=======
         url: url ?? this.url.copy(),
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
       );
 
   static DivActionDownload? fromJson(

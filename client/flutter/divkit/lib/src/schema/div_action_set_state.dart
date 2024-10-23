@@ -12,17 +12,10 @@ class DivActionSetState extends Preloadable with EquatableMixin {
 
   static const type = "set_state";
 
-<<<<<<< HEAD
   /// The path of the state inside `state` that needs to be activated. Set in the format `div_data_state_id/id/state_id'. Can be hierarchical: `div_data_state_id/id_1/state_id_1/../id_n/state_id_n`. Consists of:
   /// • `div_data_state_id` — the numeric value of the `state_id` of the `state` object in `data`
   /// • 'id` — the `id` value of the `state` object
   /// • `state_id` — the `state_id` value of the `state` object in `state`
-=======
-  /// The path of the state inside `state` that needs to be activated. Set in `div_data_state_id/id/state_id` format. Can be hierarchical: `div_data_state_id/id_1/state_id_1/../id_n/state_id_n`. Consists of:
-  /// • `div_data_state_id` - `state_id` numeric value of the `state` object in `data`;
-  /// • `id` - `id` value of the `state` object;
-  /// • `state_id` - `state_id` value of the `state` object in `state`.
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   final Expression<String> stateId;
 
   /// Indicates a state change:
