@@ -104,6 +104,7 @@ class DivCollectionItemBuilder extends Preloadable with EquatableMixin {
   ) async {
     try {
       await data.preload(context);
+      await safeFuturesWait(prototypes, (v) => v.preload(context));
     } catch (e) {
       return;
     }

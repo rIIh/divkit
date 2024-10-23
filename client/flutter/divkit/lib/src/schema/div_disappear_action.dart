@@ -54,11 +54,7 @@ class DivDisappearAction extends Preloadable
   @override
   final Expression<Uri>? referer;
 
-<<<<<<< HEAD
   /// The ID of the element within which the specified action will be performed.
-=======
-  /// Div identifier denotes the scope in which this action will be performed.
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
   @override
   final String? scopeId;
   @override
@@ -109,11 +105,7 @@ class DivDisappearAction extends Preloadable
         logId: logId ?? this.logId.copy(),
         logLimit: logLimit ?? this.logLimit.copy(),
         payload: payload != null ? payload.call() : this.payload,
-<<<<<<< HEAD
-        referer: referer != null ? referer.call() : this.referer,
-=======
         referer: referer != null ? referer.call() : this.referer?.copy(),
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
         scopeId: scopeId != null ? scopeId.call() : this.scopeId,
         typed: typed != null ? typed.call() : this.typed,
         url: url != null ? url.call() : this.url?.copy(),

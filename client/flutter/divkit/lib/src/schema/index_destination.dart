@@ -24,11 +24,7 @@ class IndexDestination extends Preloadable with EquatableMixin {
     Expression<int>? value,
   }) =>
       IndexDestination(
-<<<<<<< HEAD
-        value: value ?? this.value,
-=======
         value: value ?? this.value.copy(),
->>>>>>> 6e628ef7b (chore: regenerate schema for copy-able expressions)
       );
 
   static IndexDestination? fromJson(
