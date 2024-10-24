@@ -31,7 +31,7 @@ class _DivStateWidgetState extends State<DivStateWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    stream ??= DivStateModel.from(context, widget.data);
+    stream = DivStateModel.from(context, widget.data);
   }
 
   @override
