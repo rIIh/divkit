@@ -142,6 +142,12 @@ class _DivKitViewState extends State<_DivKitView> {
   DivRootContext? _divRootContext;
   DivRootContext? get divRootContext => _divRootContext;
   set divRootContext(DivRootContext? value) {
+    if (_divRootContext != null) {
+      for (final entry in _divRootContext!.stateManager.states.entries) {
+        value?.stateManager.registerState(entry.key, entry.value);
+      }
+    }
+
     _divRootContext?.dispose();
     _divRootContext = value;
   }
