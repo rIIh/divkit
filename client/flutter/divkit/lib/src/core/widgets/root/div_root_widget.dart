@@ -68,7 +68,7 @@ class _DivRendererState extends State<DivRenderer> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    stream ??= DivRootModel.from(context, widget.data);
+    stream = DivRootModel.from(context, widget.data);
   }
 
   @override
