@@ -114,6 +114,8 @@ class _DivImageWidgetState extends State<DivImageWidget> {
                     fit: model.fit,
                     color: model.color,
                     colorBlendMode: model.colorBlendMode,
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        const SizedBox.shrink(),
                     imageBuilder: (context, imageProvider) => Image(
                       image: imageProvider.withScale(model.src.imageScale),
                     ),
