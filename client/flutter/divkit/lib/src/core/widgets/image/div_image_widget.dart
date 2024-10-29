@@ -6,6 +6,8 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:divkit/divkit.dart';
+import 'package:divkit/src/core/extension/cached_image_provider_x.dart';
+import 'package:divkit/src/core/extension/image_src_x.dart';
 import 'package:divkit/src/core/widgets/image/div_image_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -87,6 +89,7 @@ class _DivImageWidgetState extends State<DivImageWidget> {
                     fit: model.fit,
                     color: model.color,
                     colorBlendMode: model.colorBlendMode,
+                    scale: model.src.imageScale,
                     alignment: model.contentAlignment.resolve(
                       Directionality.maybeOf(context),
                     ),
@@ -111,6 +114,9 @@ class _DivImageWidgetState extends State<DivImageWidget> {
                     fit: model.fit,
                     color: model.color,
                     colorBlendMode: model.colorBlendMode,
+                    imageBuilder: (context, imageProvider) => Image(
+                      image: imageProvider.withScale(model.src.imageScale),
+                    ),
                     alignment: model.contentAlignment.resolve(
                       Directionality.maybeOf(context),
                     ),
