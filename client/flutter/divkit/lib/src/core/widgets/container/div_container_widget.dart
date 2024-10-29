@@ -105,6 +105,7 @@ class _DivContainerWidgetState extends State<DivContainerWidget> {
                 stack: (data) => provide(
                   DivParentData.stack,
                   child: Stack(
+                    clipBehavior: Clip.none,
                     alignment:
                         data.contentAlignment ?? AlignmentDirectional.topStart,
                     children: children,
@@ -112,7 +113,10 @@ class _DivContainerWidgetState extends State<DivContainerWidget> {
                 ),
               );
 
-              return mainWidget;
+              return ClipRect(
+                clipBehavior: model.clipToBounds ? Clip.hardEdge : Clip.none,
+                child: mainWidget,
+              );
             }
 
             return const SizedBox.shrink();

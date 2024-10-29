@@ -9,11 +9,13 @@ class DivContainerModel with EquatableMixin {
   final List<Widget> children;
   final List<DivItemBuilderResult> itemBuilderResults;
   final ContentAlignment contentAlignment;
+  final bool clipToBounds;
 
   const DivContainerModel({
     required this.contentAlignment,
     this.children = const [],
     this.itemBuilderResults = const [],
+    this.clipToBounds = true,
   });
 
   static DivContainerModel? value(
@@ -21,6 +23,8 @@ class DivContainerModel with EquatableMixin {
     DivContainer data,
   ) {
     try {
+      final clipToBounds = data.clipToBounds.requireValue;
+
       final contentAlignment = PassDivContentAlignment(
         data.orientation,
         data.contentAlignmentVertical,
@@ -48,6 +52,7 @@ class DivContainerModel with EquatableMixin {
         contentAlignment: contentAlignment,
         children: children,
         itemBuilderResults: results,
+        clipToBounds: clipToBounds,
       );
     } catch (e, st) {
       logger.warning(
@@ -66,6 +71,9 @@ class DivContainerModel with EquatableMixin {
     final variables = watch<DivContext>(buildContext)!.variableManager;
 
     return variables.watch<DivContainerModel>((context) async {
+      final clipToBounds =
+          await data.clipToBounds.resolveValue(context: context);
+
       final contentAlignment = await PassDivContentAlignment(
         data.orientation,
         data.contentAlignmentVertical,
@@ -98,6 +106,7 @@ class DivContainerModel with EquatableMixin {
         contentAlignment: contentAlignment,
         children: children,
         itemBuilderResults: results,
+        clipToBounds: clipToBounds,
       );
     }).distinct(); // The widget is redrawn when the model changes.
   }
