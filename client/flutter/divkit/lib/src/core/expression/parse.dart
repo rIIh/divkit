@@ -173,38 +173,67 @@ Expression<Map<String, dynamic>>? safeParseMapExpr(
   return null;
 }
 
-List? safeParseList(
+List<T>? safeParseList<T>(
   Object? source, {
   List? fallback,
+  Object Function(dynamic obj)? mapper,
 }) {
+  mapper ??= (v) => v;
   if (source is List) {
-    return source;
-  } else if (source is String) {
+    return source.map(mapper).cast<T>().toList();
+  }
+
+  if (source is String) {
     final list = jsonDecode(source);
     if (list is List) {
-      return list;
+      return list.map(mapper).cast<T>().toList();
     }
   }
-  return fallback;
+
+  return fallback?.cast<T>();
 }
 
-Expression<List>? safeParseListExpr(
+Expression<List<T>>? safeParseListExpr<T>(
   Object? source, {
   Object? fallback,
+  Object Function(dynamic obj)? mapper,
 }) {
+  mapper ??= (it) => it;
   if (source != null) {
+    if (source is String && source.startsWith('@{')) {
+      return ResolvableExpression(
+        source,
+        parse: (obj) {
+          final List list;
+          if (obj is List) {
+            list = obj;
+          } else if (obj is String &&
+              obj.startsWith('[') &&
+              obj.endsWith(']')) {
+            list = jsonDecode(obj);
+          } else {
+            list = [];
+          }
+
+          return list.map(mapper!).cast<T>().toList();
+        },
+        fallback: fallback as List<T>?,
+      );
+    }
+
     final list = safeParseList(source);
     if (list is List) {
-      return ValueExpression(list);
+      return ValueExpression(list.map(mapper).cast<T>().toList());
     }
   } else {
     if (fallback != null) {
       final list = safeParseList(fallback);
       if (list is List) {
-        return ValueExpression(list);
+        return ValueExpression(list.map(mapper).cast<T>().toList());
       }
     }
   }
+
   return null;
 }
 
