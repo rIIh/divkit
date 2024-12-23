@@ -6,6 +6,8 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:divkit/divkit.dart';
+import 'package:divkit/src/core/extension/cached_image_provider_x.dart';
+import 'package:divkit/src/core/extension/image_src_x.dart';
 import 'package:divkit/src/core/widgets/image/div_image_model.dart';
 import 'package:divkit/src/utils/mapping_widget.dart';
 import 'package:divkit/src/utils/provider.dart';
@@ -50,6 +52,7 @@ class DivImageWidget extends DivMappingWidget<DivImage, DivImageModel> {
           fit: model.fit,
           color: model.color,
           colorBlendMode: model.colorBlendMode,
+          scale: model.src.imageScale,
           alignment: model.contentAlignment.resolve(
             Directionality.maybeOf(context),
           ),
@@ -74,6 +77,11 @@ class DivImageWidget extends DivMappingWidget<DivImage, DivImageModel> {
           fit: model.fit,
           color: model.color,
           colorBlendMode: model.colorBlendMode,
+          progressIndicatorBuilder: (context, url, progress) =>
+              const SizedBox.shrink(),
+          imageBuilder: (context, imageProvider) => Image(
+            image: imageProvider.withScale(model.src.imageScale),
+          ),
           alignment: model.contentAlignment.resolve(
             Directionality.maybeOf(context),
           ),
