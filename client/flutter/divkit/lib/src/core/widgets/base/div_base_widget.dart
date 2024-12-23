@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 class DivBaseWidget extends StatefulWidget {
   final DivBase data;
-
   final DivTapActionData? tapActionData;
+  final bool ignorePaddings;
 
   final Expression<double>? aspect;
 
@@ -21,6 +21,7 @@ class DivBaseWidget extends StatefulWidget {
     required this.child,
     this.tapActionData,
     this.aspect,
+    this.ignorePaddings = false,
   });
 
   @override
@@ -92,7 +93,9 @@ class _DivBaseWidgetState extends State<DivBaseWidget> {
                             animation: focusNode,
                             builder: (_, __) => DivDecoratedBox(
                               key: key,
-                              padding: model.padding,
+                              padding: widget.ignorePaddings //
+                                  ? null
+                                  : model.padding,
                               decoration: focusNode.hasFocus
                                   ? model.focusDecoration
                                   : model.decoration,
@@ -101,7 +104,9 @@ class _DivBaseWidgetState extends State<DivBaseWidget> {
                           )
                         : DivDecoratedBox(
                             key: key,
-                            padding: model.padding,
+                            padding: widget.ignorePaddings //
+                                ? null
+                                : model.padding,
                             decoration: model.decoration,
                             child: widget.child,
                           ),
