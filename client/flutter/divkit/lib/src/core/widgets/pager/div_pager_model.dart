@@ -1,4 +1,5 @@
 import 'package:divkit/divkit.dart';
+import 'package:divkit/src/utils/div_item_builder_utils.dart';
 import 'package:divkit/src/utils/provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
@@ -6,10 +7,12 @@ import 'package:flutter/widgets.dart';
 class DivPagerModel with EquatableMixin {
   final Axis orientation;
   final List<Widget> children;
+  final List<DivItemBuilderResult>? itemBuilderResults;
 
   const DivPagerModel({
-    required this.children,
     required this.orientation,
+    required this.itemBuilderResults,
+    required this.children,
   });
 
   @override
@@ -25,10 +28,30 @@ extension DivPagerConvereter on DivPager {
 
     final orientation =
         _convertOrientation(this.orientation.resolve(variables));
-    final children = items?.map((e) => DivWidget(e)).toList() ?? [];
+
+    final List<Widget> children;
+    final List<DivItemBuilderResult>? results;
+    if (items != null) {
+      results = null;
+      children = [
+        for (final item in items!) //
+          DivWidget(item),
+      ];
+    } else if (itemBuilder != null && context.mounted) {
+      children = const [];
+      results = buildItemBuilderResults(
+        builder: itemBuilder!,
+        context: variables,
+      );
+    } else {
+      children = const [];
+      results = null;
+    }
+
     return DivPagerModel(
-      children: children,
       orientation: orientation,
+      itemBuilderResults: results,
+      children: children,
     );
   }
 
@@ -53,12 +76,32 @@ extension DivPagerConvereter on DivPager {
       }
     }
 
+    final List<Widget> children;
+    final List<DivItemBuilderResult>? results;
+    if (items != null) {
+      results = null;
+      children = [
+        for (final item in items!) //
+          DivWidget(item),
+      ];
+    } else if (itemBuilder != null && context.mounted) {
+      children = const [];
+      results = buildItemBuilderResults(
+        builder: itemBuilder!,
+        context: variables,
+      );
+    } else {
+      children = const [];
+      results = null;
+    }
+
     final orientation =
         _convertOrientation(this.orientation.resolve(variables));
-    final children = items?.map((e) => DivWidget(e)).toList();
+
     return DivPagerModel(
       orientation: orientation,
-      children: children ?? [],
+      itemBuilderResults: results,
+      children: children,
     );
   }
 
