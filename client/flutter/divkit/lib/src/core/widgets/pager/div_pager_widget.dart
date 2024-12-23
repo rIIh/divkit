@@ -2,6 +2,7 @@ import 'package:divkit/divkit.dart';
 import 'package:divkit/src/core/widgets/pager/div_pager_model.dart';
 import 'package:divkit/src/utils/div_item_builder_utils.dart';
 import 'package:divkit/src/utils/provider.dart';
+import 'package:divkit/src/utils/size_axis_extension.dart';
 import 'package:flutter/material.dart';
 
 class DivPagerWidget extends StatefulWidget {
@@ -23,6 +24,8 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
   late int currentPage;
 
   late PageController controller;
+
+  late DivPager dataWithoutPaddings;
 
   @override
   void initState() {
@@ -46,10 +49,10 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    stream ??= watch<DivContext>(context)!.variableManager.watch((values) {
+    stream = watch<DivContext>(context)!.variableManager.watch((values) {
       return widget.data.resolve(
         context,
-        controller,
+        () => controller,
         () => currentPage,
       );
     });
@@ -64,7 +67,7 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
       stream = watch<DivContext>(context)!.variableManager.watch(
             (values) => widget.data.resolve(
               context,
-              controller,
+              () => controller,
               () => currentPage,
             ),
           );
@@ -78,14 +81,27 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
   ) {
     return DivBaseWidget(
       data: widget.data,
-      child: provide(
-        DivParentData.pager,
-        child: PageView(
-          scrollDirection: model.orientation,
-          controller: controller,
-          onPageChanged: (value) => onPageChanged(value),
-          children: model.children,
-        ),
+      ignorePaddings: true,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          updateViewportFraction(model, constraints);
+
+          return provide(
+            DivParentData.pager,
+            child: PageView.builder(
+              controller: controller,
+              scrollDirection: model.orientation,
+              onPageChanged: (value) => onPageChanged(value),
+              itemCount: model.isInfinite ? null : model.children.length,
+              itemBuilder: (context, index) => model.children.isNotEmpty
+                  ? buildItem(
+                      itemSpacing: model.itemSpacing,
+                      child: children[index % model.children.length],
+                    )
+                  : null,
+            ),
+          );
+        },
       ),
     );
   }
@@ -124,6 +140,35 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
 
           return const SizedBox.shrink();
         },
+      );
+
+  void updateViewportFraction(
+    DivPagerModel model,
+    BoxConstraints constraints,
+  ) {
+    final padding = model.padding;
+    final viewportFractionPadding = padding.along(
+      model.orientation,
+    );
+
+    final viewportFraction = 1 +
+        (model.itemSpacing - viewportFractionPadding) /
+            constraints.biggest.along(model.orientation);
+
+    if (controller.viewportFraction != viewportFraction) {
+      controller = PageController(
+        initialPage: controller.initialPage,
+        viewportFraction: viewportFraction,
+      );
+    }
+  }
+
+  Widget buildItem({required Widget child, required double itemSpacing}) =>
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: itemSpacing / 2,
+        ),
+        child: child,
       );
 
   void onPageChanged(int value) {
