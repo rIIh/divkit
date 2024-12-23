@@ -60,7 +60,8 @@ extension DivTextConverter on DivText {
 
     final fontSize = this.fontSize.resolve(variables).toDouble() *
         fontSizeUnit.resolve(variables).asPx *
-        textScale;
+        textScale *
+        viewScale;
 
     final lineHeight = this.lineHeight?.resolve(variables).toDouble();
 
