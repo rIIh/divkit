@@ -52,7 +52,7 @@ List<DivItemBuilderResult> buildItemBuilderResults({
   required DivCollectionItemBuilder builder,
   required DivVariableContext context,
 }) {
-  final items = builder.data.value;
+  final items = builder.data.resolve(context);
   var itemName = builder.dataElementName;
   if (itemName.isEmpty) itemName = 'it';
 
