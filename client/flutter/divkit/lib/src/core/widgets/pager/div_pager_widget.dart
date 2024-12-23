@@ -1,5 +1,6 @@
 import 'package:divkit/divkit.dart';
 import 'package:divkit/src/core/widgets/pager/div_pager_model.dart';
+import 'package:divkit/src/utils/div_item_builder_utils.dart';
 import 'package:divkit/src/utils/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -70,26 +71,55 @@ class _DivPagerWidgetState extends State<DivPagerWidget> {
     }
   }
 
+  Widget buildPager(
+    BuildContext context,
+    DivPagerModel model,
+    List<Widget> children,
+  ) {
+    return DivBaseWidget(
+      data: widget.data,
+      child: provide(
+        DivParentData.pager,
+        child: PageView(
+          scrollDirection: model.orientation,
+          controller: controller,
+          onPageChanged: (value) => onPageChanged(value),
+          children: model.children,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => StreamBuilder<DivPagerModel>(
         initialData: value,
         stream: stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final model = snapshot.requireData;
+            final model = snapshot.data!;
 
-            return DivBaseWidget(
-              data: widget.data,
-              child: provide(
-                DivParentData.pager,
-                child: PageView(
-                  scrollDirection: model.orientation,
-                  controller: controller,
-                  onPageChanged: (value) => onPageChanged(value),
-                  children: model.children,
-                ),
-              ),
-            );
+            if (widget.data.itemBuilder != null) {
+              final children = [
+                for (final result in model.itemBuilderResults ?? [])
+                  provide<DivContext>(
+                    DivAdditionalVariablesContext(
+                      buildContext: context,
+                      variables: [
+                        for (final variable in result.variables.entries)
+                          DivVariableModel(
+                            name: variable.key,
+                            value: variable.value,
+                          ),
+                      ],
+                    ),
+                    child: DivWidget(result.div),
+                  )
+              ];
+
+              return buildPager(context, model, children);
+            } else {
+              return buildPager(context, model, model.children);
+            }
           }
 
           return const SizedBox.shrink();
