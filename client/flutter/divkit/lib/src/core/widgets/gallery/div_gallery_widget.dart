@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:divkit/divkit.dart';
 import 'package:divkit/src/core/widgets/gallery/div_gallery_model.dart';
+import 'package:divkit/src/utils/div_item_builder_utils.dart';
 import 'package:divkit/src/utils/mapping_widget.dart';
 import 'package:divkit/src/utils/provider.dart';
 import 'package:flutter/widgets.dart';
@@ -20,8 +21,11 @@ class DivGalleryWidget extends DivMappingWidget<DivGallery, DivGalleryModel> {
             (values) => data.resolve(context),
           );
 
-  @override
-  Widget build(BuildContext context, DivGalleryModel model) {
+  Widget buildGallery(
+    BuildContext context,
+    DivGalleryModel model,
+    List<Widget> children,
+  ) {
     final isHorizontal = model.orientation == Axis.horizontal;
 
     final childrenWithSpacing = model.children
@@ -54,5 +58,31 @@ class DivGalleryWidget extends DivMappingWidget<DivGallery, DivGalleryModel> {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context, DivGalleryModel model) {
+    if (data.itemBuilder != null) {
+      final children = [
+        for (final result in model.itemBuilderResults ?? [])
+          provide<DivContext>(
+            DivAdditionalVariablesContext(
+              buildContext: context,
+              variables: [
+                for (final variable in result.variables.entries)
+                  DivVariableModel(
+                    name: variable.key,
+                    value: variable.value,
+                  ),
+              ],
+            ),
+            child: DivWidget(result.div),
+          )
+      ];
+
+      return buildGallery(context, model, children);
+    } else {
+      return buildGallery(context, model, model.children);
+    }
   }
 }
