@@ -1,5 +1,6 @@
 import 'package:divkit/divkit.dart';
 import 'package:divkit/src/core/widgets/container/div_container_model.dart';
+import 'package:divkit/src/utils/div_item_builder_utils.dart';
 import 'package:divkit/src/utils/mapping_widget.dart';
 import 'package:divkit/src/utils/provider.dart';
 import 'package:flutter/widgets.dart';
@@ -20,8 +21,11 @@ class DivContainerWidget
             (values) => data.resolve(context),
           );
 
-  @override
-  Widget build(BuildContext context, DivContainerModel model) {
+  Widget buildContainer(
+    BuildContext context,
+    DivContainerModel model,
+    List<Widget> children,
+  ) {
     final mainWidget = model.contentAlignment.map(
       flex: (data) => provide(
         data.direction == Axis.vertical
@@ -32,7 +36,7 @@ class DivContainerWidget
           direction: data.direction,
           mainAxisAlignment: data.mainAxisAlignment,
           crossAxisAlignment: data.crossAxisAlignment,
-          children: model.children,
+          children: children,
         ),
       ),
       wrap: (data) => provide(
@@ -41,14 +45,14 @@ class DivContainerWidget
           direction: data.direction,
           alignment: data.wrapAlignment,
           runAlignment: data.runAlignment,
-          children: model.children,
+          children: children,
         ),
       ),
       stack: (data) => provide(
         DivParentData.stack,
         child: Stack(
           alignment: data.contentAlignment ?? AlignmentDirectional.topStart,
-          children: model.children,
+          children: children,
         ),
       ),
     );
@@ -64,5 +68,31 @@ class DivContainerWidget
       ),
       child: mainWidget,
     );
+  }
+
+  @override
+  Widget build(BuildContext context, DivContainerModel model) {
+    if (data.itemBuilder != null) {
+      final children = [
+        for (final result in model.itemBuilderResults ?? [])
+          provide<DivContext>(
+            DivAdditionalVariablesContext(
+              buildContext: context,
+              variables: [
+                for (final variable in result.variables.entries)
+                  DivVariableModel(
+                    name: variable.key,
+                    value: variable.value,
+                  ),
+              ],
+            ),
+            child: DivWidget(result.div),
+          )
+      ];
+
+      return buildContainer(context, model, children);
+    } else {
+      return buildContainer(context, model, model.children);
+    }
   }
 }
