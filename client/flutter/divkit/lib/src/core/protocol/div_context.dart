@@ -202,7 +202,7 @@ class DivRootContext extends DivContext {
               ?.map((t) => t.pass)
               .toList(growable: false),
         )
-        ..scale = const DivScale()
+        ..scale = scale ?? const DivScale()
         ..fontProvider = const DefaultDivFontProvider();
 
       _log(loggerContext, 'Prepared #${divContext.hashCode}');
