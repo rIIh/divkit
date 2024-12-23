@@ -82,14 +82,22 @@ extension DivPagerConvereter on DivPager {
       results = null;
       children = [
         for (final item in items!) //
-          DivWidget(item),
+          if (item.value.visibility.resolve(variables) != DivVisibility.gone)
+            DivWidget(item),
       ];
     } else if (itemBuilder != null && context.mounted) {
       children = const [];
       results = buildItemBuilderResults(
         builder: itemBuilder!,
         context: variables,
-      );
+      )
+          .where(
+            (element) =>
+                element.div.value.visibility.resolve(variables) !=
+                DivVisibility.gone,
+          )
+          .toList();
+      ;
     } else {
       children = const [];
       results = null;
