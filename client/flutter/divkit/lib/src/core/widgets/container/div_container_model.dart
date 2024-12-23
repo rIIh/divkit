@@ -9,11 +9,13 @@ class DivContainerModel with EquatableMixin {
   final List<Widget> children;
   final List<DivItemBuilderResult>? itemBuilderResults;
   final ContentAlignment contentAlignment;
+  final bool clipToBounds;
 
   const DivContainerModel({
     required this.contentAlignment,
     this.children = const [],
     this.itemBuilderResults,
+    this.clipToBounds = true,
   });
 
   @override

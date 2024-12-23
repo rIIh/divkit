@@ -16,16 +16,24 @@ class DivDecoratedBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final backgroundWidgets = decoration?.backgroundWidgets ?? <Widget>[];
+    final borderRadius = decoration?.customBorderRadius.toBorderRadius() ?? //
+        BorderRadius.zero;
+
+    final clipBehavior = borderRadius == BorderRadius.zero //
+        ? Clip.none
+        : Clip.antiAlias;
+
     return CustomPaint(
       painter: _OuterShadowPainter(
         outerShadow: decoration?.outerShadow,
         borderRadiusCustom: decoration?.customBorderRadius,
       ),
       child: ClipRRect(
-        borderRadius: decoration?.customBorderRadius.toBorderRadius() ??
-            BorderRadius.zero,
+        clipBehavior: clipBehavior,
+        borderRadius: borderRadius,
         child: Stack(
           fit: StackFit.passthrough,
+          clipBehavior: Clip.none,
           children: [
             ...backgroundWidgets
                 .map(
