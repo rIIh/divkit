@@ -78,7 +78,7 @@ class DivText with EquatableMixin implements DivBase {
     this.fontFamily,
     this.fontFeatureSettings,
     this.fontSize = const ValueExpression(12),
-    this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
+    this.fontSizeUnit = const ValueExpression(DivSizeUnit.dp),
     this.fontWeight = const ValueExpression(DivFontWeight.regular),
     this.fontWeightValue,
     this.functions,
@@ -213,7 +213,7 @@ class DivText with EquatableMixin implements DivBase {
   /// Font size.
   // constraint: number >= 0; default value: 12
   final Expression<int> fontSize;
-  // default value: DivSizeUnit.sp
+  // default value: DivSizeUnit.dp
   final Expression<DivSizeUnit> fontSizeUnit;
 
   /// Style.
@@ -799,7 +799,7 @@ class DivText with EquatableMixin implements DivBase {
           safeParseStrEnumExpr(
             json['font_size_unit'],
             parse: DivSizeUnit.fromJson,
-            fallback: DivSizeUnit.sp,
+            fallback: DivSizeUnit.dp,
           ),
           name: 'font_size_unit',
         ),
@@ -1131,7 +1131,7 @@ class DivTextRange with EquatableMixin {
     this.fontFamily,
     this.fontFeatureSettings,
     this.fontSize,
-    this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
+    this.fontSizeUnit = const ValueExpression(DivSizeUnit.dp),
     this.fontWeight,
     this.fontWeightValue,
     this.letterSpacing,
@@ -1177,7 +1177,7 @@ class DivTextRange with EquatableMixin {
   /// • `px` — a physical pixel.
   /// • `dp` — a logical pixel that doesn't depend on screen density.
   /// • `sp` — a logical pixel that depends on the font size on a device. Specify height in `sp`. Only available on Android.
-  // default value: DivSizeUnit.sp
+  // default value: DivSizeUnit.dp
   final Expression<DivSizeUnit> fontSizeUnit;
 
   /// Style.
@@ -1338,7 +1338,7 @@ class DivTextRange with EquatableMixin {
           safeParseStrEnumExpr(
             json['font_size_unit'],
             parse: DivSizeUnit.fromJson,
-            fallback: DivSizeUnit.sp,
+            fallback: DivSizeUnit.dp,
           ),
           name: 'font_size_unit',
         ),
