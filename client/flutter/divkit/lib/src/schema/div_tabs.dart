@@ -814,7 +814,7 @@ class DivTabsTabTitleStyle with EquatableMixin {
     this.cornersRadius,
     this.fontFamily,
     this.fontSize = const ValueExpression(12),
-    this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
+    this.fontSizeUnit = const ValueExpression(DivSizeUnit.dp),
     this.fontWeight = const ValueExpression(DivFontWeight.regular),
     this.inactiveBackgroundColor,
     this.inactiveFontWeight,
@@ -874,7 +874,7 @@ class DivTabsTabTitleStyle with EquatableMixin {
   final Expression<int> fontSize;
 
   /// Units of title font size measurement.
-  // default value: DivSizeUnit.sp
+  // default value: DivSizeUnit.dp
   final Expression<DivSizeUnit> fontSizeUnit;
 
   /// Style. Use `active_font_weight` and `inactive_font_weight` instead.
@@ -1041,7 +1041,7 @@ class DivTabsTabTitleStyle with EquatableMixin {
           safeParseStrEnumExpr(
             json['font_size_unit'],
             parse: DivSizeUnit.fromJson,
-            fallback: DivSizeUnit.sp,
+            fallback: DivSizeUnit.dp,
           ),
           name: 'font_size_unit',
         ),
