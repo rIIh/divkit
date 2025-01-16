@@ -18,6 +18,8 @@ abstract class Expression<T> extends Resolvable<T> with EquatableMixin {
 
   @override
   T resolve(DivVariableContext context);
+
+  Expression<T> copy();
 }
 
 class ValueExpression<T> extends Expression<T> {
@@ -31,6 +33,9 @@ class ValueExpression<T> extends Expression<T> {
 
   @override
   List<Object?> get props => [value];
+
+  @override
+  Expression<T> copy() => ValueExpression(value);
 }
 
 class ResolvableExpression<T> extends Expression<T> {
@@ -80,4 +85,11 @@ class ResolvableExpression<T> extends Expression<T> {
 
   @override
   List<Object?> get props => [source, fallback];
+
+  @override
+  Expression<T> copy() => ResolvableExpression(
+        source,
+        parse: parse,
+        fallback: fallback,
+      );
 }
