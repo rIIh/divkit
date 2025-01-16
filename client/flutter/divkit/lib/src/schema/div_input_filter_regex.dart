@@ -23,7 +23,7 @@ class DivInputFilterRegex with EquatableMixin {
     Expression<String>? pattern,
   }) =>
       DivInputFilterRegex(
-        pattern: pattern ?? this.pattern,
+        pattern: pattern ?? this.pattern.copy(),
       );
 
   static DivInputFilterRegex? fromJson(

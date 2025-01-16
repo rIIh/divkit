@@ -24,7 +24,7 @@ class DivPercentageSize with EquatableMixin {
     Expression<double>? value,
   }) =>
       DivPercentageSize(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static DivPercentageSize? fromJson(

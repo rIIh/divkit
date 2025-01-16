@@ -21,7 +21,7 @@ class DivActionFocusElement with EquatableMixin {
     Expression<String>? elementId,
   }) =>
       DivActionFocusElement(
-        elementId: elementId ?? this.elementId,
+        elementId: elementId ?? this.elementId.copy(),
       );
 
   static DivActionFocusElement? fromJson(

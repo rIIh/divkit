@@ -34,9 +34,9 @@ class DivStroke with EquatableMixin {
     Expression<double>? width,
   }) =>
       DivStroke(
-        color: color ?? this.color,
-        unit: unit ?? this.unit,
-        width: width ?? this.width,
+        color: color ?? this.color.copy(),
+        unit: unit ?? this.unit.copy(),
+        width: width ?? this.width.copy(),
       );
 
   static DivStroke? fromJson(

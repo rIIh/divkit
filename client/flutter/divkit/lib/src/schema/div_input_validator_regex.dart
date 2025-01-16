@@ -42,9 +42,9 @@ class DivInputValidatorRegex with EquatableMixin {
     String? variable,
   }) =>
       DivInputValidatorRegex(
-        allowEmpty: allowEmpty ?? this.allowEmpty,
-        labelId: labelId ?? this.labelId,
-        pattern: pattern ?? this.pattern,
+        allowEmpty: allowEmpty ?? this.allowEmpty.copy(),
+        labelId: labelId ?? this.labelId.copy(),
+        pattern: pattern ?? this.pattern.copy(),
         variable: variable ?? this.variable,
       );
 

@@ -36,8 +36,8 @@ class DivActionSetStoredValue with EquatableMixin {
     DivTypedValue? value,
   }) =>
       DivActionSetStoredValue(
-        lifetime: lifetime ?? this.lifetime,
-        name: name ?? this.name,
+        lifetime: lifetime ?? this.lifetime.copy(),
+        name: name ?? this.name.copy(),
         value: value ?? this.value,
       );
 

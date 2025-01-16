@@ -52,6 +52,7 @@ class DivSlider with EquatableMixin implements DivBase {
       DivWrapContentSize(),
     ),
     this.id,
+    this.isEnabled = const ValueExpression(true),
     this.layoutProvider,
     this.margins = const DivEdgeInsets(),
     this.maxValue = const ValueExpression(100),
@@ -148,6 +149,10 @@ class DivSlider with EquatableMixin implements DivBase {
   /// Element ID. It must be unique within the root element. It is used as `accessibilityIdentifier` on iOS.
   @override
   final String? id;
+
+  /// Enables or disables value selecting by click/tap or swipe.
+  // default value: true
+  final Expression<bool> isEnabled;
 
   /// Provides data on the actual size of the element.
   @override
@@ -285,6 +290,7 @@ class DivSlider with EquatableMixin implements DivBase {
         functions,
         height,
         id,
+        isEnabled,
         layoutProvider,
         margins,
         maxValue,
@@ -334,6 +340,7 @@ class DivSlider with EquatableMixin implements DivBase {
     Arr<DivFunction>? Function()? functions,
     DivSize? height,
     String? Function()? id,
+    Expression<bool>? isEnabled,
     DivLayoutProvider? Function()? layoutProvider,
     DivEdgeInsets? margins,
     Expression<int>? maxValue,
@@ -371,15 +378,16 @@ class DivSlider with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -388,16 +396,17 @@ class DivSlider with EquatableMixin implements DivBase {
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        maxValue: maxValue ?? this.maxValue,
-        minValue: minValue ?? this.minValue,
+        maxValue: maxValue ?? this.maxValue.copy(),
+        minValue: minValue ?? this.minValue.copy(),
         paddings: paddings ?? this.paddings,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         secondaryValueAccessibility:
             secondaryValueAccessibility ?? this.secondaryValueAccessibility,
         selectedActions: selectedActions != null
@@ -443,7 +452,7 @@ class DivSlider with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -556,6 +565,13 @@ class DivSlider with EquatableMixin implements DivBase {
         ),
         id: safeParseStr(
           json['id'],
+        ),
+        isEnabled: reqVProp<bool>(
+          safeParseBoolExpr(
+            json['is_enabled'],
+            fallback: true,
+          ),
+          name: 'is_enabled',
         ),
         layoutProvider: safeParseObject(
           json['layout_provider'],
@@ -815,14 +831,14 @@ class DivSliderTextStyle with EquatableMixin {
     Expression<Color>? textColor,
   }) =>
       DivSliderTextStyle(
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
         offset: offset != null ? offset.call() : this.offset,
-        textColor: textColor ?? this.textColor,
+        textColor: textColor ?? this.textColor.copy(),
       );
 
   static DivSliderTextStyle? fromJson(
@@ -918,9 +934,9 @@ class DivSliderRange with EquatableMixin {
     DivDrawable? Function()? trackInactiveStyle,
   }) =>
       DivSliderRange(
-        end: end != null ? end.call() : this.end,
+        end: end != null ? end.call() : this.end?.copy(),
         margins: margins ?? this.margins,
-        start: start != null ? start.call() : this.start,
+        start: start != null ? start.call() : this.start?.copy(),
         trackActiveStyle: trackActiveStyle != null
             ? trackActiveStyle.call()
             : this.trackActiveStyle,

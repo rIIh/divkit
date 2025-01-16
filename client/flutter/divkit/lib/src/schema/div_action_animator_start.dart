@@ -72,14 +72,17 @@ class DivActionAnimatorStart with EquatableMixin {
   }) =>
       DivActionAnimatorStart(
         animatorId: animatorId ?? this.animatorId,
-        direction: direction != null ? direction.call() : this.direction,
-        duration: duration != null ? duration.call() : this.duration,
+        direction:
+            direction != null ? direction.call() : this.direction?.copy(),
+        duration: duration != null ? duration.call() : this.duration?.copy(),
         endValue: endValue != null ? endValue.call() : this.endValue,
-        interpolator:
-            interpolator != null ? interpolator.call() : this.interpolator,
+        interpolator: interpolator != null
+            ? interpolator.call()
+            : this.interpolator?.copy(),
         repeatCount:
             repeatCount != null ? repeatCount.call() : this.repeatCount,
-        startDelay: startDelay != null ? startDelay.call() : this.startDelay,
+        startDelay:
+            startDelay != null ? startDelay.call() : this.startDelay?.copy(),
         startValue: startValue != null ? startValue.call() : this.startValue,
       );
 
