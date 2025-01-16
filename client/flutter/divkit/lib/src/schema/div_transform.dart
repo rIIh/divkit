@@ -51,7 +51,7 @@ class DivTransform with EquatableMixin {
       DivTransform(
         pivotX: pivotX ?? this.pivotX,
         pivotY: pivotY ?? this.pivotY,
-        rotation: rotation != null ? rotation.call() : this.rotation,
+        rotation: rotation != null ? rotation.call() : this.rotation?.copy(),
       );
 
   static DivTransform? fromJson(

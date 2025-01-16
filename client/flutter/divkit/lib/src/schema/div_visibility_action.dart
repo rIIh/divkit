@@ -98,16 +98,18 @@ class DivVisibilityAction with EquatableMixin implements DivSightAction {
         downloadCallbacks: downloadCallbacks != null
             ? downloadCallbacks.call()
             : this.downloadCallbacks,
-        isEnabled: isEnabled ?? this.isEnabled,
-        logId: logId ?? this.logId,
-        logLimit: logLimit ?? this.logLimit,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
+        logId: logId ?? this.logId.copy(),
+        logLimit: logLimit ?? this.logLimit.copy(),
         payload: payload != null ? payload.call() : this.payload,
-        referer: referer != null ? referer.call() : this.referer,
+        referer: referer != null ? referer.call() : this.referer?.copy(),
         scopeId: scopeId != null ? scopeId.call() : this.scopeId,
         typed: typed != null ? typed.call() : this.typed,
-        url: url != null ? url.call() : this.url,
-        visibilityDuration: visibilityDuration ?? this.visibilityDuration,
-        visibilityPercentage: visibilityPercentage ?? this.visibilityPercentage,
+        url: url != null ? url.call() : this.url?.copy(),
+        visibilityDuration:
+            visibilityDuration ?? this.visibilityDuration.copy(),
+        visibilityPercentage:
+            visibilityPercentage ?? this.visibilityPercentage.copy(),
       );
 
   static DivVisibilityAction? fromJson(

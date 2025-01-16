@@ -367,46 +367,49 @@ class DivSelect with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
-        hintColor: hintColor ?? this.hintColor,
-        hintText: hintText != null ? hintText.call() : this.hintText,
+        hintColor: hintColor ?? this.hintColor.copy(),
+        hintText: hintText != null ? hintText.call() : this.hintText?.copy(),
         id: id != null ? id.call() : this.id,
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+        letterSpacing: letterSpacing ?? this.letterSpacing.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         margins: margins ?? this.margins,
         options: options ?? this.options,
         paddings: paddings ?? this.paddings,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
-        textColor: textColor ?? this.textColor,
+        textColor: textColor ?? this.textColor.copy(),
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
         transitionChange: transitionChange != null
@@ -424,7 +427,7 @@ class DivSelect with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -766,8 +769,8 @@ class DivSelectOption with EquatableMixin {
     Expression<String>? value,
   }) =>
       DivSelectOption(
-        text: text != null ? text.call() : this.text,
-        value: value ?? this.value,
+        text: text != null ? text.call() : this.text?.copy(),
+        value: value ?? this.value.copy(),
       );
 
   static DivSelectOption? fromJson(

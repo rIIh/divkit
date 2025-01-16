@@ -42,9 +42,9 @@ class DivInputValidatorExpression with EquatableMixin {
     String? variable,
   }) =>
       DivInputValidatorExpression(
-        allowEmpty: allowEmpty ?? this.allowEmpty,
-        condition: condition ?? this.condition,
-        labelId: labelId ?? this.labelId,
+        allowEmpty: allowEmpty ?? this.allowEmpty.copy(),
+        condition: condition ?? this.condition.copy(),
+        labelId: labelId ?? this.labelId.copy(),
         variable: variable ?? this.variable,
       );
 

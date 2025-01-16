@@ -77,14 +77,15 @@ class DivAnimation with EquatableMixin {
     Expression<double>? Function()? startValue,
   }) =>
       DivAnimation(
-        duration: duration ?? this.duration,
-        endValue: endValue != null ? endValue.call() : this.endValue,
-        interpolator: interpolator ?? this.interpolator,
+        duration: duration ?? this.duration.copy(),
+        endValue: endValue != null ? endValue.call() : this.endValue?.copy(),
+        interpolator: interpolator ?? this.interpolator.copy(),
         items: items != null ? items.call() : this.items,
-        name: name ?? this.name,
+        name: name ?? this.name.copy(),
         repeat: repeat ?? this.repeat,
-        startDelay: startDelay ?? this.startDelay,
-        startValue: startValue != null ? startValue.call() : this.startValue,
+        startDelay: startDelay ?? this.startDelay.copy(),
+        startValue:
+            startValue != null ? startValue.call() : this.startValue?.copy(),
       );
 
   static DivAnimation? fromJson(

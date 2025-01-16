@@ -41,9 +41,9 @@ class DivActionScrollTo with EquatableMixin {
     Expression<String>? id,
   }) =>
       DivActionScrollTo(
-        animated: animated ?? this.animated,
+        animated: animated ?? this.animated.copy(),
         destination: destination ?? this.destination,
-        id: id ?? this.id,
+        id: id ?? this.id.copy(),
       );
 
   static DivActionScrollTo? fromJson(

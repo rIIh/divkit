@@ -20,7 +20,7 @@ class ArrayValue with EquatableMixin {
     Expression<Arr>? value,
   }) =>
       ArrayValue(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static ArrayValue? fromJson(

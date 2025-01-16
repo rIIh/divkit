@@ -43,9 +43,9 @@ class DivShadow with EquatableMixin {
     DivPoint? offset,
   }) =>
       DivShadow(
-        alpha: alpha ?? this.alpha,
-        blur: blur ?? this.blur,
-        color: color ?? this.color,
+        alpha: alpha ?? this.alpha.copy(),
+        blur: blur ?? this.blur.copy(),
+        color: color ?? this.color.copy(),
         offset: offset ?? this.offset,
       );
 

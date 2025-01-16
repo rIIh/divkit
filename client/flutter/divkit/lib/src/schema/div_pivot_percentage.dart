@@ -23,7 +23,7 @@ class DivPivotPercentage with EquatableMixin {
     Expression<double>? value,
   }) =>
       DivPivotPercentage(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static DivPivotPercentage? fromJson(

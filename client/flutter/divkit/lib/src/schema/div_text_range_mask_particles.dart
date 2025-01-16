@@ -56,10 +56,10 @@ class DivTextRangeMaskParticles with EquatableMixin {
     DivFixedSize? particleSize,
   }) =>
       DivTextRangeMaskParticles(
-        color: color ?? this.color,
-        density: density ?? this.density,
-        isAnimated: isAnimated ?? this.isAnimated,
-        isEnabled: isEnabled ?? this.isEnabled,
+        color: color ?? this.color.copy(),
+        density: density ?? this.density.copy(),
+        isAnimated: isAnimated ?? this.isAnimated.copy(),
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
         particleSize: particleSize ?? this.particleSize,
       );
 
