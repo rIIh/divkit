@@ -111,15 +111,16 @@ class DivColorAnimator with EquatableMixin implements DivAnimatorBase {
       DivColorAnimator(
         cancelActions:
             cancelActions != null ? cancelActions.call() : this.cancelActions,
-        direction: direction ?? this.direction,
-        duration: duration ?? this.duration,
+        direction: direction ?? this.direction.copy(),
+        duration: duration ?? this.duration.copy(),
         endActions: endActions != null ? endActions.call() : this.endActions,
-        endValue: endValue ?? this.endValue,
+        endValue: endValue ?? this.endValue.copy(),
         id: id ?? this.id,
-        interpolator: interpolator ?? this.interpolator,
+        interpolator: interpolator ?? this.interpolator.copy(),
         repeatCount: repeatCount ?? this.repeatCount,
-        startDelay: startDelay ?? this.startDelay,
-        startValue: startValue != null ? startValue.call() : this.startValue,
+        startDelay: startDelay ?? this.startDelay.copy(),
+        startValue:
+            startValue != null ? startValue.call() : this.startValue?.copy(),
         variableName: variableName ?? this.variableName,
       );
 

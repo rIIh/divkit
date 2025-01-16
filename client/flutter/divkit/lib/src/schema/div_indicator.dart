@@ -370,22 +370,23 @@ class DivIndicator with EquatableMixin implements DivBase {
   }) =>
       DivIndicator(
         accessibility: accessibility ?? this.accessibility,
-        activeItemColor: activeItemColor ?? this.activeItemColor,
-        activeItemSize: activeItemSize ?? this.activeItemSize,
+        activeItemColor: activeItemColor ?? this.activeItemColor.copy(),
+        activeItemSize: activeItemSize ?? this.activeItemSize.copy(),
         activeShape:
             activeShape != null ? activeShape.call() : this.activeShape,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
-        animation: animation ?? this.animation,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
+        animation: animation ?? this.animation.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -394,7 +395,7 @@ class DivIndicator with EquatableMixin implements DivBase {
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
-        inactiveItemColor: inactiveItemColor ?? this.inactiveItemColor,
+        inactiveItemColor: inactiveItemColor ?? this.inactiveItemColor.copy(),
         inactiveMinimumShape: inactiveMinimumShape != null
             ? inactiveMinimumShape.call()
             : this.inactiveMinimumShape,
@@ -407,11 +408,11 @@ class DivIndicator with EquatableMixin implements DivBase {
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        minimumItemSize: minimumItemSize ?? this.minimumItemSize,
+        minimumItemSize: minimumItemSize ?? this.minimumItemSize.copy(),
         paddings: paddings ?? this.paddings,
         pagerId: pagerId != null ? pagerId.call() : this.pagerId,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -433,7 +434,7 @@ class DivIndicator with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

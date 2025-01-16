@@ -42,7 +42,7 @@ class DivActionSubmit with EquatableMixin {
     DivActionSubmitRequest? request,
   }) =>
       DivActionSubmit(
-        containerId: containerId ?? this.containerId,
+        containerId: containerId ?? this.containerId.copy(),
         onFailActions:
             onFailActions != null ? onFailActions.call() : this.onFailActions,
         onSuccessActions: onSuccessActions != null
@@ -130,8 +130,8 @@ class DivActionSubmitRequest with EquatableMixin {
   }) =>
       DivActionSubmitRequest(
         headers: headers != null ? headers.call() : this.headers,
-        method: method ?? this.method,
-        url: url ?? this.url,
+        method: method ?? this.method.copy(),
+        url: url ?? this.url.copy(),
       );
 
   static DivActionSubmitRequest? fromJson(
@@ -193,8 +193,8 @@ class DivActionSubmitRequestHeader with EquatableMixin {
     Expression<String>? value,
   }) =>
       DivActionSubmitRequestHeader(
-        name: name ?? this.name,
-        value: value ?? this.value,
+        name: name ?? this.name.copy(),
+        value: value ?? this.value.copy(),
       );
 
   static DivActionSubmitRequestHeader? fromJson(

@@ -43,11 +43,12 @@ class DivCornersRadius with EquatableMixin {
     Expression<int>? Function()? topRight,
   }) =>
       DivCornersRadius(
-        bottomLeft: bottomLeft != null ? bottomLeft.call() : this.bottomLeft,
+        bottomLeft:
+            bottomLeft != null ? bottomLeft.call() : this.bottomLeft?.copy(),
         bottomRight:
-            bottomRight != null ? bottomRight.call() : this.bottomRight,
-        topLeft: topLeft != null ? topLeft.call() : this.topLeft,
-        topRight: topRight != null ? topRight.call() : this.topRight,
+            bottomRight != null ? bottomRight.call() : this.bottomRight?.copy(),
+        topLeft: topLeft != null ? topLeft.call() : this.topLeft?.copy(),
+        topRight: topRight != null ? topRight.call() : this.topRight?.copy(),
       );
 
   static DivCornersRadius? fromJson(

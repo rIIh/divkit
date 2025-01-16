@@ -21,7 +21,7 @@ class DivAccessibility with EquatableMixin {
   /// A tooltip of what will happen during interaction. If Speak Hints is enabled in the VoiceOver settings on iOS, a tooltip is played after `description`.
   final Expression<String>? hint;
 
-  /// Indicates the current status of the checkbox or radio button. `true` is selected, `false` is not selected.
+  /// Shows the current state of the checkbox or radio button. `true` is selected, `false` is not selected.
   final Expression<bool>? isChecked;
 
   /// The way the accessibility tree is organized. In the `merge` mode the accessibility service perceives an element together with a subtree as a whole. In the `exclude` mode an element together with a subtree isn't available for accessibility.
@@ -61,14 +61,15 @@ class DivAccessibility with EquatableMixin {
   }) =>
       DivAccessibility(
         description:
-            description != null ? description.call() : this.description,
-        hint: hint != null ? hint.call() : this.hint,
-        isChecked: isChecked != null ? isChecked.call() : this.isChecked,
-        mode: mode ?? this.mode,
-        muteAfterAction: muteAfterAction ?? this.muteAfterAction,
+            description != null ? description.call() : this.description?.copy(),
+        hint: hint != null ? hint.call() : this.hint?.copy(),
+        isChecked:
+            isChecked != null ? isChecked.call() : this.isChecked?.copy(),
+        mode: mode ?? this.mode.copy(),
+        muteAfterAction: muteAfterAction ?? this.muteAfterAction.copy(),
         stateDescription: stateDescription != null
             ? stateDescription.call()
-            : this.stateDescription,
+            : this.stateDescription?.copy(),
         type: type ?? this.type,
       );
 

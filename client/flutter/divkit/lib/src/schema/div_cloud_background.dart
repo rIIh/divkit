@@ -37,8 +37,8 @@ class DivCloudBackground with EquatableMixin {
     DivEdgeInsets? paddings,
   }) =>
       DivCloudBackground(
-        color: color ?? this.color,
-        cornerRadius: cornerRadius ?? this.cornerRadius,
+        color: color ?? this.color.copy(),
+        cornerRadius: cornerRadius ?? this.cornerRadius.copy(),
         paddings: paddings ?? this.paddings,
       );
 

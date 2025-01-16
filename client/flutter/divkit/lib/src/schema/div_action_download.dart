@@ -41,7 +41,7 @@ class DivActionDownload with EquatableMixin {
         onSuccessActions: onSuccessActions != null
             ? onSuccessActions.call()
             : this.onSuccessActions,
-        url: url ?? this.url,
+        url: url ?? this.url.copy(),
       );
 
   static DivActionDownload? fromJson(

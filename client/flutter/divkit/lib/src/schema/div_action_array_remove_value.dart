@@ -25,8 +25,8 @@ class DivActionArrayRemoveValue with EquatableMixin {
     Expression<String>? variableName,
   }) =>
       DivActionArrayRemoveValue(
-        index: index ?? this.index,
-        variableName: variableName ?? this.variableName,
+        index: index ?? this.index.copy(),
+        variableName: variableName ?? this.variableName.copy(),
       );
 
   static DivActionArrayRemoveValue? fromJson(

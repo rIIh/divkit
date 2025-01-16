@@ -383,20 +383,21 @@ class DivGrid with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnCount: columnCount ?? this.columnCount,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        columnCount: columnCount ?? this.columnCount.copy(),
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -429,8 +430,8 @@ class DivGrid with EquatableMixin implements DivBase {
         pressStartActions: pressStartActions != null
             ? pressStartActions.call()
             : this.pressStartActions,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -450,7 +451,7 @@ class DivGrid with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

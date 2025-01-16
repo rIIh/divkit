@@ -21,7 +21,7 @@ class DivTextRangeMaskBase with EquatableMixin {
     Expression<bool>? isEnabled,
   }) =>
       DivTextRangeMaskBase(
-        isEnabled: isEnabled ?? this.isEnabled,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
       );
 
   static DivTextRangeMaskBase? fromJson(

@@ -29,8 +29,8 @@ class DivActionShowTooltip with EquatableMixin {
     Expression<bool>? Function()? multiple,
   }) =>
       DivActionShowTooltip(
-        id: id ?? this.id,
-        multiple: multiple != null ? multiple.call() : this.multiple,
+        id: id ?? this.id.copy(),
+        multiple: multiple != null ? multiple.call() : this.multiple?.copy(),
       );
 
   static DivActionShowTooltip? fromJson(

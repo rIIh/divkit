@@ -468,69 +468,74 @@ class DivInput with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
-        autocapitalization: autocapitalization ?? this.autocapitalization,
+        autocapitalization:
+            autocapitalization ?? this.autocapitalization.copy(),
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
         enterKeyActions: enterKeyActions != null
             ? enterKeyActions.call()
             : this.enterKeyActions,
-        enterKeyType: enterKeyType ?? this.enterKeyType,
+        enterKeyType: enterKeyType ?? this.enterKeyType.copy(),
         extensions: extensions != null ? extensions.call() : this.extensions,
         filters: filters != null ? filters.call() : this.filters,
         focus: focus != null ? focus.call() : this.focus,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         highlightColor: highlightColor != null
             ? highlightColor.call()
-            : this.highlightColor,
-        hintColor: hintColor ?? this.hintColor,
-        hintText: hintText != null ? hintText.call() : this.hintText,
+            : this.highlightColor?.copy(),
+        hintColor: hintColor ?? this.hintColor.copy(),
+        hintText: hintText != null ? hintText.call() : this.hintText?.copy(),
         id: id != null ? id.call() : this.id,
-        isEnabled: isEnabled ?? this.isEnabled,
-        keyboardType: keyboardType ?? this.keyboardType,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
+        keyboardType: keyboardType ?? this.keyboardType.copy(),
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+        letterSpacing: letterSpacing ?? this.letterSpacing.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         margins: margins ?? this.margins,
         mask: mask != null ? mask.call() : this.mask,
-        maxLength: maxLength != null ? maxLength.call() : this.maxLength,
+        maxLength:
+            maxLength != null ? maxLength.call() : this.maxLength?.copy(),
         maxVisibleLines: maxVisibleLines != null
             ? maxVisibleLines.call()
-            : this.maxVisibleLines,
+            : this.maxVisibleLines?.copy(),
         nativeInterface: nativeInterface != null
             ? nativeInterface.call()
             : this.nativeInterface,
         paddings: paddings ?? this.paddings,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        selectAllOnFocus: selectAllOnFocus ?? this.selectAllOnFocus,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        selectAllOnFocus: selectAllOnFocus ?? this.selectAllOnFocus.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
         textAlignmentHorizontal:
-            textAlignmentHorizontal ?? this.textAlignmentHorizontal,
+            textAlignmentHorizontal ?? this.textAlignmentHorizontal.copy(),
         textAlignmentVertical:
-            textAlignmentVertical ?? this.textAlignmentVertical,
-        textColor: textColor ?? this.textColor,
+            textAlignmentVertical ?? this.textAlignmentVertical.copy(),
+        textColor: textColor ?? this.textColor.copy(),
         textVariable: textVariable ?? this.textVariable,
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
@@ -549,7 +554,7 @@ class DivInput with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -971,7 +976,7 @@ class DivInputNativeInterface with EquatableMixin {
     Expression<Color>? color,
   }) =>
       DivInputNativeInterface(
-        color: color ?? this.color,
+        color: color ?? this.color.copy(),
       );
 
   static DivInputNativeInterface? fromJson(

@@ -66,7 +66,7 @@ class DivRoundedRectangleShape with EquatableMixin {
       DivRoundedRectangleShape(
         backgroundColor: backgroundColor != null
             ? backgroundColor.call()
-            : this.backgroundColor,
+            : this.backgroundColor?.copy(),
         cornerRadius: cornerRadius ?? this.cornerRadius,
         itemHeight: itemHeight ?? this.itemHeight,
         itemWidth: itemWidth ?? this.itemWidth,

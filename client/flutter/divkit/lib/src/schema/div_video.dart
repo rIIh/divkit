@@ -380,20 +380,21 @@ class DivVideo with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         aspect: aspect != null ? aspect.call() : this.aspect,
-        autostart: autostart ?? this.autostart,
+        autostart: autostart ?? this.autostart.copy(),
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
         bufferingActions: bufferingActions != null
             ? bufferingActions.call()
             : this.bufferingActions,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -412,21 +413,21 @@ class DivVideo with EquatableMixin implements DivBase {
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        muted: muted ?? this.muted,
+        muted: muted ?? this.muted.copy(),
         paddings: paddings ?? this.paddings,
         pauseActions:
             pauseActions != null ? pauseActions.call() : this.pauseActions,
         playerSettingsPayload: playerSettingsPayload != null
             ? playerSettingsPayload.call()
             : this.playerSettingsPayload,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        preview: preview != null ? preview.call() : this.preview,
-        repeatable: repeatable ?? this.repeatable,
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        preview: preview != null ? preview.call() : this.preview?.copy(),
+        repeatable: repeatable ?? this.repeatable.copy(),
         resumeActions:
             resumeActions != null ? resumeActions.call() : this.resumeActions,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        scale: scale ?? this.scale,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scale: scale ?? this.scale.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -447,7 +448,7 @@ class DivVideo with EquatableMixin implements DivBase {
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
         videoSources: videoSources ?? this.videoSources,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

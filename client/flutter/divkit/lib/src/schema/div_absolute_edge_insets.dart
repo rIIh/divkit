@@ -43,10 +43,10 @@ class DivAbsoluteEdgeInsets with EquatableMixin {
     Expression<int>? top,
   }) =>
       DivAbsoluteEdgeInsets(
-        bottom: bottom ?? this.bottom,
-        left: left ?? this.left,
-        right: right ?? this.right,
-        top: top ?? this.top,
+        bottom: bottom ?? this.bottom.copy(),
+        left: left ?? this.left.copy(),
+        right: right ?? this.right.copy(),
+        top: top ?? this.top.copy(),
       );
 
   static DivAbsoluteEdgeInsets? fromJson(

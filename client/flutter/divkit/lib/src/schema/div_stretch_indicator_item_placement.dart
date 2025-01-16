@@ -37,7 +37,7 @@ class DivStretchIndicatorItemPlacement with EquatableMixin {
   }) =>
       DivStretchIndicatorItemPlacement(
         itemSpacing: itemSpacing ?? this.itemSpacing,
-        maxVisibleItems: maxVisibleItems ?? this.maxVisibleItems,
+        maxVisibleItems: maxVisibleItems ?? this.maxVisibleItems.copy(),
       );
 
   static DivStretchIndicatorItemPlacement? fromJson(

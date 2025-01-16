@@ -429,21 +429,22 @@ class DivContainer with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         aspect: aspect != null ? aspect.call() : this.aspect,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        clipToBounds: clipToBounds ?? this.clipToBounds,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        clipToBounds: clipToBounds ?? this.clipToBounds.copy(),
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -464,7 +465,7 @@ class DivContainer with EquatableMixin implements DivBase {
         itemBuilder:
             itemBuilder != null ? itemBuilder.call() : this.itemBuilder,
         items: items != null ? items.call() : this.items,
-        layoutMode: layoutMode ?? this.layoutMode,
+        layoutMode: layoutMode ?? this.layoutMode.copy(),
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
@@ -474,7 +475,7 @@ class DivContainer with EquatableMixin implements DivBase {
             ? longtapActions.call()
             : this.longtapActions,
         margins: margins ?? this.margins,
-        orientation: orientation ?? this.orientation,
+        orientation: orientation ?? this.orientation.copy(),
         paddings: paddings ?? this.paddings,
         pressEndActions: pressEndActions != null
             ? pressEndActions.call()
@@ -482,8 +483,8 @@ class DivContainer with EquatableMixin implements DivBase {
         pressStartActions: pressStartActions != null
             ? pressStartActions.call()
             : this.pressStartActions,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -504,7 +505,7 @@ class DivContainer with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -945,9 +946,9 @@ class DivContainerSeparator with EquatableMixin {
   }) =>
       DivContainerSeparator(
         margins: margins ?? this.margins,
-        showAtEnd: showAtEnd ?? this.showAtEnd,
-        showAtStart: showAtStart ?? this.showAtStart,
-        showBetween: showBetween ?? this.showBetween,
+        showAtEnd: showAtEnd ?? this.showAtEnd.copy(),
+        showAtStart: showAtStart ?? this.showAtStart.copy(),
+        showBetween: showBetween ?? this.showBetween.copy(),
         style: style ?? this.style,
       );
 

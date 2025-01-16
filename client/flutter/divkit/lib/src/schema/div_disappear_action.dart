@@ -95,19 +95,20 @@ class DivDisappearAction with EquatableMixin implements DivSightAction {
     Expression<int>? visibilityPercentage,
   }) =>
       DivDisappearAction(
-        disappearDuration: disappearDuration ?? this.disappearDuration,
+        disappearDuration: disappearDuration ?? this.disappearDuration.copy(),
         downloadCallbacks: downloadCallbacks != null
             ? downloadCallbacks.call()
             : this.downloadCallbacks,
-        isEnabled: isEnabled ?? this.isEnabled,
-        logId: logId ?? this.logId,
-        logLimit: logLimit ?? this.logLimit,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
+        logId: logId ?? this.logId.copy(),
+        logLimit: logLimit ?? this.logLimit.copy(),
         payload: payload != null ? payload.call() : this.payload,
-        referer: referer != null ? referer.call() : this.referer,
+        referer: referer != null ? referer.call() : this.referer?.copy(),
         scopeId: scopeId != null ? scopeId.call() : this.scopeId,
         typed: typed != null ? typed.call() : this.typed,
-        url: url != null ? url.call() : this.url,
-        visibilityPercentage: visibilityPercentage ?? this.visibilityPercentage,
+        url: url != null ? url.call() : this.url?.copy(),
+        visibilityPercentage:
+            visibilityPercentage ?? this.visibilityPercentage.copy(),
       );
 
   static DivDisappearAction? fromJson(

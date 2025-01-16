@@ -412,20 +412,21 @@ class DivGifImage with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         aspect: aspect != null ? aspect.call() : this.aspect,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        contentAlignmentHorizontal:
-            contentAlignmentHorizontal ?? this.contentAlignmentHorizontal,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        contentAlignmentHorizontal: contentAlignmentHorizontal ??
+            this.contentAlignmentHorizontal.copy(),
         contentAlignmentVertical:
-            contentAlignmentVertical ?? this.contentAlignmentVertical,
+            contentAlignmentVertical ?? this.contentAlignmentVertical.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -435,7 +436,7 @@ class DivGifImage with EquatableMixin implements DivBase {
         extensions: extensions != null ? extensions.call() : this.extensions,
         focus: focus != null ? focus.call() : this.focus,
         functions: functions != null ? functions.call() : this.functions,
-        gifUrl: gifUrl ?? this.gifUrl,
+        gifUrl: gifUrl ?? this.gifUrl.copy(),
         height: height ?? this.height,
         hoverEndActions: hoverEndActions != null
             ? hoverEndActions.call()
@@ -452,18 +453,18 @@ class DivGifImage with EquatableMixin implements DivBase {
             : this.longtapActions,
         margins: margins ?? this.margins,
         paddings: paddings ?? this.paddings,
-        placeholderColor: placeholderColor ?? this.placeholderColor,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
+        placeholderColor: placeholderColor ?? this.placeholderColor.copy(),
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
         pressEndActions: pressEndActions != null
             ? pressEndActions.call()
             : this.pressEndActions,
         pressStartActions: pressStartActions != null
             ? pressStartActions.call()
             : this.pressStartActions,
-        preview: preview != null ? preview.call() : this.preview,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        scale: scale ?? this.scale,
+        preview: preview != null ? preview.call() : this.preview?.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scale: scale ?? this.scale.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -483,7 +484,7 @@ class DivGifImage with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,

@@ -30,8 +30,8 @@ class DivTextRangeMaskSolid with EquatableMixin {
     Expression<bool>? isEnabled,
   }) =>
       DivTextRangeMaskSolid(
-        color: color ?? this.color,
-        isEnabled: isEnabled ?? this.isEnabled,
+        color: color ?? this.color.copy(),
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
       );
 
   static DivTextRangeMaskSolid? fromJson(

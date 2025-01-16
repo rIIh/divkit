@@ -24,7 +24,7 @@ class DivMatchParentSize with EquatableMixin {
     Expression<double>? Function()? weight,
   }) =>
       DivMatchParentSize(
-        weight: weight != null ? weight.call() : this.weight,
+        weight: weight != null ? weight.call() : this.weight?.copy(),
       );
 
   static DivMatchParentSize? fromJson(

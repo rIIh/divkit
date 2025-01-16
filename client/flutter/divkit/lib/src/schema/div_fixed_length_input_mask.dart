@@ -45,8 +45,8 @@ class DivFixedLengthInputMask with EquatableMixin implements DivInputMaskBase {
     String? rawTextVariable,
   }) =>
       DivFixedLengthInputMask(
-        alwaysVisible: alwaysVisible ?? this.alwaysVisible,
-        pattern: pattern ?? this.pattern,
+        alwaysVisible: alwaysVisible ?? this.alwaysVisible.copy(),
+        pattern: pattern ?? this.pattern.copy(),
         patternElements: patternElements ?? this.patternElements,
         rawTextVariable: rawTextVariable ?? this.rawTextVariable,
       );
@@ -130,9 +130,9 @@ class DivFixedLengthInputMaskPatternElement with EquatableMixin {
     Expression<String>? Function()? regex,
   }) =>
       DivFixedLengthInputMaskPatternElement(
-        key: key ?? this.key,
-        placeholder: placeholder ?? this.placeholder,
-        regex: regex != null ? regex.call() : this.regex,
+        key: key ?? this.key.copy(),
+        placeholder: placeholder ?? this.placeholder.copy(),
+        regex: regex != null ? regex.call() : this.regex?.copy(),
       );
 
   static DivFixedLengthInputMaskPatternElement? fromJson(

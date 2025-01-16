@@ -59,11 +59,11 @@ class DivPageTransformationSlide with EquatableMixin {
     Expression<double>? previousPageScale,
   }) =>
       DivPageTransformationSlide(
-        interpolator: interpolator ?? this.interpolator,
-        nextPageAlpha: nextPageAlpha ?? this.nextPageAlpha,
-        nextPageScale: nextPageScale ?? this.nextPageScale,
-        previousPageAlpha: previousPageAlpha ?? this.previousPageAlpha,
-        previousPageScale: previousPageScale ?? this.previousPageScale,
+        interpolator: interpolator ?? this.interpolator.copy(),
+        nextPageAlpha: nextPageAlpha ?? this.nextPageAlpha.copy(),
+        nextPageScale: nextPageScale ?? this.nextPageScale.copy(),
+        previousPageAlpha: previousPageAlpha ?? this.previousPageAlpha.copy(),
+        previousPageScale: previousPageScale ?? this.previousPageScale.copy(),
       );
 
   static DivPageTransformationSlide? fromJson(

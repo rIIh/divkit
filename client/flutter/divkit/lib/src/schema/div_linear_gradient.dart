@@ -31,8 +31,8 @@ class DivLinearGradient with EquatableMixin {
     Expression<Arr<Color>>? colors,
   }) =>
       DivLinearGradient(
-        angle: angle ?? this.angle,
-        colors: colors ?? this.colors,
+        angle: angle ?? this.angle.copy(),
+        colors: colors ?? this.colors.copy(),
       );
 
   static DivLinearGradient? fromJson(

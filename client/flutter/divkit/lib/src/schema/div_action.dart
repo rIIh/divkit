@@ -85,16 +85,16 @@ class DivAction with EquatableMixin {
         downloadCallbacks: downloadCallbacks != null
             ? downloadCallbacks.call()
             : this.downloadCallbacks,
-        isEnabled: isEnabled ?? this.isEnabled,
-        logId: logId ?? this.logId,
-        logUrl: logUrl != null ? logUrl.call() : this.logUrl,
+        isEnabled: isEnabled ?? this.isEnabled.copy(),
+        logId: logId ?? this.logId.copy(),
+        logUrl: logUrl != null ? logUrl.call() : this.logUrl?.copy(),
         menuItems: menuItems != null ? menuItems.call() : this.menuItems,
         payload: payload != null ? payload.call() : this.payload,
-        referer: referer != null ? referer.call() : this.referer,
+        referer: referer != null ? referer.call() : this.referer?.copy(),
         scopeId: scopeId != null ? scopeId.call() : this.scopeId,
-        target: target != null ? target.call() : this.target,
+        target: target != null ? target.call() : this.target?.copy(),
         typed: typed != null ? typed.call() : this.typed,
-        url: url != null ? url.call() : this.url,
+        url: url != null ? url.call() : this.url?.copy(),
       );
 
   static DivAction? fromJson(
@@ -193,7 +193,7 @@ class DivActionMenuItem with EquatableMixin {
       DivActionMenuItem(
         action: action != null ? action.call() : this.action,
         actions: actions != null ? actions.call() : this.actions,
-        text: text ?? this.text,
+        text: text ?? this.text.copy(),
       );
 
   static DivActionMenuItem? fromJson(

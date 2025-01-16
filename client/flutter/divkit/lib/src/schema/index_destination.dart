@@ -24,7 +24,7 @@ class IndexDestination with EquatableMixin {
     Expression<int>? value,
   }) =>
       IndexDestination(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static IndexDestination? fromJson(

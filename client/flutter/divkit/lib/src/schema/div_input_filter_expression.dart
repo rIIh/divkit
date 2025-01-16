@@ -23,7 +23,7 @@ class DivInputFilterExpression with EquatableMixin {
     Expression<bool>? condition,
   }) =>
       DivInputFilterExpression(
-        condition: condition ?? this.condition,
+        condition: condition ?? this.condition.copy(),
       );
 
   static DivInputFilterExpression? fromJson(
