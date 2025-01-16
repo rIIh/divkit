@@ -134,10 +134,12 @@ class DartGenerator(Generator):
             for prop in entity.instance_properties:
                 type_decl = prop.type_declaration
                 name_decl = utils.lower_camel_case(prop.name)
+                nullable = "?" if type_decl.endswith('?') else ""
+                copy = f"{nullable}.copy()" if "Expression" in type_decl else ""
                 if type_decl.endswith('?'):
-                    result += f"      {name_decl}: {name_decl} != null ? {name_decl}.call() : this.{name_decl},"
+                    result += f"      {name_decl}: {name_decl} != null ? {name_decl}.call() : this.{name_decl}{copy},"
                 else:
-                    result += f"      {name_decl}: {name_decl} ?? this.{name_decl},"
+                    result += f"      {name_decl}: {name_decl} ?? this.{name_decl}{copy},"
             result += '    );'
         else:
             result += EMPTY
