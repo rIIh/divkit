@@ -53,11 +53,11 @@ class DivActionScrollBy with EquatableMixin {
     Expression<DivActionScrollByOverflow>? overflow,
   }) =>
       DivActionScrollBy(
-        animated: animated ?? this.animated,
-        id: id ?? this.id,
-        itemCount: itemCount ?? this.itemCount,
-        offset: offset ?? this.offset,
-        overflow: overflow ?? this.overflow,
+        animated: animated ?? this.animated.copy(),
+        id: id ?? this.id.copy(),
+        itemCount: itemCount ?? this.itemCount.copy(),
+        offset: offset ?? this.offset.copy(),
+        overflow: overflow ?? this.overflow.copy(),
       );
 
   static DivActionScrollBy? fromJson(

@@ -71,6 +71,8 @@ class DivPager with EquatableMixin implements DivBase {
     this.restrictParentScroll = const ValueExpression(false),
     this.reuseId,
     this.rowSpan,
+    this.scrollAxisAlignment =
+        const ValueExpression(DivPagerScrollAxisAlignment.center),
     this.selectedActions,
     this.tooltips,
     this.transform = const DivTransform(),
@@ -209,6 +211,10 @@ class DivPager with EquatableMixin implements DivBase {
   @override
   final Expression<int>? rowSpan;
 
+  /// Alignment of pager pages along the scroll axis. For edge alignment, the margin from the edge of the parent equals the value of the corresponding padding.
+  // default value: DivPagerScrollAxisAlignment.center
+  final Expression<DivPagerScrollAxisAlignment> scrollAxisAlignment;
+
   /// List of [actions](div-action.md) to be executed when selecting an element in [pager](div-pager.md).
   @override
   final Arr<DivAction>? selectedActions;
@@ -294,6 +300,7 @@ class DivPager with EquatableMixin implements DivBase {
         restrictParentScroll,
         reuseId,
         rowSpan,
+        scrollAxisAlignment,
         selectedActions,
         tooltips,
         transform,
@@ -338,6 +345,7 @@ class DivPager with EquatableMixin implements DivBase {
     Expression<bool>? restrictParentScroll,
     Expression<String>? Function()? reuseId,
     Expression<int>? Function()? rowSpan,
+    Expression<DivPagerScrollAxisAlignment>? scrollAxisAlignment,
     Arr<DivAction>? Function()? selectedActions,
     Arr<DivTooltip>? Function()? tooltips,
     DivTransform? transform,
@@ -356,16 +364,17 @@ class DivPager with EquatableMixin implements DivBase {
         accessibility: accessibility ?? this.accessibility,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
-        defaultItem: defaultItem ?? this.defaultItem,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
+        defaultItem: defaultItem ?? this.defaultItem.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -374,7 +383,7 @@ class DivPager with EquatableMixin implements DivBase {
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         id: id != null ? id.call() : this.id,
-        infiniteScroll: infiniteScroll ?? this.infiniteScroll,
+        infiniteScroll: infiniteScroll ?? this.infiniteScroll.copy(),
         itemBuilder:
             itemBuilder != null ? itemBuilder.call() : this.itemBuilder,
         itemSpacing: itemSpacing ?? this.itemSpacing,
@@ -384,14 +393,17 @@ class DivPager with EquatableMixin implements DivBase {
             ? layoutProvider.call()
             : this.layoutProvider,
         margins: margins ?? this.margins,
-        orientation: orientation ?? this.orientation,
+        orientation: orientation ?? this.orientation.copy(),
         paddings: paddings ?? this.paddings,
         pageTransformation: pageTransformation != null
             ? pageTransformation.call()
             : this.pageTransformation,
-        restrictParentScroll: restrictParentScroll ?? this.restrictParentScroll,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
+        restrictParentScroll:
+            restrictParentScroll ?? this.restrictParentScroll.copy(),
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        scrollAxisAlignment:
+            scrollAxisAlignment ?? this.scrollAxisAlignment.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
@@ -411,7 +423,7 @@ class DivPager with EquatableMixin implements DivBase {
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -616,6 +628,14 @@ class DivPager with EquatableMixin implements DivBase {
         rowSpan: safeParseIntExpr(
           json['row_span'],
         ),
+        scrollAxisAlignment: reqVProp<DivPagerScrollAxisAlignment>(
+          safeParseStrEnumExpr(
+            json['scroll_axis_alignment'],
+            parse: DivPagerScrollAxisAlignment.fromJson,
+            fallback: DivPagerScrollAxisAlignment.center,
+          ),
+          name: 'scroll_axis_alignment',
+        ),
         selectedActions: safeParseObjects(
           json['selected_actions'],
           (v) => reqProp<DivAction>(
@@ -715,6 +735,78 @@ class DivPager with EquatableMixin implements DivBase {
       );
     } catch (e, st) {
       logger.warning("Parsing error", error: e, stackTrace: st);
+      return null;
+    }
+  }
+}
+
+enum DivPagerScrollAxisAlignment {
+  start('start'),
+  center('center'),
+  end('end');
+
+  final String value;
+
+  const DivPagerScrollAxisAlignment(this.value);
+  bool get isStart => this == start;
+
+  bool get isCenter => this == center;
+
+  bool get isEnd => this == end;
+
+  T map<T>({
+    required T Function() start,
+    required T Function() center,
+    required T Function() end,
+  }) {
+    switch (this) {
+      case DivPagerScrollAxisAlignment.start:
+        return start();
+      case DivPagerScrollAxisAlignment.center:
+        return center();
+      case DivPagerScrollAxisAlignment.end:
+        return end();
+    }
+  }
+
+  T maybeMap<T>({
+    T Function()? start,
+    T Function()? center,
+    T Function()? end,
+    required T Function() orElse,
+  }) {
+    switch (this) {
+      case DivPagerScrollAxisAlignment.start:
+        return start?.call() ?? orElse();
+      case DivPagerScrollAxisAlignment.center:
+        return center?.call() ?? orElse();
+      case DivPagerScrollAxisAlignment.end:
+        return end?.call() ?? orElse();
+    }
+  }
+
+  static DivPagerScrollAxisAlignment? fromJson(
+    String? json,
+  ) {
+    if (json == null) {
+      return null;
+    }
+    try {
+      switch (json) {
+        case 'start':
+          return DivPagerScrollAxisAlignment.start;
+        case 'center':
+          return DivPagerScrollAxisAlignment.center;
+        case 'end':
+          return DivPagerScrollAxisAlignment.end;
+      }
+      return null;
+    } catch (e, st) {
+      logger.warning(
+        "Invalid type of DivPagerScrollAxisAlignment: $json",
+        error: e,
+        stackTrace: st,
+      );
       return null;
     }
   }

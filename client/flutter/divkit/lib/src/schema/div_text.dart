@@ -78,7 +78,7 @@ class DivText with EquatableMixin implements DivBase {
     this.fontFamily,
     this.fontFeatureSettings,
     this.fontSize = const ValueExpression(12),
-    this.fontSizeUnit = const ValueExpression(DivSizeUnit.dp),
+    this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
     this.fontWeight = const ValueExpression(DivFontWeight.regular),
     this.fontWeightValue,
     this.functions,
@@ -213,7 +213,7 @@ class DivText with EquatableMixin implements DivBase {
   /// Font size.
   // constraint: number >= 0; default value: 12
   final Expression<int> fontSize;
-  // default value: DivSizeUnit.dp
+  // default value: DivSizeUnit.sp
   final Expression<DivSizeUnit> fontSizeUnit;
 
   /// Style.
@@ -538,17 +538,19 @@ class DivText with EquatableMixin implements DivBase {
         actions: actions != null ? actions.call() : this.actions,
         alignmentHorizontal: alignmentHorizontal != null
             ? alignmentHorizontal.call()
-            : this.alignmentHorizontal,
+            : this.alignmentHorizontal?.copy(),
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
-        alpha: alpha ?? this.alpha,
+            : this.alignmentVertical?.copy(),
+        alpha: alpha ?? this.alpha.copy(),
         animators: animators != null ? animators.call() : this.animators,
-        autoEllipsize:
-            autoEllipsize != null ? autoEllipsize.call() : this.autoEllipsize,
+        autoEllipsize: autoEllipsize != null
+            ? autoEllipsize.call()
+            : this.autoEllipsize?.copy(),
         background: background != null ? background.call() : this.background,
         border: border ?? this.border,
-        columnSpan: columnSpan != null ? columnSpan.call() : this.columnSpan,
+        columnSpan:
+            columnSpan != null ? columnSpan.call() : this.columnSpan?.copy(),
         disappearActions: disappearActions != null
             ? disappearActions.call()
             : this.disappearActions,
@@ -560,17 +562,18 @@ class DivText with EquatableMixin implements DivBase {
         focus: focus != null ? focus.call() : this.focus,
         focusedTextColor: focusedTextColor != null
             ? focusedTextColor.call()
-            : this.focusedTextColor,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
+            : this.focusedTextColor?.copy(),
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
         fontFeatureSettings: fontFeatureSettings != null
             ? fontFeatureSettings.call()
-            : this.fontFeatureSettings,
-        fontSize: fontSize ?? this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight ?? this.fontWeight,
+            : this.fontFeatureSettings?.copy(),
+        fontSize: fontSize ?? this.fontSize.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight: fontWeight ?? this.fontWeight.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
+            : this.fontWeightValue?.copy(),
         functions: functions != null ? functions.call() : this.functions,
         height: height ?? this.height,
         hoverEndActions: hoverEndActions != null
@@ -584,16 +587,17 @@ class DivText with EquatableMixin implements DivBase {
         layoutProvider: layoutProvider != null
             ? layoutProvider.call()
             : this.layoutProvider,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+        letterSpacing: letterSpacing ?? this.letterSpacing.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         longtapActions: longtapActions != null
             ? longtapActions.call()
             : this.longtapActions,
         margins: margins ?? this.margins,
-        maxLines: maxLines != null ? maxLines.call() : this.maxLines,
+        maxLines: maxLines != null ? maxLines.call() : this.maxLines?.copy(),
         minHiddenLines: minHiddenLines != null
             ? minHiddenLines.call()
-            : this.minHiddenLines,
+            : this.minHiddenLines?.copy(),
         paddings: paddings ?? this.paddings,
         pressEndActions: pressEndActions != null
             ? pressEndActions.call()
@@ -602,23 +606,23 @@ class DivText with EquatableMixin implements DivBase {
             ? pressStartActions.call()
             : this.pressStartActions,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        reuseId: reuseId != null ? reuseId.call() : this.reuseId,
-        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan,
-        selectable: selectable ?? this.selectable,
+        reuseId: reuseId != null ? reuseId.call() : this.reuseId?.copy(),
+        rowSpan: rowSpan != null ? rowSpan.call() : this.rowSpan?.copy(),
+        selectable: selectable ?? this.selectable.copy(),
         selectedActions: selectedActions != null
             ? selectedActions.call()
             : this.selectedActions,
-        strike: strike ?? this.strike,
-        text: text ?? this.text,
+        strike: strike ?? this.strike.copy(),
+        text: text ?? this.text.copy(),
         textAlignmentHorizontal:
-            textAlignmentHorizontal ?? this.textAlignmentHorizontal,
+            textAlignmentHorizontal ?? this.textAlignmentHorizontal.copy(),
         textAlignmentVertical:
-            textAlignmentVertical ?? this.textAlignmentVertical,
-        textColor: textColor ?? this.textColor,
+            textAlignmentVertical ?? this.textAlignmentVertical.copy(),
+        textColor: textColor ?? this.textColor.copy(),
         textGradient:
             textGradient != null ? textGradient.call() : this.textGradient,
         textShadow: textShadow != null ? textShadow.call() : this.textShadow,
-        tightenWidth: tightenWidth ?? this.tightenWidth,
+        tightenWidth: tightenWidth ?? this.tightenWidth.copy(),
         tooltips: tooltips != null ? tooltips.call() : this.tooltips,
         transform: transform ?? this.transform,
         transitionChange: transitionChange != null
@@ -631,13 +635,13 @@ class DivText with EquatableMixin implements DivBase {
         transitionTriggers: transitionTriggers != null
             ? transitionTriggers.call()
             : this.transitionTriggers,
-        truncate: truncate ?? this.truncate,
-        underline: underline ?? this.underline,
+        truncate: truncate ?? this.truncate.copy(),
+        underline: underline ?? this.underline.copy(),
         variableTriggers: variableTriggers != null
             ? variableTriggers.call()
             : this.variableTriggers,
         variables: variables != null ? variables.call() : this.variables,
-        visibility: visibility ?? this.visibility,
+        visibility: visibility ?? this.visibility.copy(),
         visibilityAction: visibilityAction != null
             ? visibilityAction.call()
             : this.visibilityAction,
@@ -799,7 +803,7 @@ class DivText with EquatableMixin implements DivBase {
           safeParseStrEnumExpr(
             json['font_size_unit'],
             parse: DivSizeUnit.fromJson,
-            fallback: DivSizeUnit.dp,
+            fallback: DivSizeUnit.sp,
           ),
           name: 'font_size_unit',
         ),
@@ -1126,12 +1130,13 @@ class DivTextRange with EquatableMixin {
     this.actions,
     this.alignmentVertical,
     this.background,
+    this.baselineOffset = const ValueExpression(0),
     this.border,
     this.end,
     this.fontFamily,
     this.fontFeatureSettings,
     this.fontSize,
-    this.fontSizeUnit = const ValueExpression(DivSizeUnit.dp),
+    this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
     this.fontWeight,
     this.fontWeightValue,
     this.letterSpacing,
@@ -1153,6 +1158,10 @@ class DivTextRange with EquatableMixin {
 
   /// Character range background.
   final DivTextRangeBackground? background;
+
+  /// Character baseline vertial offset. If set, vertical alignment is ignored.
+  // default value: 0
+  final Expression<double> baselineOffset;
 
   /// Character range border.
   final DivTextRangeBorder? border;
@@ -1177,7 +1186,7 @@ class DivTextRange with EquatableMixin {
   /// • `px` — a physical pixel.
   /// • `dp` — a logical pixel that doesn't depend on screen density.
   /// • `sp` — a logical pixel that depends on the font size on a device. Specify height in `sp`. Only available on Android.
-  // default value: DivSizeUnit.dp
+  // default value: DivSizeUnit.sp
   final Expression<DivSizeUnit> fontSizeUnit;
 
   /// Style.
@@ -1222,6 +1231,7 @@ class DivTextRange with EquatableMixin {
         actions,
         alignmentVertical,
         background,
+        baselineOffset,
         border,
         end,
         fontFamily,
@@ -1245,6 +1255,7 @@ class DivTextRange with EquatableMixin {
     Arr<DivAction>? Function()? actions,
     Expression<DivTextAlignmentVertical>? Function()? alignmentVertical,
     DivTextRangeBackground? Function()? background,
+    Expression<double>? baselineOffset,
     DivTextRangeBorder? Function()? border,
     Expression<int>? Function()? end,
     Expression<String>? Function()? fontFamily,
@@ -1267,30 +1278,38 @@ class DivTextRange with EquatableMixin {
         actions: actions != null ? actions.call() : this.actions,
         alignmentVertical: alignmentVertical != null
             ? alignmentVertical.call()
-            : this.alignmentVertical,
+            : this.alignmentVertical?.copy(),
         background: background != null ? background.call() : this.background,
+        baselineOffset: baselineOffset ?? this.baselineOffset.copy(),
         border: border != null ? border.call() : this.border,
-        end: end != null ? end.call() : this.end,
-        fontFamily: fontFamily != null ? fontFamily.call() : this.fontFamily,
+        end: end != null ? end.call() : this.end?.copy(),
+        fontFamily:
+            fontFamily != null ? fontFamily.call() : this.fontFamily?.copy(),
         fontFeatureSettings: fontFeatureSettings != null
             ? fontFeatureSettings.call()
-            : this.fontFeatureSettings,
-        fontSize: fontSize != null ? fontSize.call() : this.fontSize,
-        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit,
-        fontWeight: fontWeight != null ? fontWeight.call() : this.fontWeight,
+            : this.fontFeatureSettings?.copy(),
+        fontSize: fontSize != null ? fontSize.call() : this.fontSize?.copy(),
+        fontSizeUnit: fontSizeUnit ?? this.fontSizeUnit.copy(),
+        fontWeight:
+            fontWeight != null ? fontWeight.call() : this.fontWeight?.copy(),
         fontWeightValue: fontWeightValue != null
             ? fontWeightValue.call()
-            : this.fontWeightValue,
-        letterSpacing:
-            letterSpacing != null ? letterSpacing.call() : this.letterSpacing,
-        lineHeight: lineHeight != null ? lineHeight.call() : this.lineHeight,
+            : this.fontWeightValue?.copy(),
+        letterSpacing: letterSpacing != null
+            ? letterSpacing.call()
+            : this.letterSpacing?.copy(),
+        lineHeight:
+            lineHeight != null ? lineHeight.call() : this.lineHeight?.copy(),
         mask: mask != null ? mask.call() : this.mask,
-        start: start ?? this.start,
-        strike: strike != null ? strike.call() : this.strike,
-        textColor: textColor != null ? textColor.call() : this.textColor,
+        start: start ?? this.start.copy(),
+        strike: strike != null ? strike.call() : this.strike?.copy(),
+        textColor:
+            textColor != null ? textColor.call() : this.textColor?.copy(),
         textShadow: textShadow != null ? textShadow.call() : this.textShadow,
-        topOffset: topOffset != null ? topOffset.call() : this.topOffset,
-        underline: underline != null ? underline.call() : this.underline,
+        topOffset:
+            topOffset != null ? topOffset.call() : this.topOffset?.copy(),
+        underline:
+            underline != null ? underline.call() : this.underline?.copy(),
       );
 
   static DivTextRange? fromJson(
@@ -1318,6 +1337,13 @@ class DivTextRange with EquatableMixin {
           json['background'],
           parse: DivTextRangeBackground.fromJson,
         ),
+        baselineOffset: reqVProp<double>(
+          safeParseDoubleExpr(
+            json['baseline_offset'],
+            fallback: 0,
+          ),
+          name: 'baseline_offset',
+        ),
         border: safeParseObject(
           json['border'],
           parse: DivTextRangeBorder.fromJson,
@@ -1338,7 +1364,7 @@ class DivTextRange with EquatableMixin {
           safeParseStrEnumExpr(
             json['font_size_unit'],
             parse: DivSizeUnit.fromJson,
-            fallback: DivSizeUnit.dp,
+            fallback: DivSizeUnit.sp,
           ),
           name: 'font_size_unit',
         ),
@@ -1483,14 +1509,15 @@ class DivTextImage with EquatableMixin {
   }) =>
       DivTextImage(
         accessibility: accessibility ?? this.accessibility,
-        alignmentVertical: alignmentVertical ?? this.alignmentVertical,
+        alignmentVertical: alignmentVertical ?? this.alignmentVertical.copy(),
         height: height ?? this.height,
-        indexingDirection: indexingDirection ?? this.indexingDirection,
-        preloadRequired: preloadRequired ?? this.preloadRequired,
-        start: start ?? this.start,
-        tintColor: tintColor != null ? tintColor.call() : this.tintColor,
-        tintMode: tintMode ?? this.tintMode,
-        url: url ?? this.url,
+        indexingDirection: indexingDirection ?? this.indexingDirection.copy(),
+        preloadRequired: preloadRequired ?? this.preloadRequired.copy(),
+        start: start ?? this.start.copy(),
+        tintColor:
+            tintColor != null ? tintColor.call() : this.tintColor?.copy(),
+        tintMode: tintMode ?? this.tintMode.copy(),
+        url: url ?? this.url.copy(),
         width: width ?? this.width,
       );
 
@@ -1613,7 +1640,7 @@ class DivTextImageAccessibility with EquatableMixin {
   }) =>
       DivTextImageAccessibility(
         description:
-            description != null ? description.call() : this.description,
+            description != null ? description.call() : this.description?.copy(),
         type: type ?? this.type,
       );
 
@@ -1838,7 +1865,7 @@ class DivTextEllipsis with EquatableMixin {
         actions: actions != null ? actions.call() : this.actions,
         images: images != null ? images.call() : this.images,
         ranges: ranges != null ? ranges.call() : this.ranges,
-        text: text ?? this.text,
+        text: text ?? this.text.copy(),
       );
 
   static DivTextEllipsis? fromJson(

@@ -35,8 +35,8 @@ class DivActionSetState with EquatableMixin {
     Expression<bool>? temporary,
   }) =>
       DivActionSetState(
-        stateId: stateId ?? this.stateId,
-        temporary: temporary ?? this.temporary,
+        stateId: stateId ?? this.stateId.copy(),
+        temporary: temporary ?? this.temporary.copy(),
       );
 
   static DivActionSetState? fromJson(

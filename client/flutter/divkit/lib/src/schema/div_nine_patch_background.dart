@@ -30,7 +30,7 @@ class DivNinePatchBackground with EquatableMixin {
     DivAbsoluteEdgeInsets? insets,
   }) =>
       DivNinePatchBackground(
-        imageUrl: imageUrl ?? this.imageUrl,
+        imageUrl: imageUrl ?? this.imageUrl.copy(),
         insets: insets ?? this.insets,
       );
 

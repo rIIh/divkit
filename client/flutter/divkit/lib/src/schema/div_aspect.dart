@@ -22,7 +22,7 @@ class DivAspect with EquatableMixin {
     Expression<double>? ratio,
   }) =>
       DivAspect(
-        ratio: ratio ?? this.ratio,
+        ratio: ratio ?? this.ratio.copy(),
       );
 
   static DivAspect? fromJson(

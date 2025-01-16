@@ -24,7 +24,7 @@ class OffsetDestination with EquatableMixin {
     Expression<int>? value,
   }) =>
       OffsetDestination(
-        value: value ?? this.value,
+        value: value ?? this.value.copy(),
       );
 
   static OffsetDestination? fromJson(

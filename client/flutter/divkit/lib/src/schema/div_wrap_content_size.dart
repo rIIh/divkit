@@ -37,7 +37,7 @@ class DivWrapContentSize with EquatableMixin {
   }) =>
       DivWrapContentSize(
         constrained:
-            constrained != null ? constrained.call() : this.constrained,
+            constrained != null ? constrained.call() : this.constrained?.copy(),
         maxSize: maxSize != null ? maxSize.call() : this.maxSize,
         minSize: minSize != null ? minSize.call() : this.minSize,
       );
@@ -95,8 +95,8 @@ class DivWrapContentSizeConstraintSize with EquatableMixin {
     Expression<int>? value,
   }) =>
       DivWrapContentSizeConstraintSize(
-        unit: unit ?? this.unit,
-        value: value ?? this.value,
+        unit: unit ?? this.unit.copy(),
+        value: value ?? this.value.copy(),
       );
 
   static DivWrapContentSizeConstraintSize? fromJson(

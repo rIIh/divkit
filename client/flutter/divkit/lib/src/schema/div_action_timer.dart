@@ -35,8 +35,8 @@ class DivActionTimer with EquatableMixin {
     Expression<String>? id,
   }) =>
       DivActionTimer(
-        action: action ?? this.action,
-        id: id ?? this.id,
+        action: action ?? this.action.copy(),
+        id: id ?? this.id.copy(),
       );
 
   static DivActionTimer? fromJson(
