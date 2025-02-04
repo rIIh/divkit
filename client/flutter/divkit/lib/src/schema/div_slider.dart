@@ -784,7 +784,7 @@ class DivSlider with EquatableMixin implements DivBase {
 class DivSliderTextStyle with EquatableMixin {
   const DivSliderTextStyle({
     required this.fontSize,
-    this.fontSizeUnit = const ValueExpression(DivSizeUnit.sp),
+    this.fontSizeUnit = const ValueExpression(DivSizeUnit.dp),
     this.fontWeight = const ValueExpression(DivFontWeight.regular),
     this.fontWeightValue,
     this.offset,
@@ -859,7 +859,7 @@ class DivSliderTextStyle with EquatableMixin {
           safeParseStrEnumExpr(
             json['font_size_unit'],
             parse: DivSizeUnit.fromJson,
-            fallback: DivSizeUnit.sp,
+            fallback: DivSizeUnit.dp,
           ),
           name: 'font_size_unit',
         ),
