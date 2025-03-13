@@ -32,6 +32,8 @@ class DivImageWidget extends DivMappingWidget<DivImage, DivImageModel> {
   @override
   Widget build(BuildContext context, DivImageModel model) {
     final Widget image;
+    final scale = model.src.imageScale;
+
     if (model.src.startsWith('divkit-asset://')) {
       final src = model.src.replaceFirst('divkit-asset:/', 'assets');
       if (src.endsWith('.svg')) {
@@ -52,7 +54,7 @@ class DivImageWidget extends DivMappingWidget<DivImage, DivImageModel> {
           fit: model.fit,
           color: model.color,
           colorBlendMode: model.colorBlendMode,
-          scale: model.src.imageScale,
+          scale: scale,
           alignment: model.contentAlignment.resolve(
             Directionality.maybeOf(context),
           ),
@@ -80,7 +82,9 @@ class DivImageWidget extends DivMappingWidget<DivImage, DivImageModel> {
           progressIndicatorBuilder: (context, url, progress) =>
               const SizedBox.shrink(),
           imageBuilder: (context, imageProvider) => Image(
-            image: imageProvider.withScale(model.src.imageScale),
+            image: scale != null //
+                ? imageProvider.withScale(scale)
+                : imageProvider,
           ),
           alignment: model.contentAlignment.resolve(
             Directionality.maybeOf(context),
