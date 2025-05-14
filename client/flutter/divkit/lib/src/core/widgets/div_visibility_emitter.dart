@@ -102,6 +102,8 @@ class _DivVisibilityActionEmitterState
       key: ValueKey(widget.id),
       child: widget.child,
       onVisibilityChanged: (VisibilityInfo info) {
+        if (!mounted) return;
+
         divContext.visibilityActionManager.updateActionsStateIfNeed(
           (info.visibleFraction * 100).toInt(),
           divContext,
